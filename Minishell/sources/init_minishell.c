@@ -42,7 +42,7 @@ int init_readline(t_data *minishell)
     {
         minishell->readline = readline("minishell~> ");
         add_history(minishell->readline);
-
+        minishell->cmd_split = 
        //minishell->cmd_split = split_quotes(minishell->readline, ' '); 
         //usar depois de tratar os espaços errados ^^^^
     }
