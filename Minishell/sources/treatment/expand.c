@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "../.././includes/minishell.h"
 
 int is_space(int c)
 {
@@ -62,6 +61,33 @@ char *separate_by_spaces(char *str)
             free(copy);
             return("ERROR: syntax error near unexpected token `|'"); // bash: syntax error near unexpected token `|'
         }
+        if (str[start] == '"')
+        {
+            copy[j] = str[start];
+            j++;
+            start++;
+            while(str[start] != '"' && str[start] != '\0')
+            {
+                copy[j] = str[start];
+                j++;
+                start++;
+            }
+
+        }
+        else if (str[start] == 39)
+        {
+            
+            copy[j] = str[start];
+            j++;
+            start++;
+            while(str[start] != 39 && str[start] != '\0')
+            {
+                copy[j] = str[start];
+                j++;
+                start++;
+            }
+
+        }
         copy[j] = str[start];
          if(is_special_char(&str[i]) == 2)
             i++;
@@ -70,7 +96,7 @@ char *separate_by_spaces(char *str)
                 j++;
                 copy[j] = ' ';
            } 
-        if(is_special_char(&str[start])==1 && !(is_space(str[start])))
+        if(is_special_char(&str[start])== 1 && !(is_space(str[start])))
         {       
                 j++;
                 copy[j] = ' ';
@@ -80,14 +106,4 @@ char *separate_by_spaces(char *str)
     }
     copy[j] = '\0';
     return copy;
-}
-
-int main()
-{
-    char *str = "cat \" |a \"";
-    char *ret;
-
-    ret = separate_by_spaces(str);
-    printf("%s\n", ret);
-    return (0);
 }

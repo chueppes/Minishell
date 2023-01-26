@@ -29,6 +29,7 @@ typedef struct s_data {
     char    **cmd_split;
     char    **minishell_envp;
     int     cmd_count;
+    char    *expanded_str;
     t_commands commands;
 }           t_data;
 
@@ -36,5 +37,8 @@ int     init_vars(t_data *minishell, char **envp); // adicionado envp como param
 int     init_readline(t_data *minishell);
 char    **split_quotes(char *str, char c);
 int     count_strs(char **strs);
+int     is_space(int c);
+int     is_special_char(char *str);
+char    *separate_by_spaces(char *str);
 
 #endif

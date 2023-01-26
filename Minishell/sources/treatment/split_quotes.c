@@ -1,44 +1,49 @@
-#include ".././includes/minishell.h"
+#include "../.././includes/minishell.h"
 
 static int    ft_wordlen(char const *s, char c)
 {
     int    i;
-
+    int j=0;
     i = 0;
-    while (s[i] != c && s[i] != '\0')
+    while (s[i] != '\0' && (s[i] != c && s[i]))
     {
         if (s[i] == '"')
         {
-            i++;
-            while (s[i] != '"')
+            j = ft_strrchr(s, '"');
+            while (i < j && s[i])
                 i++;
         }
-        if (s[i] == 39)
+        else if (s[i] == 39)
         {
-            i++;
-            while (s[i] != 39)
+            j = ft_strrchr(s, 39);
+            while (i < j && s[i])
                 i++;
         }
-        i++;
+        else
+                i++;
     }
     return (i);
 }
 
 const char	*check_quotation(const char *s)
 {
-	if (*s == '"')
+    int    i;
+    int     j;
+
+    i = 0;
+	if (s[i] == '"')
 	{
-		s++;
-		while (*s != '"')
-			s++;
+		j=ft_strrchr(s, '"');
+		while (i <= j && s[i])
+			i++;
 	}
-	if (*s == 39)
+	else if (s[i] == 39)
 	{
-		s++;
-		while (*s != 39)
-			s++;
+		j=ft_strrchr(s, 39);
+		while (i <= j && s[i])
+			i++;
 	}
-	return (s);
+	return (s+i);
 }
 
 static int	ft_wordcount(char const *s, char c)
@@ -74,6 +79,7 @@ static char **do_split(char **array, char *str, char c, int j)
         if (*str != c)
         {
             len = ft_wordlen(str, c);
+            printf("\ntamanho da string:%d\n", len);
             array[j] = malloc(sizeof(char) * (len + 1));
             array[j][len] = '\0';
             while (len--)
