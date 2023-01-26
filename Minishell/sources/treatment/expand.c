@@ -96,7 +96,7 @@ char *separate_by_spaces(char *str)
                 j++;
                 copy[j] = ' ';
            } 
-        if(is_special_char(&str[start])== 1 && !(is_space(str[start])))
+        if(!is_space(str[start]) && !is_special_char(&str[start]) && (is_special_char(&str[start+1]) == 1 || is_special_char(&str[start+1]) == 2) && !is_space(str[start+1]))
         {       
                 j++;
                 copy[j] = ' ';

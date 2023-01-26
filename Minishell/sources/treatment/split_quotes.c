@@ -1,112 +1,82 @@
 #include "../.././includes/minishell.h"
 
-static int    ft_wordlen(char const *s, char c)
+
+static size_t	ft_len(char const *s, int c)
 {
-    int    i;
-    int j=0;
-    i = 0;
-    while (s[i] != '\0' && (s[i] != c && s[i]))
-    {
-        if (s[i] == '"')
-        {
-            j = ft_strrchr(s, '"');
-            while (i < j && s[i])
-                i++;
-        }
-        else if (s[i] == 39)
-        {
-            j = ft_strrchr(s, 39);
-            while (i < j && s[i])
-                i++;
-        }
-        else
-                i++;
-    }
-    return (i);
-}
+	size_t	j;
 
-const char	*check_quotation(const char *s)
-{
-    int    i;
-    int     j;
-
-    i = 0;
-	if (s[i] == '"')
-	{
-		j=ft_strrchr(s, '"');
-		while (i <= j && s[i])
-			i++;
-	}
-	else if (s[i] == 39)
-	{
-		j=ft_strrchr(s, 39);
-		while (i <= j && s[i])
-			i++;
-	}
-	return (s+i);
-}
-
-static int	ft_wordcount(char const *s, char c)
-{
-	int	i;
-	int	j;
-
-	i = 0;
 	j = 0;
-	while (*s != '\0')
+	while (s[j] != c && s[j] != '\0')
 	{
-		s = check_quotation(s);
-		if (*s != c && i == 0)
+		if (s[j] == '"')
 		{
-			i = 1;
 			j++;
+			while (s[j] != '"')
+				j++;
 		}
-		else if (*s == c)
-			i = 0;
-		s++;
+		if (s[j] == 39)
+		{
+			j++;
+			while (s[j] != 39)
+				j++;
+		}
+		j++;
 	}
 	return (j);
 }
 
-static char **do_split(char **array, char *str, char c, int j)
+static size_t	ft_count(char const *s, int c)
 {
-    int i;
-    int len;
+	size_t	i;
+	size_t	j;
 
-    i = 0;
-    while (*str)
-    {
-        if (*str != c)
-        {
-            len = ft_wordlen(str, c);
-            printf("\ntamanho da string:%d\n", len);
-            array[j] = malloc(sizeof(char) * (len + 1));
-            array[j][len] = '\0';
-            while (len--)
-            {
-                array[j][i] = *str;
-                i++;
-                str++;
-            }
-            i = 0;
-            j++;
-        }
-        else
-            str++;
-    }
-    return (array);
+	i = 1;
+	j = -1;
+	while (*s && *s == c)
+		s++;
+	while (s[++j])
+	{
+		if (s[j] != c && s[j - 1] == c)
+			i++;
+		if (s[j] == '"')
+		{
+			j++;
+			while (s[j] != '"')
+				j++;
+		}
+		if (s[j] == 39)
+		{
+			j++;
+			while (s[j] != 39)
+				j++;
+		}
+	}
+	return (i);
 }
 
-char **split_quotes(char *str, char c)
+char	**split_quotes(char const *s, char c)
 {
-    int num_words;
-    char **array;
-    int j;
+	char	**str;
+	size_t	j;
+	char	*str1;
+	int		substr;
 
-    j = 0;
-    num_words = ft_wordcount(str, c);
-    array = malloc(sizeof(char *) * (num_words + 1));
-    array = do_split(array, str, c, j);
-    array[num_words] = 0;
-    return array;
+	str1 = (char *)s;
+	j = 0;
+	if (!s)
+		return (NULL);
+	str = (char **)malloc((ft_count(s, c) + 1) * sizeof(char *));
+	if (!str)
+		return (NULL);
+	while (j < ft_count(s, c))
+	{
+		while (*str1 == c && *str1)
+			str1++;
+		substr = ft_len(str1, c);
+		str[j] = ft_substr(str1, 0, substr);
+		j++;
+		str1 += substr;
+	}
+	str[j] = NULL;
+	return (str);
 }

@@ -35,7 +35,7 @@ typedef struct s_data {
 
 int     init_vars(t_data *minishell, char **envp); // adicionado envp como parametro
 int     init_readline(t_data *minishell);
-char    **split_quotes(char *str, char c);
+char	**split_quotes(char const *s, char c);
 int     count_strs(char **strs);
 int     is_space(int c);
 int     is_special_char(char *str);
