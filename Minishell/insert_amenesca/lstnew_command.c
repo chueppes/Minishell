@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../.././includes/minishell.h"
+#include "./list.h"
 
 t_commands	*lstnew_command(void *content)
 {

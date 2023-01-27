@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../.././includes/minishell.h"
+#include "./list.h"
 
-void	lstadd_back_command(t_commands **lst, t_commands *new)
+void	lstadd_back_command(t_commands **lst, t_commands *new_lst)
 {
 	t_commands	*list;
 
@@ -21,8 +21,8 @@ void	lstadd_back_command(t_commands **lst, t_commands *new)
 	if (*lst)
 	{
 		list = lstlast_command(*lst);
-		list->next = new;
+		list->next = new_lst;
 	}
 	else
-		*lst = new;
+		*lst = new_lst;
 }
