@@ -9,8 +9,13 @@ int	create_list(t_data *minishell)
 
 int main()
 {
-	char *str = "command | command -t -l \"oi \'oi\'\" | grep -e oi";
+	t_data *minishell;
+	minishell = (t_data *)malloc(sizeof(t_data));
+	char *str = "command | command -t -l \"oi 'oi'\" | grep -e oi";
 	printf("%s\n", str);
 	//t_data minishell;
 	//create_list(&minishell);
+
+	free(minishell);
+	return (0);
 }
