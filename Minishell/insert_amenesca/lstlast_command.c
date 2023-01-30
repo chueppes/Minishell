@@ -15,10 +15,8 @@
 t_commands	*lstlast_command(t_commands *lst)
 {
 	if (!lst)
-		return (NULL);
-	if (lst == NULL)
 		return (0);
-	while (lst ->next != NULL)
+	while (lst->next != NULL)
 		lst = lst->next;
 	return (lst);
 }

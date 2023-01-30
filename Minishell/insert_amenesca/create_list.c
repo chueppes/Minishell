@@ -1,21 +1,44 @@
 #include "./list.h"
 
-int	create_list(t_data *minishell)
+int  count_strs(char **strs)
 {
-	(void)minishell;
-	return (2);
-	//lstadd_back_command();
+    int i;
+
+    i = 0;
+    while (strs[i] != NULL)
+     i++;
+    return (i);
+}
+
+int	create_list(t_commands **list, char **array)
+{
+	int x = count_strs(array);
+	int j = 0;
+	while (j < x)
+	{
+		printf("%s\n",array[j]);
+		*list->comm
+		j++;
+	}
+	return 0;
 }
 
 int main()
 {
-	t_data *minishell;
-	minishell = (t_data *)malloc(sizeof(t_data));
-	char *str = "command | command -t -l \"oi 'oi'\" | grep -e oi";
-	printf("%s\n", str);
-	//t_data minishell;
-	//create_list(&minishell);
-
-	free(minishell);
+	t_commands **list;
+	*list = NULL;
+	char **array;
+	array = NULL;
+	char *str = "command |command -t -l \"oi 'oi'\" |grep -e oi";
+	array = split_quotes(str, '|');
+	for (int i = 0; i < 3; i++)
+		printf("%s\n", array[i]);
+//	list = (t_commands **) malloc(sizeof(t_commands *) * count_strs(array));
+	create_list(list, array);
+	while (*list)
+	{
+		printf("%s\n", (*list)->cmd);
+		*list = (*list)->next;
+	}
 	return (0);
 }

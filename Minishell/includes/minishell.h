@@ -30,7 +30,7 @@ typedef struct s_data {
     char    **minishell_envp;
     int     cmd_count;
     char    *expanded_str;
-    t_commands commands;
+    t_commands *commands;
 }           t_data;
 
 int     init_vars(t_data *minishell, char **envp); // adicionado envp como parametro

@@ -16,13 +16,13 @@ void	lstadd_back_command(t_commands **lst, t_commands *new_lst)
 {
 	t_commands	*list;
 
-	if (!lst)
+	if (!new_lst)
 		return ;
-	if (*lst)
+	if (!*lst)
 	{
-		list = lstlast_command(*lst);
-		list->next = new_lst;
-	}
-	else
 		*lst = new_lst;
+		return ;
+	}
+	list = lstlast_command(*lst);
+	list->next = new_lst;
 }

@@ -4,7 +4,7 @@
 typedef struct s_commands
 {
     char                *cmd;
-    char                *cmd_path;
+    char                **splited_cmd;
     struct s_commands   *next;
 }           t_commands;
 
@@ -16,7 +16,7 @@ typedef struct s_data {
     char    **minishell_envp;
     int     cmd_count;
     char    *expanded_str;
-    t_commands commands;
+    t_commands *commands;
 }           t_data;
 
 #include <stdlib.h>
@@ -26,7 +26,8 @@ typedef struct s_data {
 
 void	lstadd_back_command(t_commands **lst, t_commands *new_lst);
 t_commands	*lstlast_command(t_commands *lst);
-t_commands	*lstnew_command(void *content);
-int create_list(t_data *minishell);
+t_commands	*lstnew_command(char *content);
+int	create_list(t_commands **list, char **array);
+char	**split_quotes(char const *s, char c);
 
 #endif

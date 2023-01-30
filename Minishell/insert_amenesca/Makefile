@@ -1,11 +1,11 @@
 NAME = insert_list
 
-SRCS = create_list.c lstadd_back_command.c lstlast_command.c lstnew_command.c
+SRCS = create_list.c lstadd_back_command.c lstlast_command.c lstnew_command.c split_quotes.c
 
 OBJS	= $(SRCS:.c=.o)
 
 $(NAME): $(OBJS)
-	cc $(SRCS) libft.a -o $(NAME)
+	cc -g $(SRCS) libft.a -o $(NAME)
 
 all: $(NAME)
 

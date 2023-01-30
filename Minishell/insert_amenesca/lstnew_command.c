@@ -12,14 +12,14 @@
 
 #include "./list.h"
 
-t_commands	*lstnew_command(void *content)
+t_commands	*lstnew_command(char *content)
 {
 	t_commands	*comm;
 
 	comm = malloc(sizeof(t_list));
 	if (!comm)
 		return (NULL);
-	comm->cmd = ft_strdup((const char *)content);
+	comm->cmd = ft_strdup((const char *) content);
 	comm->next = NULL;
 	return (comm);
 }
