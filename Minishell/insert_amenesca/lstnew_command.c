@@ -16,7 +16,7 @@ t_commands	*lstnew_command(char *content)
 {
 	t_commands	*comm;
 
-	comm = malloc(sizeof(t_list));
+	comm = malloc(sizeof(t_commands));
 	if (!comm)
 		return (NULL);
 	comm->cmd = ft_strdup((const char *) content);

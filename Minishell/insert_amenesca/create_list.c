@@ -16,8 +16,7 @@ int	create_list(t_commands **list, char **array)
 	int j = 0;
 	while (j < x)
 	{
-		printf("%s\n",array[j]);
-		*list->comm
+		lstadd_back_command(list, lstnew_command(array[j]));
 		j++;
 	}
 	return 0;
@@ -25,8 +24,8 @@ int	create_list(t_commands **list, char **array)
 
 int main()
 {
-	t_commands **list;
-	*list = NULL;
+	t_commands *list;
+	list = NULL;
 	char **array;
 	array = NULL;
 	char *str = "command |command -t -l \"oi 'oi'\" |grep -e oi";
@@ -34,11 +33,11 @@ int main()
 	for (int i = 0; i < 3; i++)
 		printf("%s\n", array[i]);
 //	list = (t_commands **) malloc(sizeof(t_commands *) * count_strs(array));
-	create_list(list, array);
-	while (*list)
+	create_list(&list, array);
+	while (list)
 	{
-		printf("%s\n", (*list)->cmd);
-		*list = (*list)->next;
+		printf("%s\n", list->cmd);
+		list = list->next;
 	}
 	return (0);
 }

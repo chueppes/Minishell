@@ -28,7 +28,6 @@ typedef struct s_data {
     char    *home;  
     char    **cmd_split;
     char    **minishell_envp;
-    int     cmd_count;
     char    *expanded_str;
     t_commands *commands;
 }           t_data;
@@ -40,5 +39,7 @@ int     count_strs(char **strs);
 int     is_space(int c);
 int     is_special_char(char *str);
 char    *separate_by_spaces(char *str);
+void	lstadd_back_command(t_commands **lst, t_commands *new_lst);
+t_commands	*lstnew_command(char *content);
 
 #endif
