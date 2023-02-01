@@ -30,6 +30,7 @@ typedef struct s_data {
     char    **minishell_envp;
     int     cmd_count;
     char    *expanded_str;
+    char **envp;
     t_commands commands;
 }           t_data;
 
@@ -42,5 +43,7 @@ int     is_special_char(char *str);
 char    *separate_by_spaces(char *str);
 int parsing(t_data *minishell);
 int ft_strsearch(const char *str, char *comp);
+int is_builtin(t_data *minishell);
+void     exec_env(t_data *data);
 
 #endif
