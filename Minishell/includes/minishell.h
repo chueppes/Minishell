@@ -40,5 +40,7 @@ int     count_strs(char **strs);
 int     is_space(int c);
 int     is_special_char(char *str);
 char    *separate_by_spaces(char *str);
+int parsing(t_data *minishell);
+int ft_strsearch(const char *str, char *comp);
 
 #endif
