@@ -15,11 +15,16 @@
 t_commands	*lstnew_command(char *content)
 {
 	t_commands	*comm;
+	int i = 0;
 
 	comm = malloc(sizeof(t_commands));
 	if (!comm)
 		return (NULL);
-	comm->cmd = ft_strdup((const char *) content);
+	while (content[i++])
+	{
+		comm->cmd[i] = content[i];
+	}
+	comm->cmd[i] = '\0';
 	comm->next = NULL;
 	return (comm);
 }

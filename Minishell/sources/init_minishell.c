@@ -34,6 +34,7 @@ int init_vars(t_data *minishell, char **envp) // adicionei o envp como parâmetr
     minishell->cmd_split = NULL;
     minishell->expanded_str = NULL;
     minishell->minishell_envp = copy_envp(envp); // inicialização da nossa envp
+    minishell->commands = NULL;
     return(0);
 }
 
@@ -45,8 +46,20 @@ int init_readline(t_data *minishell)
         add_history(minishell->readline);
         minishell->expanded_str = separate_by_spaces(minishell->readline);
         minishell->cmd_split = split_quotes(minishell->expanded_str, '|');
-        free(minishell->expanded_str);
-        
+        for (int i = 0; i < 3; i++)
+            printf("%s\n", minishell->cmd_split[i]);
+        int j = -1;
+        int x = count_strs(minishell->cmd_split);
+	    while (++j < x)
+	    	lstadd_back_command(&minishell->commands, lstnew_command(minishell->cmd_split[j]));
+/*        t_commands *temp;
+        temp = minishell->commands;
+        while (temp)
+	    {
+	    	printf("%s\n", temp->cmd);
+	    	minishell->commands = minishell->commands->next;
+    	}*/
+//        free_list(minishell->commands);
        //minishell->cmd_split = split_quotes(minishell->readline, ' '); 
         //usar depois de tratar os espaços errados ^^^^
     }
