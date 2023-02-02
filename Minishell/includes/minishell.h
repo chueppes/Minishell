@@ -40,6 +40,5 @@ int     is_space(int c);
 int     is_special_char(char *str);
 char    *separate_by_spaces(char *str);
 void	lstadd_back_command(t_commands **lst, t_commands *new_lst);
-t_commands	*lstnew_command(char *content);
-void	free_list(t_commands **list); // função recursiva para limpar a lista depois de rodar o loop; Joinha !
+t_commands	*lstnew_command(char *content); // função recursiva para limpar a lista depois de rodar o loop; Joinha !
 #endif
