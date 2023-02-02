@@ -40,7 +40,7 @@ char	*find_path(char *cmd, char **envp)
 	}
 	if (access(final_path, F_OK | X_OK) == -1)
     {
-		printf("minishell: %s: command not found: ", cmd);
+		printf("minishell: %s: command not found\n", cmd);
 		//return alguma coisa
     }
 	// virar um outro return de existe;

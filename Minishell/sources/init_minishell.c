@@ -51,6 +51,8 @@ int init_readline(t_data *minishell)
         while (minishell->cmd_split[++i])
             lstadd_back_command(&minishell->commands, lstnew_command(minishell->cmd_split[i]));
         split_list(&minishell->commands);
+        minishell->commands->cmd_path = find_path(minishell->commands->exec_cmd[0], minishell->minishell_envp);
+        //printf("%s\n", minishell->commands->cmd_path);
 /*        while (minishell->commands)
         {
             i = -1;
@@ -58,7 +60,7 @@ int init_readline(t_data *minishell)
             while (minishell->commands->exec_cmd[++i])
                 printf("%s\n", minishell->commands->exec_cmd[i]);
             minishell->commands = minishell->commands->next;
-        }
-    }*/
+        }*/
+    }
     return (0);
 }
