@@ -1,6 +1,5 @@
 #include "../includes/minishell.h"
 
-//inicia variaveis do programa
 char **copy_envp(char **envp)
 {
     char    **cpy_envp;
@@ -19,7 +18,7 @@ char **copy_envp(char **envp)
     return (cpy_envp);
 }
 
-int init_vars(t_data *minishell, char **envp) // adicionei o envp como parâmetro
+int init_vars(t_data *minishell, char **envp)
 {
     char buff[4097];
     char *home;
@@ -33,33 +32,33 @@ int init_vars(t_data *minishell, char **envp) // adicionei o envp como parâmetr
     minishell->readline = NULL;
     minishell->cmd_split = NULL;
     minishell->commands = NULL;
+    minishell->cmd_count = 0;
     minishell->minishell_envp = copy_envp(envp); // inicialização da nossa envp
     return(0);
 }
-
-// ls -la Makefile src/main | grep makefile << teste
 
 int init_readline(t_data *minishell)
 {
     while (1)
     {
-       minishell->readline = readline("minishell~> ");
-//    minishell->readline = "ls -la Makefile src/main | grep makefile << teste";
-       add_history(minishell->readline);
+        int i;
+        minishell->readline = readline("minishell~> ");
+        add_history(minishell->readline);
         minishell->expanded_str = separate_by_spaces(minishell->readline);
         minishell->cmd_split = ft_split(minishell->expanded_str, '|');
-        int i = 0;
-        while (minishell->cmd_split[i])
-        {
+        minishell->cmd_count = count_strs(minishell->cmd_split);
+        i = -1;
+        while (minishell->cmd_split[++i])
             lstadd_back_command(&minishell->commands, lstnew_command(minishell->cmd_split[i]));
-            i++;
-        }
-        while (minishell->commands)
+        split_list(&minishell->commands);
+/*        while (minishell->commands)
         {
+            i = -1;
             printf("%s\n", minishell->commands->cmd);
+            while (minishell->commands->exec_cmd[++i])
+                printf("%s\n", minishell->commands->exec_cmd[i]);
             minishell->commands = minishell->commands->next;
         }
-       //minishell->cmd_split = split_quotes(minishell->readline, ' '); 
-        //usar depois de tratar os espaços errados ^^^^
-    }
+    }*/
+    return (0);
 }

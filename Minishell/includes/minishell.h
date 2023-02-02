@@ -18,27 +18,33 @@
 typedef struct s_commands
 {
     char                *cmd;
+    char                **exec_cmd;
     char                *cmd_path;
     struct s_commands   *next;
-}           t_commands;
+}                       t_commands;
 
 typedef struct s_data {
-    char    *readline;
-    char    *cwd_path;
-    char    *home;  
-    char    **cmd_split;
-    char    **minishell_envp;
-    char    *expanded_str;
-    t_commands *commands;
-}           t_data;
+    char        *readline;
+    char        *cwd_path;
+    char        *home;  
+    char        **cmd_split;
+    char        **minishell_envp;
+    char        *expanded_str;
+    int         cmd_count;
+    t_commands  *commands;
+}               t_data;
 
-int     init_vars(t_data *minishell, char **envp); // adicionado envp como parametro
-int     init_readline(t_data *minishell);
-char	**split_quotes(char const *s, char c);
-int     count_strs(char **strs);
-int     is_space(int c);
-int     is_special_char(char *str);
-char    *separate_by_spaces(char *str);
-void	lstadd_back_command(t_commands **lst, t_commands *new_lst);
-t_commands	*lstnew_command(char *content); // função recursiva para limpar a lista depois de rodar o loop; Joinha !
+int         init_vars(t_data *minishell, char **envp);
+int         init_readline(t_data *minishell);
+char        **split_quotes(char const *s, char c);
+int         count_strs(char **strs);
+int         is_space(int c);
+int         is_special_char(char *str);
+char        *separate_by_spaces(char *str);
+void        lstadd_back_command(t_commands **lst, t_commands *new_lst);
+t_commands	*lstnew_command(char *content);
+char        *create_path(char **paths, char *cmd);
+char        *find_path(char *cmd, char **envp);
+void        split_list(t_commands **command);
+
 #endif
