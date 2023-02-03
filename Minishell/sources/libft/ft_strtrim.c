@@ -6,12 +6,13 @@
 /*   By: acalvo4 <acalvo4@student.42.rio>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 14:21:35 by acalvo4           #+#    #+#             */
-/*   Updated: 2022/05/25 14:58:18 by acalvo4          ###   ########.fr       */
+/*   Updated: 2023/02/03 18:00:01 by acalvo4          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
-char	*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char *s1, char *set)
 {
 	size_t	lens;
 
