@@ -9,7 +9,6 @@ void     exec_env(t_data *data)
 
 int is_builtin(t_data *data)
 {
-    printf("alo");
     if(!ft_strncmp(data->cmd_split[0], "env", 4))
         exec_env(data);
     return(0);

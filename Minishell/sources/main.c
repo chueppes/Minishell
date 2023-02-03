@@ -11,5 +11,4 @@ int main(int argc, char **argv, char **envp)
     init_vars(&minishell, envp);
      //adicionado envp como parametro
     init_readline(&minishell);
-    is_builtin(&minishell);
 }

@@ -39,15 +39,13 @@ int init_vars(t_data *minishell, char **envp) // adicionei o envp como parâmetr
 int init_readline(t_data *minishell)
 {
 
-    minishell->readline = readline("minishell~> ");
-    add_history(minishell->readline);
-    minishell->expanded_str = separate_by_spaces(minishell->readline);
-    minishell->cmd_split = split_quotes(minishell->expanded_str, 32);
-    // // char *temp = ft_strdup(minishell->cmd_split[0]);
-    // // char *temp2 = ft_strdup("env");
-    // if (!ft_strncmp(minishell->cmd_split[0], "env", 4))
-    //     exec_env(minishell);
-    
-       
-    return (0);
+    while (1)
+    {
+        minishell->readline = readline("minishell~> ");
+        add_history(minishell->readline);
+        minishell->expanded_str = separate_by_spaces(minishell->readline);
+        minishell->cmd_split = split_quotes(minishell->expanded_str, 32);
+        is_builtin(minishell);
+        expand(minishell);
+    }
 }

@@ -45,5 +45,6 @@ int parsing(t_data *minishell);
 int ft_strsearch(const char *str, char *comp);
 int is_builtin(t_data *minishell);
 void     exec_env(t_data *data);
+char *expand(t_data *data);
 
 #endif
