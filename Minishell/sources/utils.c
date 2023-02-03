@@ -48,3 +48,4 @@ void do_trim(char ***cmd) // tem que mudar para receber lista ao invés de 3 pon
 		i++;
 	}
 }
+

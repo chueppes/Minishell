@@ -61,6 +61,7 @@ int init_readline(t_data *minishell)
                 printf("%s\n", minishell->commands->exec_cmd[i]);
             minishell->commands = minishell->commands->next;
         }*/
+        free_all(minishell);
     }
     return (0);
 }

@@ -32,13 +32,9 @@ t_commands	*lstnew_command(char *content)
 
 void	split_list(t_commands **command)
 {
-	int i;
 	t_commands *temp;
-	t_commands *temp2;
-	i = -1;
-	temp = *command;
-	temp2 = *command;
 
+	temp = *command;
 	while(temp)
 	{
 		temp->exec_cmd = split_quotes(temp->cmd, ' ');

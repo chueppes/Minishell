@@ -46,5 +46,7 @@ t_commands	*lstnew_command(char *content);
 char        *create_path(char **paths, char *cmd);
 char        *find_path(char *cmd, char **envp);
 void        split_list(t_commands **command);
+void        free_list(t_commands **list);
+void        free_all(t_data *minishell);
 
 #endif
