@@ -34,19 +34,38 @@ typedef struct s_data {
     t_commands  *commands;
 }               t_data;
 
+enum    input_type {
+    REDIRECT_INPUT = 1000,
+
+};
+
+// init readline
 int         init_vars(t_data *minishell, char **envp);
 int         init_readline(t_data *minishell);
-char        **split_quotes(char const *s, char c);
+
+// utils
 int         count_strs(char **strs);
 int         is_space(int c);
 int         is_special_char(char *str);
+
+// treatment
+char        **split_quotes(char const *s, char c);
 char        *separate_by_spaces(char *str);
+
+// list
 void        lstadd_back_command(t_commands **lst, t_commands *new_lst);
 t_commands	*lstnew_command(char *content);
+void        split_list(t_commands **command);
+
+// path
 char        *create_path(char **paths, char *cmd);
 char        *find_path(char *cmd, char **envp);
-void        split_list(t_commands **command);
+
+// free_all
 void        free_list(t_commands **list);
 void        free_all(t_data *minishell);
+
+// parser
+int         check_input(t_data *minishell);
 
 #endif

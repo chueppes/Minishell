@@ -45,22 +45,20 @@ int init_readline(t_data *minishell)
         minishell->readline = readline("minishell~> ");
         add_history(minishell->readline);
         minishell->expanded_str = separate_by_spaces(minishell->readline);
-        minishell->cmd_split = ft_split(minishell->expanded_str, '|');
+        minishell->cmd_split = ft_split(minishell->expanded_str, ' ');
         minishell->cmd_count = count_strs(minishell->cmd_split);
         i = -1;
         while (minishell->cmd_split[++i])
             lstadd_back_command(&minishell->commands, lstnew_command(minishell->cmd_split[i]));
-        split_list(&minishell->commands);
-        minishell->commands->cmd_path = find_path(minishell->commands->exec_cmd[0], minishell->minishell_envp);
-        //printf("%s\n", minishell->commands->cmd_path);
-/*        while (minishell->commands)
+        while (minishell->commands)
         {
-            i = -1;
             printf("%s\n", minishell->commands->cmd);
-            while (minishell->commands->exec_cmd[++i])
-                printf("%s\n", minishell->commands->exec_cmd[i]);
             minishell->commands = minishell->commands->next;
-        }*/
+        }
+/*        split_list(&minishell->commands);
+        j = 0;
+        check_input(minishell);
+            minishell->commands->cmd_path = find_path(minishell->commands->exec_cmd[j], minishell->minishell_envp);*/
         free_all(minishell);
     }
     return (0);
