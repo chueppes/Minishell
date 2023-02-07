@@ -41,17 +41,13 @@ int init_readline(t_data *minishell)
 {
     while (1)
     {
-        int i;
         minishell->readline = readline("minishell~> ");
         add_history(minishell->readline);
         minishell->expanded_str = separate_by_spaces(minishell->readline);
-        minishell->cmd_split = ft_split(minishell->expanded_str, ' ');
-        minishell->cmd_count = count_strs(minishell->cmd_split);
-        i = -1;
-        while (minishell->cmd_split[++i])
-            lstadd_back_command(&minishell->commands, lstnew_command(minishell->cmd_split[i]));
+        create_list(minishell);
         while (minishell->commands)
         {
+            printf("%d\n", minishell->commands->token);
             printf("%s\n", minishell->commands->cmd);
             minishell->commands = minishell->commands->next;
         }

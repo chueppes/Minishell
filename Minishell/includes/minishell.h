@@ -20,6 +20,7 @@ typedef struct s_commands
     char                *cmd;
     char                **exec_cmd;
     char                *cmd_path;
+    int                 token;
     struct s_commands   *next;
 }                       t_commands;
 
@@ -35,9 +36,17 @@ typedef struct s_data {
 }               t_data;
 
 enum    input_type {
-    REDIRECT_INPUT = 1000,
-
+	REDIRECT_INPUT = 1000,
+	REDIRECT_OUTPUT = 1001,
+	APPEND_OUTPUT = 1002,
+	HEREDOC = 1004,
+	PIPE = 1005,
+	NORMAL_ARG = 1006,
+	NO_ARG = 1007,
 };
+
+#define SUCESS 0
+#define FAILURE -1
 
 // init readline
 int         init_vars(t_data *minishell, char **envp);
@@ -66,6 +75,7 @@ void        free_list(t_commands **list);
 void        free_all(t_data *minishell);
 
 // parser
+void        create_list(t_data *minishell);
 int         check_input(t_data *minishell);
 
 #endif
