@@ -45,7 +45,7 @@ int init_readline(t_data *minishell)
         minishell->expanded_str = separate_by_spaces(minishell->readline);
         minishell->cmd_split = split_quotes(minishell->expanded_str, ' ');
         create_list(minishell);
-        free_all(minishell);
+ //       free_all(minishell);
     }
     return (0);
 }

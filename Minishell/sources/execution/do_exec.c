@@ -1,6 +1,6 @@
 #include "../.././includes/minishell.h"
 
-/*int do_exec(t_data *minishell)
+int do_exec(t_data *minishell)
 {
 	t_commands *aux;
 	int pipes_count;
@@ -9,8 +9,8 @@
 	aux = minishell->commands;
 	while (aux != NULL)
 	{
-		is_redirect(&aux);
-		is_builtin(&aux);
+		aux = is_redirect(&aux);
+		aux = is_builtin(&aux);
 	}
 }
 
@@ -20,17 +20,16 @@ t_commands *is_redirect(t_commands **comm)
 
 	aux = *comm;
 	if (aux->token == REDIRECT_INPUT)
-		return (do_redirect_input(comm));
+		return (open_file(comm));
 	else if (aux->token == REDIRECT_OUTPUT)
-		return (do_redirect_output(comm));
+		return (open_file(comm));
 	else if (aux->token == APPEND_OUTPUT)
-		return (do_append_output(comm));
-	else if (aux->token == HEREDOC)
-		return (do_redirect_output(comm));
+		return (open_file(comm));
 	else
 		return (*comm);
-}*/
+}
 
+t_commands *
 /*t_commands *is_builtin(t_data *minishell)
 {
 	if (ft_strcmp(temp->cmd, "echo")

@@ -27,26 +27,16 @@ int check_input(t_data *minishell)
 int create_list(t_data *minishell)
 {
 	int i;
-	int j; // testes
-	t_commands *temp; // testes
+	int j;
 
     i = -1;
-	j = -1; //testes
-	while (minishell->cmd_split[++j]) // testes
-		printf("%s\n", minishell->cmd_split[j]);
-	printf("\n");
-    while (minishell->cmd_split[++i])
+	j = count_strs(minishell->cmd_split);
+    while (++i < j)
 	{
         lstadd_back_command(&minishell->commands, lstnew_command(minishell->cmd_split[i]));
 	}
 //	if (parse_error(minishell))
 //		return (-1);
-	temp = minishell->commands;
-	while (temp)
-	{
-		printf("%s\n", temp->cmd);
-		temp = temp->next;
-	}
 	check_input(minishell);
 	check_input2(minishell);
 	return (SUCESS);

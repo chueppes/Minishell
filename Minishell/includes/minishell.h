@@ -21,6 +21,8 @@ typedef struct s_commands
     char                **exec_cmd;
     char                *cmd_path;
     int                 token;
+    int                 infile;
+    int                 outfile;
     struct s_commands   *next;
 }                       t_commands;
 
@@ -85,5 +87,6 @@ int         check_input2(t_data *minishell);
 // execution
 //t_commands  *is_builtin(t_commands **temp);
 int         do_exec(t_data *minishell);
+t_commands  *is_redirect(t_commands **comm);
 
 #endif
