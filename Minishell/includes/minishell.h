@@ -31,7 +31,6 @@ typedef struct s_data {
     char        **cmd_split;
     char        **minishell_envp;
     char        *expanded_str;
-    int         cmd_count;
     t_commands  *commands;
 }               t_data;
 
@@ -40,10 +39,10 @@ enum    input_type {
 	REDIRECT_OUTPUT = 1001,
 	APPEND_OUTPUT = 1002,
 	HEREDOC = 1003,	
-    FILE_NAME = 1004,
-    DELIMITER = 1005,
 	PIPE = 1006,
 	NORMAL_ARG = 1007,
+    FILE_NAME = 1008,
+    DELIMITER = 1009,
 };
 
 #define SUCESS 0
@@ -54,9 +53,11 @@ int         init_vars(t_data *minishell, char **envp);
 int         init_readline(t_data *minishell);
 
 // utils
-int         count_strs(char **strs);
+int         count_pipes(t_commands *comm);
 int         is_space(int c);
 int         is_special_char(char *str);
+int         count_strs(char **str);
+int         ft_strcmp(const char *s1, const char *s2);
 
 // treatment
 char        **split_quotes(char const *s, char c);
@@ -76,7 +77,13 @@ void        free_list(t_commands **list);
 void        free_all(t_data *minishell);
 
 // parser
-void        create_list(t_data *minishell);
+int         parse_error(t_data *minishell);
+int         create_list(t_data *minishell);
 int         check_input(t_data *minishell);
+int         check_input2(t_data *minishell);
+
+// execution
+//t_commands  *is_builtin(t_commands **temp);
+int         do_exec(t_data *minishell);
 
 #endif

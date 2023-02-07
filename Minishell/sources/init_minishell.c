@@ -32,7 +32,6 @@ int init_vars(t_data *minishell, char **envp)
     minishell->readline = NULL;
     minishell->cmd_split = NULL;
     minishell->commands = NULL;
-    minishell->cmd_count = 0;
     minishell->minishell_envp = copy_envp(envp); // inicialização da nossa envp
     return(0);
 }
@@ -44,17 +43,8 @@ int init_readline(t_data *minishell)
         minishell->readline = readline("minishell~> ");
         add_history(minishell->readline);
         minishell->expanded_str = separate_by_spaces(minishell->readline);
+        minishell->cmd_split = split_quotes(minishell->expanded_str, ' ');
         create_list(minishell);
-        while (minishell->commands)
-        {
-            printf("%d\n", minishell->commands->token);
-            printf("%s\n", minishell->commands->cmd);
-            minishell->commands = minishell->commands->next;
-        }
-/*        split_list(&minishell->commands);
-        j = 0;
-        check_input(minishell);
-            minishell->commands->cmd_path = find_path(minishell->commands->exec_cmd[j], minishell->minishell_envp);*/
         free_all(minishell);
     }
     return (0);
