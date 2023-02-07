@@ -56,6 +56,6 @@ void	echo(char **str)
 				print_double(str[i]);
 			i++;
 		}
-		write(1, "\n", 1);
+		printf("\n");
 	}
 }
