@@ -2,34 +2,31 @@
 
 int do_exec(t_data *minishell)
 {
-	t_commands *aux;
 	int pipes_count;
+	int has_redirect;
+	int infile;
+	int outfile;
 
 	pipes_count = count_pipes(minishell->commands);
-	aux = minishell->commands;
-	while (aux != NULL)
-	{
-		aux = is_redirect(&aux);
-		aux = is_builtin(&aux);
-	}
+	is_redirect(&minishell->commands);
 }
 
-t_commands *is_redirect(t_commands **comm)
+int is_redirect(t_commands **comm)
 {
 	t_commands *aux;
 
 	aux = *comm;
-	if (aux->token == REDIRECT_INPUT)
-		return (open_file(comm));
-	else if (aux->token == REDIRECT_OUTPUT)
-		return (open_file(comm));
-	else if (aux->token == APPEND_OUTPUT)
-		return (open_file(comm));
-	else
-		return (*comm);
+	while (aux != NULL || aux->token != PIPE)
+	{
+		if (aux->token == REDIRECT_INPUT)
+			return (open_input(aux));
+		else if (aux->token == REDIRECT_OUTPUT)
+			return (open_output(aux));
+		else if (aux->token == APPEND_OUTPUT)
+			return (open_append(aux));
+		
+	}
 }
-
-t_commands *
 /*t_commands *is_builtin(t_data *minishell)
 {
 	if (ft_strcmp(temp->cmd, "echo")

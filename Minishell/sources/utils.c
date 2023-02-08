@@ -27,7 +27,7 @@ int  count_pipes(t_commands *comm)
     i = 0;
     while (comm != NULL)
 	{
-		if (comm->cmd[0] == '|')
+		if (comm->cmd[0] == '|' && comm->cmd[1] == '\0')
 			i++;
 		comm = comm->next;
 	}

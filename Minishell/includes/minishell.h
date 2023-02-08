@@ -79,7 +79,7 @@ void        free_list(t_commands **list);
 void        free_all(t_data *minishell);
 
 // parser
-int         parse_error(t_data *minishell);
+//int         parse_error(t_data *minishell);
 int         create_list(t_data *minishell);
 int         check_input(t_data *minishell);
 int         check_input2(t_data *minishell);
@@ -87,6 +87,9 @@ int         check_input2(t_data *minishell);
 // execution
 //t_commands  *is_builtin(t_commands **temp);
 int         do_exec(t_data *minishell);
-t_commands  *is_redirect(t_commands **comm);
+int         *is_redirect(t_commands **comm);
+int         *open_input(t_commands **comm);
+int         *open_output(t_commands **comm);
+int         *open_append(t_commands **comm);
 
 #endif

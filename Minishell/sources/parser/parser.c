@@ -1,5 +1,19 @@
 #include "../.././includes/minishell.h"
 
+int create_list(t_data *minishell)
+{
+	int i;
+
+	i = -1;
+    while (minishell->cmd_split[i])
+        lstadd_back_command(&minishell->commands, lstnew_command(minishell->cmd_split[i]));
+//	if (parse_error(minishell))
+//		return (-1);
+	check_input(minishell);
+	check_input2(minishell);
+	return (SUCESS);
+}
+
 int check_input(t_data *minishell)
 {
 	t_commands	*temp;
@@ -21,24 +35,6 @@ int check_input(t_data *minishell)
 			temp->token = NORMAL_ARG;
 		temp = temp->next;
 	}
-	return (SUCESS);
-}
-
-int create_list(t_data *minishell)
-{
-	int i;
-	int j;
-
-    i = -1;
-	j = count_strs(minishell->cmd_split);
-    while (++i < j)
-	{
-        lstadd_back_command(&minishell->commands, lstnew_command(minishell->cmd_split[i]));
-	}
-//	if (parse_error(minishell))
-//		return (-1);
-	check_input(minishell);
-	check_input2(minishell);
 	return (SUCESS);
 }
 
