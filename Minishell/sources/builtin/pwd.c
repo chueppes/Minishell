@@ -1,3 +1,5 @@
+#include "../../includes/minishell.h"
+
 void    do_pwd(void)
 {
     char *dir;

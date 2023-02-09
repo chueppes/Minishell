@@ -1,3 +1,5 @@
+#include "../../includes/minishell.h"
+
 void	print_simple(char *str)
 {
 	int		i;
@@ -38,10 +40,10 @@ void	echo(char **str)
 	int	i;
 
 	i = 1;
-	if (ft_strncmp(str[i], "-n\0" 3) == 0)
+	if (ft_strncmp(str[i], "-n\0", 3) == 0)
 	{
 		i++;
-		if (str[i][0] == '\'')
+		if (str[i][0] == "\'")
 			print_simple(str[i]);
 		else
 			print_double(str[i]);
@@ -50,7 +52,7 @@ void	echo(char **str)
 	{
 		while (str[i])
 		{
-			if (str[i][0] == '\'')
+			if (str[i][0] == "\'")
 				print_simple(str[i]);
 			else
 				print_double(str[i]);
