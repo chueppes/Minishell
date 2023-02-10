@@ -23,23 +23,12 @@ void free_all(t_data *minishell)
 void	free_list(t_commands **list)
 {
 	t_commands	*tmp;
-    int i;
-
-    i = -1;
+	
 	if (*list == NULL)
 		return ;
 	tmp = (*list)->next;
     free((*list)->cmd);
     (*list)->cmd = NULL;
-    free((*list)->cmd_path);
-    (*list)->cmd_path = NULL;
-    while ((*list)->exec_cmd[++i])
-    {
-        free((*list)->exec_cmd[i]);
-        (*list)->exec_cmd[i] = NULL;
-    }
-    free((*list)->exec_cmd);
-    (*list)->exec_cmd = NULL;
 	free(*list);
 	*list = NULL;
 	free_list(&tmp);

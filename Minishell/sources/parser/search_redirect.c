@@ -1,6 +1,6 @@
-/*#include "../.././includes/minishell.h"
+#include "../.././includes/minishell.h"
 
-int search_redirect(t_commands *comm)
+/*t_commands *search_redirect(t_commands *comm)
 {
 	while (comm->token != PIPE && comm != NULL)
 	{

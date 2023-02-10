@@ -32,6 +32,7 @@ int init_vars(t_data *minishell, char **envp)
     minishell->readline = NULL;
     minishell->cmd_split = NULL;
     minishell->commands = NULL;
+	minishell->exec_list = NULL;
     minishell->minishell_envp = copy_envp(envp); // inicialização da nossa envp
     return(0);
 }

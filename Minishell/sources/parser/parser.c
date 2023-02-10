@@ -2,7 +2,10 @@
 
 /*int prepare_exec(t_data *minishell)
 {
-	search_redirect(minishell->commands);
+	t_commands *temp;
+	
+	minishell->exec_list = create_exec_list(minishell->commands);
+	
 }*/
 
 int create_list(t_data *minishell)

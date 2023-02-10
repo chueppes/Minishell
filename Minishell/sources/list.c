@@ -29,16 +29,3 @@ t_commands	*lstnew_command(char *content)
 	comm->next = NULL;
 	return (comm);
 }
-
-void	split_list(t_commands **command)
-{
-	t_commands *temp;
-
-	temp = *command;
-	while(temp)
-	{
-		temp->exec_cmd = split_quotes(temp->cmd, ' ');
-		temp = temp->next;
-	}
-	return ;
-}
