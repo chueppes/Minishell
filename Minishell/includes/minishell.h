@@ -83,9 +83,10 @@ void        free_all(t_data *minishell);
 int         create_list(t_data *minishell);
 int         check_input(t_data *minishell);
 int         check_input2(t_data *minishell);
+int         prepare_execution(t_data *minishell);
+int			search_redirect(t_commands *comm);
 
 // execution
 //t_commands  *is_builtin(t_commands **temp);
-int         prepare_execution(t_data *minishell);
 
 #endif

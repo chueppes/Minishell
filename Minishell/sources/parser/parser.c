@@ -1,5 +1,10 @@
 #include "../.././includes/minishell.h"
 
+int prepare_exec(t_data *minishell)
+{
+	search_redirect(minishell->commands);
+}
+
 int create_list(t_data *minishell)
 {
 	int i;
