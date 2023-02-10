@@ -1,4 +1,4 @@
-#include "../.././includes/minishell.h"
+/*#include "../.././includes/minishell.h"
 
 int search_redirect(t_commands *comm)
 {
@@ -17,4 +17,4 @@ int search_redirect(t_commands *comm)
 			append_open();
 		}
 	}
-}
+}*/

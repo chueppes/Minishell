@@ -1,9 +1,9 @@
 #include "../.././includes/minishell.h"
 
-int prepare_exec(t_data *minishell)
+/*int prepare_exec(t_data *minishell)
 {
 	search_redirect(minishell->commands);
-}
+}*/
 
 int create_list(t_data *minishell)
 {
@@ -50,15 +50,22 @@ int check_input2(t_data *minishell)
 	temp = minishell->commands;
 	while (temp != NULL)
 	{
-		if (temp->token == APPEND_OUTPUT || temp->token == REDIRECT_INPUT || temp->token == REDIRECT_OUTPUT)
+		if (temp->token == APPEND_OUTPUT || temp->token == REDIRECT_INPUT\
+		|| temp->token == REDIRECT_OUTPUT)
 		{
 			temp = temp->next;
-			temp->token = FILE_NAME;
+			if (temp->token != PIPE && temp->token != APPEND_OUTPUT\
+			&& temp->token != REDIRECT_OUTPUT && temp->token != REDIRECT_INPUT\
+			&& temp->token != HEREDOC)
+				temp->token = FILE_NAME;
 		}
 		else if (temp->token == HEREDOC)
 		{
 			temp = temp->next;
-			temp->token = DELIMITER;
+			if (temp->token != PIPE && temp->token != APPEND_OUTPUT\
+			&& temp->token != REDIRECT_OUTPUT && temp->token != REDIRECT_INPUT\
+			&& temp->token != HEREDOC)
+				temp->token = DELIMITER;
 		}
 		temp = temp->next;
 	}
