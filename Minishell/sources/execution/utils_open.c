@@ -1,6 +1,6 @@
-#include "../.././includes/minishell.h"
+/*#include "../.././includes/minishell.h"
 
-t_commands *open_input(t_commands **comm)
+int *open_input(t_commands **comm)
 {
 	int infile;
 
@@ -12,7 +12,7 @@ t_commands *open_input(t_commands **comm)
 
 }
 
-t_commands *open_output(t_commands **comm)
+int *open_output(t_commands **comm)
 {
 	int infile;
 
@@ -23,7 +23,7 @@ t_commands *open_output(t_commands **comm)
 	infile = open((*comm)->cmd, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 }
 
-t_commands *open_append(t_commands **comm)
+int *open_append(t_commands **comm)
 {
 	int infile;
 
@@ -32,4 +32,4 @@ t_commands *open_append(t_commands **comm)
 	else
 		return(NULL); // fazer função de erro
 	infile = open((*comm)->cmd, O_WRONLY | O_CREAT | O_APPEND, 0777);
-}
+}*/

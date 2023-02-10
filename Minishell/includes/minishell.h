@@ -86,10 +86,6 @@ int         check_input2(t_data *minishell);
 
 // execution
 //t_commands  *is_builtin(t_commands **temp);
-int         do_exec(t_data *minishell);
-int         *is_redirect(t_commands **comm);
-int         *open_input(t_commands **comm);
-int         *open_output(t_commands **comm);
-int         *open_append(t_commands **comm);
+int         prepare_execution(t_data *minishell);
 
 #endif
