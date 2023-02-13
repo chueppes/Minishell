@@ -60,14 +60,15 @@ int init_readline(t_data *minishell)
     while (1)
     {
         minishell->readline = readline("minishell~> ");
-        add_history(minishell->readline);
-        minishell->expanded_str = separate_by_spaces(minishell->readline);
-        minishell->cmd_split = split_quotes(minishell->expanded_str, ' ');
-        create_list(minishell);
-        executioner(minishell);
-//        print_commands(minishell->commands);
-
-//        free_all(minishell);
+        if (minishell->readline != NULL || minishell->readline[0] != 0)
+        {
+            add_history(minishell->readline);
+            minishell->expanded_str = separate_by_spaces(minishell->readline);
+            minishell->cmd_split = split_quotes(minishell->expanded_str, ' ');
+            create_list(minishell);
+            executioner(minishell);
+            free_all(minishell);
+        }
     }
     return (0);
 }

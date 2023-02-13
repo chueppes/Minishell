@@ -83,5 +83,6 @@ void	create_exec_list(t_exec **exec_list, t_commands *comm)
 		}
 		comm = comm->next;
 	}
-	do_list(exec_list, temp);
+	if (temp != NULL)
+		do_list(exec_list, temp);
 }

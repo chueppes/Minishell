@@ -83,7 +83,8 @@ char        *create_path(char **paths, char *cmd);
 char        *find_path(char *cmd, char **envp);
 
 // free_all
-void        free_list(t_commands **list);
+void        free_list_comm(t_commands **list);
+void        free_list_exec(t_exec **list);
 void        free_all(t_data *minishell);
 
 // parser
