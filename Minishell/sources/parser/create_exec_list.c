@@ -1,33 +1,87 @@
 #include "../.././includes/minishell.h"
 
+static char	*my_strjoin(char *s1, char *s2, int *size)
+{
+	size_t	i;
+	size_t	j;
+	char	*str;
+
+	j = -1;
+	i = -1;
+	str = (char *) malloc((ft_strlen(s1) + ft_strlen(s2) + 2) * sizeof(char));
+	if (!str)
+		return (NULL);
+	while (s1[++i] != '\0')
+		str[i] = s1[i];
+	while (s2[++j] != '\0')
+	{
+		str[i] = s2[j];
+		i++;
+	}
+	str[i] = '\0';
+	*size = i;
+	free(s1);
+	return (str);
+}
+
+static void free_used(char **array, char *temp)
+{
+	int i;
+
+	i = -1;
+	free(temp);
+	while(array[++i])
+		free(array[i]);
+	free(array);
+	return ;
+}
+
 static int is_redirect(t_commands *comm)
 {
-	if (comm->token == APPEND_OUTPUT && comm->token == REDIRECT_OUTPUT\
-	&& comm->token == REDIRECT_INPUT && comm->token == HEREDOC\
-	&& comm->token == FILE_NAME && comm->token == DELIMITER)
+	if (comm->token == APPEND_OUTPUT || comm->token == REDIRECT_OUTPUT\
+	|| comm->token == REDIRECT_INPUT || comm->token == HEREDOC\
+	|| comm->token == FILE_NAME || comm->token == DELIMITER)
 		return (1);
 	else
 		return (0);
 }
 
-t_exec	*create_exec_list(t_commands *comm)
+static void do_list(t_exec **exec_list, char *temp)
 {
-	char *temp;
-	t_exec *exec_list;
+	int i;
+	char **array;
 
-	exec_list = NULL;
+	array = NULL;
+	array = split_quotes(temp, '|');
+	i = -1;
+	while (array[++i])
+		lstadd_back_exec(exec_list, lstnew_exec(array[i]));
+	free_used(array, temp);
+}
+
+void	create_exec_list(t_exec **exec_list, t_commands *comm)
+{
+	int size;
+	char *temp;
+
 	temp = NULL;
 	while (comm)
 	{
-		if (!is_redirect(comm) && comm->token != PIPE)
-			temp = ft_strjoin(temp, comm->cmd);
-		if (comm->token == PIPE)
+		if (!is_redirect(comm))
 		{
-			lstadd_back_exec(&exec_list, lstnew_exec(temp));
-			free(temp);
-			temp = NULL;
+			if (!temp)
+			{
+				temp = malloc(1);
+				*temp = '\0';
+			}
+			temp = my_strjoin(temp, comm->cmd, &size);
+			if (comm->next != NULL)
+			{
+				temp[size] = ' ';
+				temp[size + 1] = '\0';
+			}
 		}
 		comm = comm->next;
 	}
-	return (exec_list);
+	do_list(exec_list, temp);
 }

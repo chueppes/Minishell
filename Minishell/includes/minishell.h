@@ -26,7 +26,6 @@ typedef struct s_exec
 {
 	char				*aux;
 	char                **exec_cmd;
-    char                *cmd_path;
 	int                 infile;
     int                 outfile;
 	int					file;
@@ -76,7 +75,6 @@ char        *separate_by_spaces(char *str);
 // list
 void        lstadd_back_command(t_commands **lst, t_commands *new_lst);
 t_commands	*lstnew_command(char *content);
-void        split_list(t_commands **command);
 void		lstadd_back_exec(t_exec **lst, t_exec *new_lst);
 t_exec		*lstnew_exec(char *content);
 
@@ -93,12 +91,11 @@ void        free_all(t_data *minishell);
 int         create_list(t_data *minishell);
 int         check_input(t_data *minishell);
 int         check_input2(t_data *minishell);
-int         prepare_execution(t_data *minishell);
-t_commands	*search_redirect(t_commands *comm);
-t_exec		*create_exec_list(t_commands *comm);
+void		create_exec_list(t_exec **exec_com, t_commands *comm);
+void        prepare_for_execution(t_exec **exec_list);
 
 // execution
-//t_commands  *is_builtin(t_commands **temp);
+void    executioner(t_data *minishell);
 
 
 #endif

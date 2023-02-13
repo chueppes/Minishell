@@ -18,6 +18,24 @@ char **copy_envp(char **envp)
     return (cpy_envp);
 }
 
+void print_commands(t_commands *temp)
+{
+    while (temp)
+    {
+        printf("%s\n%d\n", temp->cmd, temp->token);
+        temp = temp->next;
+    }
+}
+
+void print_exec(t_exec *temp)
+{
+    while (temp)
+    {
+        printf("%s\n", temp->aux);
+        temp = temp->next;
+    }
+}
+
 int init_vars(t_data *minishell, char **envp)
 {
     char buff[4097];
@@ -46,7 +64,10 @@ int init_readline(t_data *minishell)
         minishell->expanded_str = separate_by_spaces(minishell->readline);
         minishell->cmd_split = split_quotes(minishell->expanded_str, ' ');
         create_list(minishell);
- //       free_all(minishell);
+        executioner(minishell);
+//        print_commands(minishell->commands);
+
+//        free_all(minishell);
     }
     return (0);
 }
