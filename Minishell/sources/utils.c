@@ -20,20 +20,6 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (0);
 }
 
-int  count_pipes(t_commands *comm)
-{
-    int i;
-
-    i = 0;
-    while (comm != NULL)
-	{
-		if (comm->cmd[0] == '|' && comm->cmd[1] == '\0')
-			i++;
-		comm = comm->next;
-	}
-    return (i);
-}
-
 int  count_strs(char **str)
 {
 	int i;
