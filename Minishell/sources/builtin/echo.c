@@ -9,7 +9,7 @@ void	print_simple(char *str)
 	len = 0;
 	i = -1;
 	len = ft_strlen(str);
-	print = ft_strtrim(str, '\'');
+	print = ft_strtrim(str, "\'");
 	while (print[++i])
 		printf("%c", print[i]);
 	free(print);
@@ -24,7 +24,7 @@ void	print_double(char *str)
 	len = 0;
 	i = 0;
 	len = ft_strlen(str);
-	print = ft_strtrim(str, '\"');
+	print = ft_strtrim(str, "\"");
 	while (print[i])
 	{
 		if (print[i] == "\"")
@@ -40,7 +40,7 @@ void	echo(char **str)
 	int	i;
 
 	i = 1;
-	if (ft_strncmp(str[i], "-n\0", 3) == 0)
+	if (ft_strcmp(str[i], "-n") == 0)
 	{
 		i++;
 		if (str[i][0] == "\'")
