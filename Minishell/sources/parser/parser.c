@@ -13,6 +13,7 @@ int create_list(t_data *minishell)
 	check_input2(minishell);
     create_exec_list(&minishell->exec_list, minishell->commands);
 	prepare_for_execution(&minishell->exec_list);
+	search_redirect(&minishell->commands, &minishell->exec_list);
 	return (SUCESS);
 }
 
@@ -47,8 +48,8 @@ int check_input2(t_data *minishell)
 	temp = minishell->commands;
 	while (temp != NULL)
 	{
-		if (temp->token == APPEND_OUTPUT || temp->token == REDIRECT_INPUT\
-		|| temp->token == REDIRECT_OUTPUT)
+		if ((temp->token == APPEND_OUTPUT || temp->token == REDIRECT_INPUT\
+		|| temp->token == REDIRECT_OUTPUT) && temp->next)
 		{
 			temp = temp->next;
 			if (temp->token != PIPE && temp->token != APPEND_OUTPUT\
@@ -56,7 +57,7 @@ int check_input2(t_data *minishell)
 			&& temp->token != HEREDOC)
 				temp->token = FILE_NAME;
 		}
-		else if (temp->token == HEREDOC)
+		else if ((temp->token == HEREDOC) && temp->next)
 		{
 			temp = temp->next;
 			if (temp->token != PIPE && temp->token != APPEND_OUTPUT\

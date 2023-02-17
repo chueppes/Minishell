@@ -1,20 +1,22 @@
 #include "../.././includes/minishell.h"
 
-/*t_commands *search_redirect(t_commands *comm)
+int search_redirect(t_commands **comm, t_exec **exec_list)
 {
-	while (comm->token != PIPE && comm != NULL)
+	t_commands	*temp;
+	int			i;
+
+	i = 0;
+	temp = *comm;
+	while (temp && temp->next)
 	{
-		if(comm->token == REDIRECT_INPUT)
-		{
-			input_open();
-		}
-		else if(comm->token == REDIRECT_OUTPUT)
-		{
-			output_open();
-		}
-		else if(comm->token == APPEND_OUTPUT)
-		{
-			append_open();
-		}
+//		if(temp->token == REDIRECT_INPUT)
+//			input_open(comm, exec_list, i);
+		if(temp->token == REDIRECT_OUTPUT)
+			open_output(comm, exec_list, i);
+//		else if(temp->token == APPEND_OUTPUT)
+//			append_open(comm, exec_list, i);
+		temp = temp->next;
+		i++;
 	}
-}*/
+	return (1);
+}
