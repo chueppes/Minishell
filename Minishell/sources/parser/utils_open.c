@@ -28,18 +28,21 @@ int find_position_open(t_commands *comm, int i)
 
 }*/
 
-int open_output(t_commands **comm, t_exec **exec_list, int i)
+int open_output(t_commands **comm, t_exec **exec_list, int i, char *file)
 {
-//	t_commands	*temp_comm;
-//	t_data		*temp_exec;
+	t_exec		*temp_exec;
 	int			find_list;
-	(void)exec_list;
 
-//	temp_comm = *comm;
-//	temp_exec = *exec_list;
+	temp_exec = *exec_list;
 	find_list = find_position_open(*comm, i);
-	while ()// parei aqui
-	printf("i = %d, find_list = %d\n", i, find_list);
+	if (exec_list && *exec_list)
+	{
+		while (find_list--)
+			temp_exec = temp_exec->next;
+		temp_exec->outfile = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+	}
+	else
+		open(file, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	return (0);
 }
 

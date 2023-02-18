@@ -83,6 +83,6 @@ void	create_exec_list(t_exec **exec_list, t_commands *comm)
 		}
 		comm = comm->next;
 	}
-	if (temp != NULL)
+	if (temp != NULL && temp[0] != '|') // não é aqui que eu tenho que resolver isso
 		do_list(exec_list, temp);
 }

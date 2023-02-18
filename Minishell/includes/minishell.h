@@ -93,7 +93,7 @@ int         check_input2(t_data *minishell);
 void		create_exec_list(t_exec **exec_com, t_commands *comm);
 int			search_redirect(t_commands **comm, t_exec **exec_list);
 int			find_position_open(t_commands *comm, int i);
-int			open_output(t_commands **comm, t_exec **exec_list, int i);
+int			open_output(t_commands **comm, t_exec **exec_list, int i, char *file);
 
 
 // execution
