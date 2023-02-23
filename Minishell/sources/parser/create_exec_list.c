@@ -53,6 +53,8 @@ static void do_list(t_exec **exec_list, char *temp)
 
 	array = NULL;
 	array = split_quotes(temp, '|');
+	if (!array && !*array)
+		return ;
 	i = -1;
 	while (array[++i])
 		lstadd_back_exec(exec_list, lstnew_exec(array[i]));
@@ -63,8 +65,10 @@ void	create_exec_list(t_exec **exec_list, t_commands *comm)
 {
 	int size;
 	char *temp;
+	t_commands *check_exec;
 
 	temp = NULL;
+	check_exec = comm;
 	while (comm)
 	{
 		if (!is_redirect(comm))
@@ -83,6 +87,6 @@ void	create_exec_list(t_exec **exec_list, t_commands *comm)
 		}
 		comm = comm->next;
 	}
-	if (temp != NULL && temp[0] != '|') // não é aqui que eu tenho que resolver isso
+	if (temp != NULL && check_executable(check_exec)) // não é aqui que eu tenho que resolver isso
 		do_list(exec_list, temp);
 }
