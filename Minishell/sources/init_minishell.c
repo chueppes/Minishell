@@ -46,6 +46,11 @@ int init_readline(t_data *minishell)
         minishell->expanded_str = separate_by_spaces(minishell->readline);
         minishell->cmd_split = split_quotes(minishell->expanded_str, 32);
         is_builtin(minishell);
-        expand(minishell);
+        int i=-1;
+        while(minishell->cmd_split[++i])
+            {
+                expand_vars(minishell->cmd_split[i]);
+                printf("%s\n", minishell->cmd_split[i]);
+            }
     }
 }
