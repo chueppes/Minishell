@@ -49,7 +49,7 @@ int init_readline(t_data *minishell)
         int i=-1;
         while(minishell->cmd_split[++i])
             {
-                expand_vars(minishell->cmd_split[i]);
+                expansion(minishell->cmd_split[i], minishell);
                 printf("%s\n", minishell->cmd_split[i]);
             }
     }
