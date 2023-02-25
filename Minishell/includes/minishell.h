@@ -18,27 +18,97 @@
 typedef struct s_commands
 {
     char                *cmd;
-    char                *cmd_path;
+    int                 token;
     struct s_commands   *next;
-}           t_commands;
+}                       t_commands;
+
+typedef struct s_exec
+{
+	char				*aux;
+	char                **exec_cmd;
+	int                 infile;
+    int                 outfile;
+	int					file;
+	struct s_exec  *next;
+}						t_exec;
 
 typedef struct s_data {
-    char    *readline;
-    char    *cwd_path;
-    char    *home;  
-    char    **cmd_split;
-    char    **minishell_envp;
-    int     cmd_count;
-    char    *expanded_str;
-    t_commands commands;
-}           t_data;
+    char        *readline;
+    char        *cwd_path;
+    char        *home;  
+    char        **cmd_split;
+    char        **minishell_envp;
+    char        *expanded_str;
+    t_commands  *commands;
+	t_exec		*exec_list;
+}               t_data;
 
-int     init_vars(t_data *minishell, char **envp); // adicionado envp como parametro
-int     init_readline(t_data *minishell);
-char	**split_quotes(char const *s, char c);
-int     count_strs(char **strs);
-int     is_space(int c);
-int     is_special_char(char *str);
-char    *separate_by_spaces(char *str);
+enum    input_type {
+	REDIRECT_INPUT = 1000,
+	REDIRECT_OUTPUT = 1001,
+	APPEND_OUTPUT = 1002,
+	HEREDOC = 1003,	
+	PIPE = 1006,
+	NORMAL_ARG = 1007,
+    FILE_NAME = 1008,
+    DELIMITER = 1009,
+};
+
+#define SUCESS 0
+#define FAILURE -1
+
+// init readline
+int         init_vars(t_data *minishell, char **envp);
+int         init_readline(t_data *minishell);
+
+// utils
+int         count_pipes(t_commands *comm);
+int         count_strs(char **str);
+int         ft_strcmp(const char *s1, const char *s2);
+
+// treatment
+char        **split_quotes(char const *s, char c);
+char        *separate_by_spaces(char *str);
+
+// list
+void        lstadd_back_command(t_commands **lst, t_commands *new_lst);
+t_commands	*lstnew_command(char *content);
+void		lstadd_back_exec(t_exec **lst, t_exec *new_lst);
+t_exec		*lstnew_exec(char *content);
+
+// path
+char        *create_path(char **paths, char *cmd);
+char        *find_path(char *cmd, char **envp);
+
+// free_all
+void        free_list_comm(t_commands **list);
+void        free_list_exec(t_exec **list);
+void        free_all(t_data *minishell);
+
+// parser
+//int         parse_error(t_data *minishell);
+int         create_list(t_data *minishell);
+int         check_input(t_data *minishell);
+int         check_input2(t_data *minishell);
+void		create_exec_list(t_exec **exec_com, t_commands *comm);
+int			search_redirect(t_commands **comm, t_exec **exec_list);
+int			find_position_open(t_commands *comm, int i);
+int			open_output(t_commands **comm, t_exec **exec_list, int i, char *file);
+int			check_executable(t_commands *check_exec);
+
+
+// execution
+void        prepare_for_execution(t_exec **exec_list);
+void    	executioner(t_data *minishell);
+void		ft_pipe(t_exec *exec_list, int *prevpipe, char **envp);
+void		ft_last_prog(t_exec *exec_list, int prevpipe, char **envp);
+int 		execute_pipes(t_data *minishell);
+
+//expansions
+void	start_expansions(char **commands, t_data *data);
+char	*expand_path(char *str, t_data *data);
+char	*expand_vars(char *str, t_data *data);
+int	ft_strnchar(const char *s, char *set);
+char	*ft_getenv(char *key, char **envp, int key_size);
 
 #endif

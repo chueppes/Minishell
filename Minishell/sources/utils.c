@@ -20,14 +20,14 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (0);
 }
 
-int  count_strs(char **strs)
+int  count_strs(char **str)
 {
-    int i;
+	int i;
 
-    i = 0;
-    while (strs[i] != NULL)
-     i++;
-    return (i);
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }
 
 void do_trim(char ***cmd) // tem que mudar para receber lista ao invés de 3 ponteiros
@@ -48,3 +48,4 @@ void do_trim(char ***cmd) // tem que mudar para receber lista ao invés de 3 pon
 		i++;
 	}
 }
+

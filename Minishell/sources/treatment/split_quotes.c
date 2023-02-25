@@ -1,6 +1,5 @@
 #include "../.././includes/minishell.h"
 
-
 static size_t	ft_len(char const *s, int c)
 {
 	size_t	j;
@@ -25,33 +24,43 @@ static size_t	ft_len(char const *s, int c)
 	return (j);
 }
 
-static size_t	ft_count(char const *s, int c)
+static const char	*check_quotation(const char *s)
 {
-	size_t	i;
-	size_t	j;
-
-	i = 1;
-	j = -1;
-	while (*s && *s == c)
-		s++;
-	while (s[++j])
+	if (*s == '"')
 	{
-		if (s[j] != c && s[j - 1] == c)
-			i++;
-		if (s[j] == '"')
-		{
-			j++;
-			while (s[j] != '"')
-				j++;
-		}
-		if (s[j] == 39)
-		{
-			j++;
-			while (s[j] != 39)
-				j++;
-		}
+		s++;
+		while (*s != '"')
+			s++;
 	}
-	return (i);
+	if (*s == 39)
+	{
+		s++;
+		while (*s != 39)
+			s++;
+	}
+	return (s);
+}
+
+static size_t	ft_wordcount(char const *s, char c)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (*s != '\0')
+	{
+		s = check_quotation(s);
+		if (*s != c && i == 0)
+		{
+			i = 1;
+			j++;
+		}
+		else if (*s == c)
+			i = 0;
+		s++;
+	}
+	return (j);
 }
 
 char	**split_quotes(char const *s, char c)
@@ -65,10 +74,10 @@ char	**split_quotes(char const *s, char c)
 	j = 0;
 	if (!s)
 		return (NULL);
-	str = (char **)malloc((ft_count(s, c) + 1) * sizeof(char *));
+	str = (char **)malloc((ft_wordcount(s, c) + 1) * sizeof(char *));
 	if (!str)
 		return (NULL);
-	while (j < ft_count(s, c))
+	while (j < ft_wordcount(s, c))
 	{
 		while (*str1 == c && *str1)
 			str1++;
