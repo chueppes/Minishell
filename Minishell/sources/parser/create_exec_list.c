@@ -24,7 +24,7 @@ static char	*my_strjoin(char *s1, char *s2, int *size)
 	return (str);
 }
 
-static void free_used(char **array, char *temp)
+static void free_used(char **array)
 {
 	int i;
 
@@ -57,7 +57,7 @@ static void do_list(t_exec **exec_list, char *temp)
 	i = -1;
 	while (array[++i])
 		lstadd_back_exec(exec_list, lstnew_exec(array[i]));
-	free_used(array, temp);
+	free_used(array);
 }
 
 void	create_exec_list(t_exec **exec_list, t_commands *comm)
