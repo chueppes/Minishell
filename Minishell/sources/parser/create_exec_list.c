@@ -29,7 +29,6 @@ static void free_used(char **array, char *temp)
 	int i;
 
 	i = -1;
-	free(temp);
 	while(array[++i])
 		free(array[i]);
 	free(array);
@@ -89,4 +88,6 @@ void	create_exec_list(t_exec **exec_list, t_commands *comm)
 	}
 	if (temp != NULL && check_executable(check_exec)) // não é aqui que eu tenho que resolver isso
 		do_list(exec_list, temp);
+	free(temp);
+	return ;
 }
