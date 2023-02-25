@@ -11,36 +11,47 @@ int check_quotes(char* string) {
         if (*p == '"' && !inside_single_quotes) inside_quotes = !inside_quotes;
         else if (*p == '\'' && !inside_quotes) inside_single_quotes = !inside_single_quotes;
         else if (!inside_quotes && !inside_single_quotes && (*p == '"' || *p == '\'')) {
-            fprintf(stderr, "Erro: aspas abertas\n");
+            printf("Erro: aspas abertas\n");
             return 1;
         }
     }
     if (inside_quotes || inside_single_quotes) {
-        fprintf(stderr, "Erro: aspas não fechadas\n");
+        printf("Erro: aspas não fechadas\n");
         return 1;
     }
     return 0;
 }
-
-char* remove_outer_quotes(char* string) {
+char* remove_outer_quotes(char* string)
+ {
+    char* result = NULL;
     int len = strlen(string);
-    int start = 0, end = len - 1;
-
-    while (isspace(string[start])) start++; // remove espaços no início
-    while (isspace(string[end])) end--; // remove espaços no final
-
-    if (string[start] == '"' && string[end] == '"' && start < end) { // remove aspas duplas
-        start++;
-        end--;
+    int i = 0;
+    char* trimmed = NULL;
+    char quote[2] = {0}; // inicializa quote como uma string vazia
+    while (i < len) {// procura a primeira aspa
+        if (string[i] == '"' || string[i] == '\'') {
+            quote[0] = string[i];
+            break;
+        }
+        i++;
     }
-    else if (string[start] == '\'' && string[end] == '\'' && start < end) { // remove aspas simples
-        start++;
-        end--;
+    if (quote[0] == '\0') // se não encontrar aspas, retorna a string original
+    {
+        result = (char*) malloc(sizeof(char) * (len + 1));
+        ft_strcpy(result, string);
+        return result;
     }
-
-    char* result = (char*) malloc(sizeof(char) * (end - start + 2));
-    strncpy(result, &string[start], end - start + 1);
-    result[end - start + 1] = '\0';
-
+    trimmed = ft_strtrim(string, quote);// remove todas as ocorrências da primeira aspa encontrada
+    len = ft_strlen(trimmed);
+    result = (char*) malloc(sizeof(char) * (len + 1));
+    int j = 0;
+    i=-1;
+    while ( ++i < len) // copia o resultado para a string final
+    {
+        if (trimmed[i] != quote[0]) 
+            result[j++] = trimmed[i];
+    }
+    result[j] = '\0';
+    free(trimmed); // libera a memória alocada por ft_strtrim
     return result;
 }
