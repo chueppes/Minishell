@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acalvo4 <acalvo4@student.42.rio>           +#+  +:+       +#+        */
+/*   By: acalvo4 <acalvo4@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 16:56:42 by acalvo4           #+#    #+#             */
-/*   Updated: 2023/02/03 18:00:24 by acalvo4          ###   ########.fr       */
+/*   Updated: 2023/01/26 14:32:20 by acalvo4          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	*ft_calloc(size_t count, size_t size);
 char	*ft_strdup(const char *s1);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strtrim(char *s1, char *set);
+char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_itoa(int n);
 char	**ft_split(char const *s, char c);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
@@ -64,6 +64,5 @@ void	ft_lstdelone(t_list *lst, void (*del)(void*));
 void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
-char	*ft_strcpy(char *s1, char *s2);
 
 #endif

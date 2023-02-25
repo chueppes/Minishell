@@ -1,6 +1,5 @@
 #include "../includes/minishell.h"
 
-//inicia variaveis do programa
 char **copy_envp(char **envp)
 {
     char    **cpy_envp;
@@ -19,7 +18,25 @@ char **copy_envp(char **envp)
     return (cpy_envp);
 }
 
-int init_vars(t_data *minishell, char **envp) // adicionei o envp como parâmetro
+void print_commands(t_commands *temp)
+{
+    while (temp)
+    {
+        printf("%s\n%d\n", temp->cmd, temp->token);
+        temp = temp->next;
+    }
+}
+
+void print_exec(t_exec *temp)
+{
+    while (temp)
+    {
+        printf("%s\n", temp->aux);
+        temp = temp->next;
+    }
+}
+
+int init_vars(t_data *minishell, char **envp)
 {
     char buff[4097];
     char *home;
@@ -32,20 +49,27 @@ int init_vars(t_data *minishell, char **envp) // adicionei o envp como parâmetr
         minishell->cwd_path = ft_strjoin("~", buff + ft_strlen(home));
     minishell->readline = NULL;
     minishell->cmd_split = NULL;
+    minishell->commands = NULL;
+	minishell->exec_list = NULL;
     minishell->minishell_envp = copy_envp(envp); // inicialização da nossa envp
     return(0);
 }
 
 int init_readline(t_data *minishell)
 {
-
     while (1)
     {
         minishell->readline = readline("minishell~> ");
-        add_history(minishell->readline);
-        minishell->expanded_str = separate_by_spaces(minishell->readline);
-        minishell->cmd_split = split_quotes(minishell->expanded_str, 32);
-        is_builtin(minishell);
-        start_expansions(minishell->cmd_split, minishell);
+        if (minishell->readline != NULL || minishell->readline[0] != 0)
+        {
+            add_history(minishell->readline);
+            minishell->expanded_str = separate_by_spaces(minishell->readline);
+            minishell->cmd_split = split_quotes(minishell->expanded_str, ' ');
+            start_expansions(minishell->cmd_split, minishell);
+            create_list(minishell);
+            execute_pipes(minishell);
+			free_all(minishell);
+        }
     }
+    return (0);
 }
