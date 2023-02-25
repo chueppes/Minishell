@@ -104,5 +104,11 @@ void		ft_pipe(t_exec *exec_list, int *prevpipe, char **envp);
 void		ft_last_prog(t_exec *exec_list, int prevpipe, char **envp);
 int 		execute_pipes(t_data *minishell);
 
+//expansions
+void	start_expansions(char **commands, t_data *data);
+char	*expand_path(char *str, t_data *data);
+char	*expand_vars(char *str, t_data *data);
+int	ft_strnchar(const char *s, char *set);
+char	*ft_getenv(char *key, char **envp, int key_size);
 
 #endif
