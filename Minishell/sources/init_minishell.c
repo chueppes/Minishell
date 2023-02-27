@@ -55,6 +55,8 @@ int init_vars(t_data *minishell, char **envp)
     return(0);
 }
 
+int var_exist(char **envp, char *var);
+
 int init_readline(t_data *minishell)
 {
     while (1)
@@ -65,11 +67,39 @@ int init_readline(t_data *minishell)
             add_history(minishell->readline);
             minishell->expanded_str = separate_by_spaces(minishell->readline);
             minishell->cmd_split = split_quotes(minishell->expanded_str, ' ');
-            start_expansions(minishell->cmd_split, minishell);
-            create_list(minishell);
+            int i = -1;
+            int var = 0;
+            while (minishell->cmd_split[++i])
+            {
+                if (minishell->cmd_split[i][0] == '$')
+                {
+                    if (var_exist(minishell->minishell_envp, minishell->cmd_split[i]))
+                    {
+                        var = 1;
+                        break;
+                    }
+                }
+            }
+            if (var)
+                start_expansions(minishell->cmd_split, minishell);
+            parser(minishell);
             execute_pipes(minishell);
 			free_all(minishell);
         }
     }
+    return (0);
+}
+
+int var_exist(char **envp, char *var)
+{
+    int i;
+
+    i = -1;
+    var++;
+    while (envp[++i])
+	{
+		    if (ft_strncmp(envp[i], var, ft_strlen(var)) == 0)
+                return (1);
+	}
     return (0);
 }
