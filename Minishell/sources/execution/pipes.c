@@ -23,6 +23,16 @@ void	ft_last_prog(t_exec *exec_list, int prevpipe, char **envp)
 	{
 		dup2 (prevpipe, STDIN_FILENO);
 		close (prevpipe);
+		if (exec_list->infile != 0)
+		{
+			dup2 (exec_list->infile, STDIN_FILENO);
+			close(exec_list->infile);
+		}
+		if (exec_list->outfile != 0)
+		{
+			dup2 (exec_list->outfile, STDOUT_FILENO);
+			close(exec_list->outfile);
+		}
 		execve (find_path(exec_list->exec_cmd[0], envp), exec_list->exec_cmd, envp);
 	}
 	else
@@ -45,8 +55,18 @@ void	ft_pipe(t_exec *exec_list, int *prevpipe, char **envp)
 		close (pipefd[0]);
 		dup2 (pipefd[1], STDOUT_FILENO);
 		close (pipefd[1]);
+		if (exec_list->outfile != 0)
+		{
+			dup2 (exec_list->outfile, STDOUT_FILENO);
+			close(exec_list->outfile);
+		}
 		dup2 (*prevpipe, STDIN_FILENO);
 		close (*prevpipe);
+		if (exec_list->infile != 0)
+		{
+			dup2 (exec_list->infile, STDIN_FILENO);
+			close(exec_list->infile);
+		}
 		execve (find_path(exec_list->exec_cmd[0], envp), exec_list->exec_cmd, envp);
 	}
 	else

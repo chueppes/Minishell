@@ -68,13 +68,20 @@ int init_readline(t_data *minishell)
             minishell->expanded_str = separate_by_spaces(minishell->readline);
             minishell->cmd_split = split_quotes(minishell->expanded_str, ' ');
             int i = -1;
+            int j = -1;
             int var = 0;
+            while (minishell->cmd_split[++j])
+            {
+                if (check_quotes(minishell->cmd_split[j]))
+                    printf("erro tratar");
+            }
             while (minishell->cmd_split[++i])
             {
                 if (minishell->cmd_split[i][0] == '$')
                 {
                     if (var_exist(minishell->minishell_envp, minishell->cmd_split[i]))
-                    {
+                    {// função para transformar a variavel que nao existe em null
+                     // remove outer quotes
                         var = 1;
                         break;
                     }
@@ -82,6 +89,7 @@ int init_readline(t_data *minishell)
             }
             if (var)
                 start_expansions(minishell->cmd_split, minishell);
+            
             parser(minishell);
             execute_pipes(minishell);
 			free_all(minishell);

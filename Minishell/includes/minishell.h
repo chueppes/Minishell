@@ -28,7 +28,6 @@ typedef struct s_exec
 	char                **exec_cmd;
 	int                 infile;
     int                 outfile;
-	int					file;
 	struct s_exec  *next;
 }						t_exec;
 
@@ -69,6 +68,8 @@ int         ft_strcmp(const char *s1, const char *s2);
 // treatment
 char        **split_quotes(char const *s, char c);
 char        *separate_by_spaces(char *str);
+int         check_quotes(char* string);
+char*       remove_outer_quotes(char* string);
 
 // list
 void        lstadd_back_command(t_commands **lst, t_commands *new_lst);
@@ -98,6 +99,7 @@ int			check_executable(t_commands *check_exec);
 //utils_open
 int			open_output(t_commands **comm, t_exec **exec_list, int i, char *file);
 int         open_append(t_commands **comm, t_exec **exec_list, int i, char *file);
+int         open_input(t_commands **comm, t_exec **exec_list, int i, char *file);
 
 // execution
 void        prepare_for_execution(t_exec **exec_list);
