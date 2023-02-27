@@ -98,6 +98,7 @@ int			check_executable(t_commands *check_exec);
 //utils_open
 int			open_output(t_commands **comm, t_exec **exec_list, int i, char *file);
 int         open_append(t_commands **comm, t_exec **exec_list, int i, char *file);
+int         open_input(t_commands **comm, t_exec **exec_list, int i, char *file);
 
 // execution
 void        prepare_for_execution(t_exec **exec_list);

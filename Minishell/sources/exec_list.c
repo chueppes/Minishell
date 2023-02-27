@@ -26,6 +26,10 @@ t_exec	*lstnew_exec(char *content)
 	if (!comm)
 		return (NULL);
 	comm->aux = ft_strdup(content);
+	comm->exec_cmd = NULL;
+	comm->file = 0;
+	comm->infile = 0;
+	comm->outfile = 0;
 	comm->next = NULL;
 	return (comm);
 }
