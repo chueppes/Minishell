@@ -28,7 +28,6 @@ typedef struct s_exec
 	char                **exec_cmd;
 	int                 infile;
     int                 outfile;
-	int					file;
 	struct s_exec  *next;
 }						t_exec;
 
