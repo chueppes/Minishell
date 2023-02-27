@@ -9,6 +9,7 @@
 /*   Updated: 2022/05/30 15:48:37 by acalvo4          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 static int	ft_wordlen(char const *s, char c);

@@ -68,6 +68,8 @@ int         ft_strcmp(const char *s1, const char *s2);
 // treatment
 char        **split_quotes(char const *s, char c);
 char        *separate_by_spaces(char *str);
+int         check_quotes(char* string);
+char*       remove_outer_quotes(char* string);
 
 // list
 void        lstadd_back_command(t_commands **lst, t_commands *new_lst);
