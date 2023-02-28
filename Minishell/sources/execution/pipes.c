@@ -1,6 +1,7 @@
 #include "../.././includes/minishell.h"
 
-/*static int is_builtin(char *cmd)
+
+int is_builtin(char *cmd)
 {
     if (ft_strcmp(cmd, "echo") == 0)
         return (1);
@@ -20,7 +21,7 @@
         return (0);
 }
 
-static void exec_builtin(t_exec *cmd, t_data *minishell)
+void exec_builtin(t_exec *cmd, t_data *minishell)
 {
 	if (ft_strcmp(cmd->exec_cmd[0], "echo") == 0)
 		do_echo(cmd->exec_cmd);
@@ -38,18 +39,17 @@ static void exec_builtin(t_exec *cmd, t_data *minishell)
 		do_env(minishell);
 //    else if (ft_strcmp(cmd->exec_cmd[0], "exit") == 0)
 //		return (42);
-}*/
+}
 
 void	ft_last_prog(t_data *mini, int prevpipe, t_exec *exec_list)
 {
 	pid_t	cpid;
 
-	cpid = 0;
-	cpid = fork ();
-	if (cpid == 0)
-		exec_child_last(mini, prevpipe, exec_list);
-	else
-		main_process_last(prevpipe, exec_list);
+		cpid = fork ();
+		if (cpid == 0)
+			exec_child_last(mini, prevpipe, exec_list);
+		else
+			main_process_last(prevpipe, exec_list);
 }
 
 void	ft_pipe(t_data *mini, int *prevpipe, t_exec *exec_list)
@@ -57,7 +57,6 @@ void	ft_pipe(t_data *mini, int *prevpipe, t_exec *exec_list)
 	int		pipefd[2];
 	pid_t	cpid;
 
-	cpid = 0;
 	pipe (pipefd);
 	cpid = fork ();
 	if (cpid == 0)

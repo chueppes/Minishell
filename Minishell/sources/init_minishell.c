@@ -63,7 +63,7 @@ int init_readline(t_data *minishell)
     while (1)
     {
         minishell->readline = readline("minishell~> ");
-        if (minishell->readline != NULL || minishell->readline[0] != 0)
+        if (minishell->readline != NULL)
         {
             add_history(minishell->readline);
             minishell->expanded_str = separate_by_spaces(minishell->readline);
@@ -92,7 +92,7 @@ int init_readline(t_data *minishell)
                 start_expansions(minishell->cmd_split, minishell);
             
             parser(minishell);
-            execute_pipes(minishell);
+            execution(minishell);
 			free_all(minishell);
         }
     }

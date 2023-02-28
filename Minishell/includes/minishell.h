@@ -102,6 +102,7 @@ int         open_append(t_commands **comm, t_exec **exec_list, int i, char *file
 int         open_input(t_commands **comm, t_exec **exec_list, int i, char *file);
 
 // execution
+void         execution(t_data *minishell);
 void        prepare_for_execution(t_exec **exec_list);
 void		ft_pipe(t_data *mini, int *prevpipe, t_exec *exec_list);
 void		ft_last_prog(t_data *mini, int prevpipe, t_exec *exec_list);
@@ -114,6 +115,9 @@ void        close_outfile(t_exec *exec_list);
 void		main_process(int *prevpipe, int pipefd[2], t_exec *exec_list);
 void 		exec_child_last(t_data *mini, int prevpipe, t_exec *exec_list);
 void		main_process_last(int prevpipe, t_exec *exec_list);
+void        single_command(t_data *minishell);
+int         is_builtin(char *cmd);
+void        exec_builtin(t_exec *cmd, t_data *minishell);
 
 //expansions
 void	start_expansions(char **commands, t_data *data);
