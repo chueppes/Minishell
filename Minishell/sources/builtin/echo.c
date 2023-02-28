@@ -27,7 +27,7 @@ void	print_double(char *str)
 	print = ft_strtrim(str, "\"");
 	while (print[i])
 	{
-		if (print[i] == "\"")
+		if (print[i] == '\"')
 			i++;
 		printf("%c", print[i]);
 		i++;
@@ -35,7 +35,7 @@ void	print_double(char *str)
 	free(print);
 }
 
-void	echo(char **str)
+void	do_echo(char **str)
 {
 	int	i;
 
@@ -43,7 +43,7 @@ void	echo(char **str)
 	if (ft_strcmp(str[i], "-n") == 0)
 	{
 		i++;
-		if (str[i][0] == "\'")
+		if (str[i][0] == '\'')
 			print_simple(str[i]);
 		else
 			print_double(str[i]);
@@ -52,7 +52,7 @@ void	echo(char **str)
 	{
 		while (str[i])
 		{
-			if (str[i][0] == "\'")
+			if (str[i][0] == '\'')
 				print_simple(str[i]);
 			else
 				print_double(str[i]);

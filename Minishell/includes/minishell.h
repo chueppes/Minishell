@@ -119,7 +119,7 @@ char	*ft_getenv(char *key, char **envp, int key_size);
 void	do_cd(char *path, char **env, t_data *mini);
 void    do_export(char **envp, char *str, t_data *mini);
 void    do_unset(char **env, char *unset, t_data *mini);
-void	echo(char **str);
+void	do_echo(char **str);
 void    do_env(t_data *envp);
 void    do_pwd(void);
 

@@ -6,7 +6,7 @@ char	*remove_tilda(char *path)
 	int		i;
 
 	i = -1;
-	rest_path = malloc(strlen(path) - 2);
+	rest_path = malloc(ft_strlen(path) - 2);
 	while(path[++i])
 		rest_path[i] = path[i + 2];
 	return (rest_path);
