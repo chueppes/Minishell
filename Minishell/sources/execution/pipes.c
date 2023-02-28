@@ -1,6 +1,6 @@
 #include "../.././includes/minishell.h"
 
-static int is_builtin(char *cmd)
+/*static int is_builtin(char *cmd)
 {
     if (ft_strcmp(cmd, "echo") == 0)
         return (1);
@@ -38,40 +38,18 @@ static void exec_builtin(t_exec *cmd, t_data *minishell)
 		do_env(minishell);
 //    else if (ft_strcmp(cmd->exec_cmd[0], "exit") == 0)
 //		return (42);
-}
+}*/
 
 void	ft_last_prog(t_data *mini, int prevpipe, t_exec *exec_list)
 {
 	pid_t	cpid;
 
 	cpid = 0;
-	if (!is_builtin(exec_list->exec_cmd[0]))
-		cpid = fork ();
+	cpid = fork ();
 	if (cpid == 0)
-	{
-		dup2 (prevpipe, STDIN_FILENO);
-		close (prevpipe);
-		if (exec_list->infile != 0)
-		{
-			dup2 (exec_list->infile, STDIN_FILENO);
-			close(exec_list->infile);
-		}
-		if (exec_list->outfile != 0)
-		{
-			dup2 (exec_list->outfile, STDOUT_FILENO);
-			close(exec_list->outfile);
-		}
-		if (!is_builtin(exec_list->exec_cmd[0]))
-			execve(find_path(exec_list->exec_cmd[0], mini->minishell_envp), exec_list->exec_cmd, mini->minishell_envp);
-		else
-			exec_builtin(exec_list, mini);
-	}
+		exec_child_last(mini, prevpipe, exec_list);
 	else
-	{
-		close (prevpipe);
-		while (wait (NULL) != -1)
-			;
-	}
+		main_process_last(prevpipe, exec_list);
 }
 
 void	ft_pipe(t_data *mini, int *prevpipe, t_exec *exec_list)
@@ -81,36 +59,11 @@ void	ft_pipe(t_data *mini, int *prevpipe, t_exec *exec_list)
 
 	cpid = 0;
 	pipe (pipefd);
-	if (!is_builtin(exec_list->exec_cmd[0]))
-		cpid = fork ();
+	cpid = fork ();
 	if (cpid == 0)
-	{
-		close (pipefd[0]);
-		dup2 (pipefd[1], STDOUT_FILENO);
-		close (pipefd[1]);
-		if (exec_list->outfile != 0)
-		{
-			dup2 (exec_list->outfile, STDOUT_FILENO);
-			close(exec_list->outfile);
-		}
-		dup2 (*prevpipe, STDIN_FILENO);
-		close (*prevpipe);
-		if (exec_list->infile != 0)
-		{
-			dup2 (exec_list->infile, STDIN_FILENO);
-			close(exec_list->infile);
-		}
-		if (!is_builtin(exec_list->exec_cmd[0]))
-			execve(find_path(exec_list->exec_cmd[0], mini->minishell_envp), exec_list->exec_cmd, mini->minishell_envp);
-		else
-			exec_builtin(exec_list, mini);
-	}
+		exec_child(mini, prevpipe, exec_list, pipefd);
 	else
-	{
-		close (pipefd[1]);
-		close (*prevpipe);
-		*prevpipe = pipefd[0];
-	}
+		main_process(prevpipe, pipefd, exec_list);
 }
 
 int execute_pipes(t_data *minishell)
