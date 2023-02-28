@@ -62,7 +62,6 @@ int         init_vars(t_data *minishell, char **envp);
 int         init_readline(t_data *minishell);
 
 // utils
-int         count_pipes(t_commands *comm);
 int         count_strs(char **str);
 int         ft_strcmp(const char *s1, const char *s2);
 
@@ -104,8 +103,8 @@ int         open_input(t_commands **comm, t_exec **exec_list, int i, char *file)
 
 // execution
 void        prepare_for_execution(t_exec **exec_list);
-void		ft_pipe(t_exec *exec_list, int *prevpipe, char **envp);
-void		ft_last_prog(t_exec *exec_list, int prevpipe, char **envp);
+void		ft_pipe(t_data *mini, int *prevpipe, t_exec *exec_list);
+void		ft_last_prog(t_data *mini, int prevpipe, t_exec *exec_list);
 int 		execute_pipes(t_data *minishell);
 
 //expansions
