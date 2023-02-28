@@ -115,7 +115,7 @@ int	    ft_strnchar(const char *s, char *set);
 char	*ft_getenv(char *key, char **envp, int key_size);
 
 // builtin
-void	do_cd(char *path, char **env, t_data *mini);
+void	do_cd(char *path, char **env, t_data *mini, int empity);
 void    do_export(char **envp, char *str, t_data *mini);
 void    do_unset(char **env, char *unset, t_data *mini);
 void	do_echo(char **str);

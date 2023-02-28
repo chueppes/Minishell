@@ -24,8 +24,10 @@ static void exec_builtin(t_exec *cmd, t_data *minishell)
 {
 	if (ft_strcmp(cmd->exec_cmd[0], "echo") == 0)
 		do_echo(cmd->exec_cmd);
-    else if (ft_strcmp(cmd->exec_cmd[0], "cd") == 0)
-		do_cd(cmd->exec_cmd[1], minishell->minishell_envp, minishell);
+    else if (ft_strcmp(cmd->exec_cmd[0], "cd") == 0 && cmd->exec_cmd[1])
+		do_cd(cmd->exec_cmd[1], minishell->minishell_envp, minishell, 0);
+	else if (ft_strcmp(cmd->exec_cmd[0], "cd") == 0 && !cmd->exec_cmd[1])
+		do_cd(cmd->exec_cmd[1], minishell->minishell_envp, minishell, 1);
     else if (ft_strcmp(cmd->exec_cmd[0], "pwd") == 0)
 		do_pwd();
     else if (ft_strcmp(cmd->exec_cmd[0], "export") == 0)
