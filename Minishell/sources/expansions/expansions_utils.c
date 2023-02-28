@@ -48,6 +48,5 @@ char	*ft_getenv(char *key, char **envp, int key_size)
 			return (ft_strdup(envp[i] + key_size + 1));
 		i++;
 	}
-
 	return (NULL);
 }
