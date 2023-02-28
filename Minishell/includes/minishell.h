@@ -38,6 +38,7 @@ typedef struct s_data {
     char        **cmd_split;
     char        **minishell_envp;
     char        *expanded_str;
+    char        *old_pwd;
     t_commands  *commands;
 	t_exec		*exec_list;
 }               t_data;
@@ -113,5 +114,14 @@ char	*expand_path(char *str, t_data *data);
 char	*expand_vars(char *str, t_data *data);
 int	    ft_strnchar(const char *s, char *set);
 char	*ft_getenv(char *key, char **envp, int key_size);
+
+// builtin
+void	do_cd(char *path, char **env, t_data *mini);
+void    do_export(char **envp, char *str, t_data *mini);
+void    do_unset(char **env, char *unset, t_data *mini);
+void	echo(char **str);
+void    do_env(t_data *envp);
+void    do_pwd(void);
+
 
 #endif
