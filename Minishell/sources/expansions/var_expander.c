@@ -17,8 +17,8 @@ char	*get_var_value(char *str, int i, t_data *data)
 	var = ft_getenv(str + i, data->minishell_envp, size_var);
 	// if (!var && str[i] == '$')
 	// 	var = ft_itoa(data->pid);
-	// else if (!var && str[i] == '?')
-	// 	var = ft_itoa(g_status);
+	if (!var && str[i] == '?')
+		var = ft_itoa(global);
 	path = ft_strjoin(aux, var);
 	free(aux);
 	aux = ft_strjoin(path, str + i + position);
