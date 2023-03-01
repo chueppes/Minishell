@@ -9,7 +9,13 @@ void exec_child(t_data *mini, int *prevpipe, t_exec *exec_list, int pipefd[2])
 	dup2 (*prevpipe, STDIN_FILENO);
 	close (*prevpipe);
 	dup_infile(exec_list);
-	execve(find_path(exec_list->exec_cmd[0], mini->minishell_envp), exec_list->exec_cmd, mini->minishell_envp);
+  if (is_builtin(exec_list->exec_cmd[0]))
+  {
+    exec_builtin(exec_list, mini);
+    exit(0) ;
+  }
+  else
+    execve(find_path(exec_list->exec_cmd[0], mini->minishell_envp), exec_list->exec_cmd, mini->minishell_envp);
 }
 
 void exec_child_last(t_data *mini, int prevpipe, t_exec *exec_list)
@@ -18,7 +24,13 @@ void exec_child_last(t_data *mini, int prevpipe, t_exec *exec_list)
 	close (prevpipe);
 	dup_outfile(exec_list);
 	dup_infile(exec_list);
-	execve(find_path(exec_list->exec_cmd[0], mini->minishell_envp), exec_list->exec_cmd, mini->minishell_envp);
+  if (is_builtin(exec_list->exec_cmd[0]))
+  {
+    exec_builtin(exec_list, mini);
+    exit(0);
+  }
+  else 
+	  execve(find_path(exec_list->exec_cmd[0], mini->minishell_envp), exec_list->exec_cmd, mini->minishell_envp);
 }
 
 void main_process(int *prevpipe, int pipefd[2], t_exec *exec_list)
