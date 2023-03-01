@@ -3,12 +3,12 @@
 void	print_simple(char *str)
 {
 	int		i;
-	int		len;
+//	int		len;
 	char	*print;
 
-	len = 0;
+//	len = 0;
 	i = -1;
-	len = ft_strlen(str);
+//	len = ft_strlen(str);
 	print = ft_strtrim(str, "\'");
 	while (print[++i])
 		printf("%c", print[i]);
@@ -18,12 +18,12 @@ void	print_simple(char *str)
 void	print_double(char *str)
 {
 	int		i;
-	int		len;
+//	int		len;
 	char	*print;
 
-	len = 0;
+//	len = 0;
 	i = 0;
-	len = ft_strlen(str);
+//	len = ft_strlen(str);
 	print = ft_strtrim(str, "\"");
 	while (print[i])
 	{
