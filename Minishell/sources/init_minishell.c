@@ -63,16 +63,15 @@ int init_readline(t_data *minishell)
     {
         sigint_parser();
         minishell->readline = readline("minishell~> ");
-        if (minishell->readline != NULL || minishell->readline[0] != 0)
-        {
-            add_history(minishell->readline);
-            minishell->expanded_str = separate_by_spaces(minishell->readline);
-            minishell->cmd_split = split_quotes(minishell->expanded_str, ' ');
-            start_expansions(minishell->cmd_split, minishell);
-            create_list(minishell);
-            execute_pipes(minishell);
-			free_all(minishell);
-        }
+        if (minishell->readline == NULL)
+            break ;  
+        add_history(minishell->readline);
+        minishell->expanded_str = separate_by_spaces(minishell->readline);
+        minishell->cmd_split = split_quotes(minishell->expanded_str, ' ');
+        start_expansions(minishell->cmd_split, minishell);
+        create_list(minishell);
+        execute_pipes(minishell);
+		free_all(minishell);
     }
     return (0);
 }

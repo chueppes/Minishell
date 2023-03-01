@@ -19,7 +19,7 @@ RM	=	rm -f
 
 all:	${NAME}
 
-bonus:	 ${BONUS_OBJ}
+bonus:	 ${OBJ} ${BONUS_OBJ}
 	ar rcs	${NAME} ${BONUS_OBJ}
 	ranlib	${NAME}
 
