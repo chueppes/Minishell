@@ -56,6 +56,8 @@ enum    input_type {
 #define SUCESS 0
 #define FAILURE -1
 
+extern int global;
+
 // init readline
 int         init_vars(t_data *minishell, char **envp);
 int         init_readline(t_data *minishell);
@@ -113,5 +115,10 @@ char	*expand_path(char *str, t_data *data);
 char	*expand_vars(char *str, t_data *data);
 int	    ft_strnchar(const char *s, char *set);
 char	*ft_getenv(char *key, char **envp, int key_size);
+
+//signals
+void sigint_should_do(int signal);
+void sigint_parser(void);
+
 
 #endif

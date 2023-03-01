@@ -1,5 +1,6 @@
 #include "../includes/minishell.h"
 
+int global;
 char **copy_envp(char **envp)
 {
     char    **cpy_envp;
@@ -61,6 +62,7 @@ int init_readline(t_data *minishell)
 {
     while (1)
     {
+        sigint_parser();
         minishell->readline = readline("minishell~> ");
         if (minishell->readline != NULL || minishell->readline[0] != 0)
         {
@@ -89,7 +91,6 @@ int init_readline(t_data *minishell)
             }
             if (var)
                 start_expansions(minishell->cmd_split, minishell);
-            
             parser(minishell);
             execute_pipes(minishell);
 			free_all(minishell);
