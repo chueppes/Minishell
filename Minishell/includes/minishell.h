@@ -39,6 +39,7 @@ typedef struct s_data {
     char        **minishell_envp;
     char        *expanded_str;
     t_commands  *commands;
+	char        *old_pwd;
 	t_exec		*exec_list;
 }               t_data;
 
@@ -104,10 +105,22 @@ int         open_append(t_commands **comm, t_exec **exec_list, int i, char *file
 int         open_input(t_commands **comm, t_exec **exec_list, int i, char *file);
 
 // execution
+void         execution(t_data *minishell);
 void        prepare_for_execution(t_exec **exec_list);
-void		ft_pipe(t_exec *exec_list, int *prevpipe, char **envp);
-void		ft_last_prog(t_exec *exec_list, int prevpipe, char **envp);
+void		ft_pipe(t_data *mini, int *prevpipe, t_exec *exec_list);
+void		ft_last_prog(t_data *mini, int prevpipe, t_exec *exec_list);
 int 		execute_pipes(t_data *minishell);
+void        dup_outfile(t_exec *exec_list);
+void        dup_infile(t_exec *exec_list);
+void        exec_child(t_data *mini, int *prevpipe, t_exec *exec_list, int pipefd[2]);
+void        close_infile(t_exec *exec_list);
+void        close_outfile(t_exec *exec_list);
+void		main_process(int *prevpipe, int pipefd[2], t_exec *exec_list);
+void 		exec_child_last(t_data *mini, int prevpipe, t_exec *exec_list);
+void		main_process_last(int prevpipe, t_exec *exec_list);
+void        single_command(t_data *minishell);
+int         is_builtin(char *cmd);
+void        exec_builtin(t_exec *cmd, t_data *minishell);
 
 //expansions
 void	start_expansions(char **commands, t_data *data);
@@ -120,5 +133,19 @@ char	*ft_getenv(char *key, char **envp, int key_size);
 void sigint_should_do(int signal);
 void sigint_parser(void);
 
+//expansions
+void	start_expansions(char **commands, t_data *data);
+char	*expand_path(char *str, t_data *data);
+char	*expand_vars(char *str, t_data *data);
+int	    ft_strnchar(const char *s, char *set);
+char	*ft_getenv(char *key, char **envp, int key_size);
+
+// builtin
+void	do_cd(char *path, char **env, t_data *mini, int empity);
+void    do_export(char **envp, char *str, t_data *mini);
+void    do_unset(char **env, char *unset, t_data *mini);
+void	do_echo(char **str);
+void    do_env(t_data *envp);
+void    do_pwd(void);
 
 #endif

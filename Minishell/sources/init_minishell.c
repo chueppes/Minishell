@@ -92,7 +92,7 @@ int init_readline(t_data *minishell)
             if (var)
                 start_expansions(minishell->cmd_split, minishell);
             parser(minishell);
-            execute_pipes(minishell);
+            execution(minishell);
 			free_all(minishell);
         }
     }
