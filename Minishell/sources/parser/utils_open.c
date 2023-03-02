@@ -85,3 +85,30 @@ int open_append(t_commands **comm, t_exec **exec_list, int i, char *file)
   }
   return (0);
 }
+
+void open_heredoc(t_commands **comm, t_exec **exec_list, int i, char *eof)
+{
+	char	*str;
+	int		find_list;
+	t_exec	*temp_exec;
+
+	find_list = find_position_open(*comm, i);
+	temp_exec = *exec_list;
+
+	str = heredoc_readline(eof);
+	str[ft_strlen(str) - 1] = '\0';
+
+	if (exec_list && *exec_list)
+	{
+		while (find_list--)
+			temp_exec = temp_exec->next;
+    	if (temp_exec->outfile)
+    		close(temp_exec->outfile);
+		free(str);
+	}
+	else
+  	{
+		printf("%s\n", str);
+		free(str);
+  	}
+}

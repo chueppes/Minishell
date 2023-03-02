@@ -28,6 +28,7 @@ typedef struct s_exec
 	char                **exec_cmd;
 	int                 infile;
     int                 outfile;
+    int                 pipe_heredoc[2];
 	struct s_exec  *next;
 }						t_exec;
 
@@ -38,8 +39,8 @@ typedef struct s_data {
     char        **cmd_split;
     char        **minishell_envp;
     char        *expanded_str;
+    char        *old_pwd;
     t_commands  *commands;
-	char        *old_pwd;
 	t_exec		*exec_list;
 }               t_data;
 
@@ -57,14 +58,11 @@ enum    input_type {
 #define SUCESS 0
 #define FAILURE -1
 
-extern int global;
-
 // init readline
 int         init_vars(t_data *minishell, char **envp);
 int         init_readline(t_data *minishell);
 
 // utils
-int         count_pipes(t_commands *comm);
 int         count_strs(char **str);
 int         ft_strcmp(const char *s1, const char *s2);
 
@@ -98,11 +96,15 @@ void		create_exec_list(t_exec **exec_com, t_commands *comm);
 int			search_redirect(t_commands **comm, t_exec **exec_list);
 int			find_position_open(t_commands *comm, int i);
 int			check_executable(t_commands *check_exec);
+char        *my_strjoin(char *s1, char *s2, int *size);
+char	    *my_strjoin2(char *s1, char *s2);
 
 //utils_open
 int			open_output(t_commands **comm, t_exec **exec_list, int i, char *file);
 int         open_append(t_commands **comm, t_exec **exec_list, int i, char *file);
 int         open_input(t_commands **comm, t_exec **exec_list, int i, char *file);
+void        open_heredoc(t_commands **comm, t_exec **exec_list, int i, char *eof);
+char        *heredoc_readline(char *eof);
 
 // execution
 void         execution(t_data *minishell);
@@ -129,17 +131,6 @@ char	*expand_vars(char *str, t_data *data);
 int	    ft_strnchar(const char *s, char *set);
 char	*ft_getenv(char *key, char **envp, int key_size);
 
-//signals
-void sigint_should_do(int signal);
-void sigint_parser(void);
-
-//expansions
-void	start_expansions(char **commands, t_data *data);
-char	*expand_path(char *str, t_data *data);
-char	*expand_vars(char *str, t_data *data);
-int	    ft_strnchar(const char *s, char *set);
-char	*ft_getenv(char *key, char **envp, int key_size);
-
 // builtin
 void	do_cd(char *path, char **env, t_data *mini, int empity);
 void    do_export(char **envp, char *str, t_data *mini);
@@ -147,5 +138,7 @@ void    do_unset(char **env, char *unset, t_data *mini);
 void	do_echo(char **str);
 void    do_env(t_data *envp);
 void    do_pwd(void);
+void    do_exit(t_data *minishell);
+
 
 #endif
