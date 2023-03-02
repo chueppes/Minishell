@@ -16,7 +16,7 @@ char **unset_env(char **envp, int unset_i)
         cpy_envp[j] = ft_strdup(envp[i]);
         j++;
     }
-    while (++i < (amount_strs))
+    while (++i < (amount_strs) && envp[i])
     {
         cpy_envp[j] = ft_strdup(envp[i]);
         j++;

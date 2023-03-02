@@ -30,5 +30,6 @@ t_exec	*lstnew_exec(char *content)
 	comm->infile = 0;
 	comm->outfile = 0;
 	comm->next = NULL;
+	comm->heredoc = NULL;
 	return (comm);
 }

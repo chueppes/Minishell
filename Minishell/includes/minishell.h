@@ -28,6 +28,7 @@ typedef struct s_exec
 	char                **exec_cmd;
 	int                 infile;
     int                 outfile;
+    char                *heredoc;
 	struct s_exec  *next;
 }						t_exec;
 
@@ -95,11 +96,14 @@ void		create_exec_list(t_exec **exec_com, t_commands *comm);
 int			search_redirect(t_commands **comm, t_exec **exec_list);
 int			find_position_open(t_commands *comm, int i);
 int			check_executable(t_commands *check_exec);
+char        *my_strjoin(char *s1, char *s2, int *size);
+char	    *my_strjoin2(char *s1, char *s2);
 
 //utils_open
 int			open_output(t_commands **comm, t_exec **exec_list, int i, char *file);
 int         open_append(t_commands **comm, t_exec **exec_list, int i, char *file);
 int         open_input(t_commands **comm, t_exec **exec_list, int i, char *file);
+void        open_heredoc(t_commands **comm, t_exec **exec_list, int i, char *eof);
 
 // execution
 void         execution(t_data *minishell);
