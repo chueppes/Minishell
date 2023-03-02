@@ -28,7 +28,7 @@ typedef struct s_exec
 	char                **exec_cmd;
 	int                 infile;
     int                 outfile;
-    char                *heredoc;
+    int                 pipe_heredoc[2];
 	struct s_exec  *next;
 }						t_exec;
 
@@ -104,6 +104,7 @@ int			open_output(t_commands **comm, t_exec **exec_list, int i, char *file);
 int         open_append(t_commands **comm, t_exec **exec_list, int i, char *file);
 int         open_input(t_commands **comm, t_exec **exec_list, int i, char *file);
 void        open_heredoc(t_commands **comm, t_exec **exec_list, int i, char *eof);
+char        *heredoc_readline(char *eof);
 
 // execution
 void         execution(t_data *minishell);

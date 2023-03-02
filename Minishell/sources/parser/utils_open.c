@@ -89,37 +89,21 @@ int open_append(t_commands **comm, t_exec **exec_list, int i, char *file)
 void open_heredoc(t_commands **comm, t_exec **exec_list, int i, char *eof)
 {
 	char	*str;
-	char	*temp;
 	int		find_list;
 	t_exec	*temp_exec;
 
-	str = NULL;
 	find_list = find_position_open(*comm, i);
 	temp_exec = *exec_list;
 
-	while (1)
-	{
-		temp = readline("heredoc>");
-		if (ft_strncmp(temp, eof, ft_strlen(eof)) == 0)
-			break;
-		if (!str)
-		{
-			str = malloc(1);
-			*str = '\0';
-		}
-		str = my_strjoin2(str, temp);
-		free(temp);
-	}
-	free(temp);
+	str = heredoc_readline(eof);
 	str[ft_strlen(str) - 1] = '\0';
 
 	if (exec_list && *exec_list)
 	{
 		while (find_list--)
 			temp_exec = temp_exec->next;
-    	if (temp_exec->heredoc != 0)
+    	if (temp_exec->outfile)
     		close(temp_exec->outfile);
-		temp_exec->heredoc = ft_strdup(str);
 		free(str);
 	}
 	else
