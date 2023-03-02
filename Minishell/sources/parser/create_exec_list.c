@@ -1,6 +1,6 @@
 #include "../.././includes/minishell.h"
 
-char	*my_strjoin(char *s1, char *s2, int *size)
+static char	*my_strjoin(char *s1, char *s2, int *size)
 {
 	size_t	i;
 	size_t	j;

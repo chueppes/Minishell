@@ -27,7 +27,7 @@ char **add_env(char **envp, char *str)
     i = -1;
     amount_strs = count_strs(envp);
     cpy_envp = (char **)malloc(sizeof(char *) * amount_strs + 1);
-    while (++i < amount_strs)
+    while (++i < (amount_strs - 1))
         cpy_envp[i] = ft_strdup(envp[i]);
     cpy_envp[i] = ft_strdup(str);
     cpy_envp[i + 1] = NULL;

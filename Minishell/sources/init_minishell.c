@@ -1,5 +1,6 @@
 #include "../includes/minishell.h"
 
+int global;
 char **copy_envp(char **envp)
 {
     char    **cpy_envp;
@@ -9,7 +10,7 @@ char **copy_envp(char **envp)
     i = 0;
     amount_strs = count_strs(envp);
     cpy_envp = (char **)malloc(sizeof(char *) * amount_strs);
-    while (i < amount_strs)
+    while (i < amount_strs - 1)
     {
         cpy_envp[i] = ft_strdup(envp[i]);
         i++;
@@ -52,7 +53,6 @@ int init_vars(t_data *minishell, char **envp)
     minishell->commands = NULL;
 	minishell->exec_list = NULL;
     minishell->minishell_envp = copy_envp(envp); // inicialização da nossa envp
-    minishell->old_pwd = getcwd(NULL, 0);
     return(0);
 }
 
@@ -62,8 +62,9 @@ int init_readline(t_data *minishell)
 {
     while (1)
     {
+        sigint_parser();
         minishell->readline = readline("minishell~> ");
-        if (minishell->readline != NULL)
+        if (minishell->readline != NULL || minishell->readline[0] != 0)
         {
             add_history(minishell->readline);
             minishell->expanded_str = separate_by_spaces(minishell->readline);
@@ -90,7 +91,6 @@ int init_readline(t_data *minishell)
             }
             if (var)
                 start_expansions(minishell->cmd_split, minishell);
-            
             parser(minishell);
             execution(minishell);
 			free_all(minishell);

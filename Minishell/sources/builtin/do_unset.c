@@ -5,22 +5,12 @@ char **unset_env(char **envp, int unset_i)
     char    **cpy_envp;
     int     amount_strs;
     int     i;
-    int     j;
 
     i = -1;
-    j = 0;
     amount_strs = count_strs(envp);
-    cpy_envp = (char **)malloc(sizeof(char *) * (amount_strs));
-    while (++i < (amount_strs) && i != unset_i)
-    {
-        cpy_envp[j] = ft_strdup(envp[i]);
-        j++;
-    }
-    while (++i < (amount_strs) && envp[i])
-    {
-        cpy_envp[j] = ft_strdup(envp[i]);
-        j++;
-    }
+    cpy_envp = (char **)malloc(sizeof(char *) * amount_strs);
+    while (++i < (amount_strs - 1) && i != unset_i)
+        cpy_envp[i] = ft_strdup(envp[i]);
     cpy_envp[i] = NULL;
     return (cpy_envp);
 }
