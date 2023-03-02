@@ -24,21 +24,21 @@ int is_builtin(char *cmd)
 void exec_builtin(t_exec *cmd, t_data *minishell)
 {
 	if (ft_strcmp(cmd->exec_cmd[0], "echo") == 0)
-    do_echo(cmd->exec_cmd);
-  else if (ft_strcmp(cmd->exec_cmd[0], "cd") == 0 && cmd->exec_cmd[1])
-    do_cd(cmd->exec_cmd[1], minishell->minishell_envp, minishell, 0);
+    	do_echo(cmd->exec_cmd);
+	else if (ft_strcmp(cmd->exec_cmd[0], "cd") == 0 && cmd->exec_cmd[1])
+    	do_cd(cmd->exec_cmd[1], minishell->minishell_envp, minishell, 0);
 	else if (ft_strcmp(cmd->exec_cmd[0], "cd") == 0 && !cmd->exec_cmd[1])
-    do_cd(cmd->exec_cmd[1], minishell->minishell_envp, minishell, 1);
-  else if (ft_strcmp(cmd->exec_cmd[0], "pwd") == 0)
-    do_pwd();
-  else if (ft_strcmp(cmd->exec_cmd[0], "export") == 0)
-    do_export(minishell->minishell_envp, cmd->exec_cmd[1], minishell);
-  else if (ft_strcmp(cmd->exec_cmd[0], "unset") == 0)
-    do_unset(minishell->minishell_envp, cmd->exec_cmd[1], minishell);
-  else if (ft_strcmp(cmd->exec_cmd[0], "env") == 0)
-	  do_env(minishell);
-//    else if (ft_strcmp(cmd->exec_cmd[0], "exit") == 0)
-//		return (42);
+    	do_cd(cmd->exec_cmd[1], minishell->minishell_envp, minishell, 1);
+	else if (ft_strcmp(cmd->exec_cmd[0], "pwd") == 0)
+    	do_pwd();
+	else if (ft_strcmp(cmd->exec_cmd[0], "export") == 0)
+    	do_export(minishell->minishell_envp, cmd->exec_cmd[1], minishell);
+	else if (ft_strcmp(cmd->exec_cmd[0], "unset") == 0)
+    	do_unset(minishell->minishell_envp, cmd->exec_cmd[1], minishell);
+	else if (ft_strcmp(cmd->exec_cmd[0], "env") == 0)
+		do_env(minishell);
+	else if (ft_strcmp(cmd->exec_cmd[0], "exit") == 0)
+		do_exit(minishell);
 }
 
 void	ft_last_prog(t_data *mini, int prevpipe, t_exec *exec_list)

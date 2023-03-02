@@ -137,6 +137,7 @@ void    do_unset(char **env, char *unset, t_data *mini);
 void	do_echo(char **str);
 void    do_env(t_data *envp);
 void    do_pwd(void);
+void    do_exit(t_data *minishell);
 
 
 #endif
