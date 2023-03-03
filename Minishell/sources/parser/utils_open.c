@@ -96,19 +96,21 @@ void open_heredoc(t_commands **comm, t_exec **exec_list, int i, char *eof)
 	temp_exec = *exec_list;
 
 	str = heredoc_readline(eof);
-	str[ft_strlen(str) - 1] = '\0';
-
-	if (exec_list && *exec_list)
-	{
-		while (find_list--)
-			temp_exec = temp_exec->next;
-    	if (temp_exec->outfile)
-    		close(temp_exec->outfile);
-		free(str);
-	}
-	else
+  if (str != NULL)
+  {
+	  str[ft_strlen(str) - 1] = '\0';
+    if (exec_list && *exec_list)
+	  {
+		  while (find_list--)
+		  	temp_exec = temp_exec->next;
+      if (temp_exec->outfile)
+      	close(temp_exec->outfile);
+		  free(str);
+	  }
+	  else
   	{
-		printf("%s\n", str);
-		free(str);
+		  printf("%s\n", str);
+		  free(str);
   	}
+  }
 }
