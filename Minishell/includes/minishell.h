@@ -98,6 +98,7 @@ int			find_position_open(t_commands *comm, int i);
 int			check_executable(t_commands *check_exec);
 char        *my_strjoin(char *s1, char *s2, int *size);
 char	    *my_strjoin2(char *s1, char *s2);
+void		pipe_heredoc(char *str, t_exec **exec_list, t_exec *temp, int find_list);
 
 //utils_open
 int			open_output(t_commands **comm, t_exec **exec_list, int i, char *file);

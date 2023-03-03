@@ -23,3 +23,24 @@ char	*heredoc_readline(char *eof)
 	free(temp);
 	return (str);
 }
+
+void pipe_heredoc(char *str, t_exec **exec_list, t_exec *temp_exec, int find_list)
+{
+	int i;
+
+	i = -1;
+	str[ft_strlen(str) - 1] = '\0';
+	if (exec_list && *exec_list)
+	{
+		while (find_list--)
+			temp_exec = temp_exec->next;
+		if (temp_exec->outfile)
+    		close(temp_exec->outfile);
+		
+	}
+	else
+  	{
+		printf("%s\n", str);
+		free(str);
+  	}
+}

@@ -34,6 +34,12 @@ void single_command(t_data *minishell)
 		{
 			dup_infile(minishell->exec_list);
 			dup_outfile(minishell->exec_list);
+			if (minishell->exec_list->pipe_heredoc[1] != 0 && minishell->exec_list->pipe_heredoc[0] != 0)
+			{
+				close(minishell->exec_list->pipe_heredoc[1]);
+				dup2(minishell->exec_list->pipe_heredoc[0], STDIN_FILENO);
+				close(minishell->exec_list->pipe_heredoc[0]);
+			}
 			execve(find_path(minishell->exec_list->exec_cmd[0], minishell->minishell_envp), minishell->exec_list->exec_cmd, minishell->minishell_envp);
 		}
 		else
