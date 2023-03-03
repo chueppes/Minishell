@@ -31,6 +31,7 @@ t_exec	*lstnew_exec(char *content)
 	comm->outfile = 0;
 	comm->next = NULL;
 	comm->pipe_heredoc[0] = 0;
-	comm->pipe_heredoc[1] = 1;
+	comm->pipe_heredoc[1] = 0;
+	comm->heredoc_str = NULL;
 	return (comm);
 }

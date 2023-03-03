@@ -24,11 +24,8 @@ char	*heredoc_readline(char *eof)
 	return (str);
 }
 
-void pipe_heredoc(char *str, t_exec **exec_list, t_exec *temp_exec, int find_list)
+void str_heredoc(char *str, t_exec **exec_list, t_exec *temp_exec, int find_list)
 {
-	int i;
-
-	i = -1;
 	str[ft_strlen(str) - 1] = '\0';
 	if (exec_list && *exec_list)
 	{
@@ -36,7 +33,8 @@ void pipe_heredoc(char *str, t_exec **exec_list, t_exec *temp_exec, int find_lis
 			temp_exec = temp_exec->next;
 		if (temp_exec->outfile)
     		close(temp_exec->outfile);
-		
+		temp_exec->heredoc_str = ft_strdup(str);
+		free(str);
 	}
 	else
   	{
