@@ -21,6 +21,8 @@ char	*get_var_value(char *str, int i, t_data *data)
 		var = ft_itoa(global);
 	path = ft_strjoin(aux, var);
 	free(aux);
+	if(position == (int)ft_strlen(str)-1)
+		i=1;
 	aux = ft_strjoin(path, str + i + position);
 	free(var);
 	free(path);

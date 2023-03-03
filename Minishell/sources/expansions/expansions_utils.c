@@ -7,11 +7,9 @@ void	start_expansions(char **commands, t_data *data)
 	i = 0;
 	while (commands[i])
 	{
-		if (check_quotes(commands[i]))
-			return ;
 		commands[i] = expand_vars(commands[i], data);
 		commands[i] = expand_path(commands[i], data);
-		commands[i] = remove_outer_quotes(commands[i]);
+		remove_outer_quotes(commands[i]);
 		printf("%s\n", commands[i]);
 		i++;
 	}
@@ -48,5 +46,6 @@ char	*ft_getenv(char *key, char **envp, int key_size)
 			return (ft_strdup(envp[i] + key_size + 1));
 		i++;
 	}
+
 	return (NULL);
 }

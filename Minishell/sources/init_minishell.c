@@ -1,7 +1,6 @@
 #include "../includes/minishell.h"
 
 int global;
-
 char **copy_envp(char **envp)
 {
     char    **cpy_envp;
@@ -57,21 +56,61 @@ int init_vars(t_data *minishell, char **envp)
     return(0);
 }
 
+int var_exist(char **envp, char *var);
+
 int init_readline(t_data *minishell)
 {
     while (1)
     {
         sigint_parser();
         minishell->readline = readline("minishell~> ");
-        if (minishell->readline == NULL)
-            break ;  
-        add_history(minishell->readline);
-        minishell->expanded_str = separate_by_spaces(minishell->readline);
-        minishell->cmd_split = split_quotes(minishell->expanded_str, ' ');
-        start_expansions(minishell->cmd_split, minishell);
-        create_list(minishell);
-        execute_pipes(minishell);
-		free_all(minishell);
+        //if (minishell->readline != NULL || minishell->readline[0] != 0)
+        //{
+            if (minishell->readline == NULL)
+                break ; 
+            add_history(minishell->readline);
+            minishell->expanded_str = separate_by_spaces(minishell->readline);
+            minishell->cmd_split = split_quotes(minishell->expanded_str, ' ');
+            int i = -1;
+            int j = -1;
+            int var = 0;
+            while (minishell->cmd_split[++j])
+            {
+                if (check_quotes(minishell->cmd_split[j]))
+                    printf("erro tratar");
+            }
+            while (minishell->cmd_split[++i])
+            {
+                if (minishell->cmd_split[i][0] == '$')
+                {
+                    if (var_exist(minishell->minishell_envp, minishell->cmd_split[i]))
+                    {// função para transformar a variavel que nao existe em null
+                     // remove outer quotes
+                        var = 1;
+                        break;
+                    }
+                }
+            }
+            if (var)
+                start_expansions(minishell->cmd_split, minishell);
+            parser(minishell);
+            execution(minishell);
+			free_all(minishell);
+       // }
     }
+    return (0);
+}
+
+int var_exist(char **envp, char *var)
+{
+    int i;
+
+    i = -1;
+    var++;
+    while (envp[++i])
+	{
+		    if (ft_strncmp(envp[i], var, ft_strlen(var)) == 0)
+                return (1);
+	}
     return (0);
 }

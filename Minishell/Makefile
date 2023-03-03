@@ -6,11 +6,12 @@ SRCS = $(shell find sources -name '*.c')
 
 OBJS	= $(SRC:.c=.o)
 
-CFLAGS	= -I /opt/homebrew/Cellar/readline/8.2.1/include
+CFLAGS = -I ~/.brew/opt/readline/include
 
-LFLAGS = -L /opt/homebrew/Cellar/readline/8.2.1/lib
+LFLAGS = -L ~/.brew/opt/readline/lib
 
 $(NAME):	$(OBJS)
+	make bonus -s -C ./sources/libft 
 	make -s -C ./sources/libft 
 	cc -g -Wall -Wextra -Werror $(SRCS) -o $(NAME) $(LIBFT) -lreadline $(CFLAGS) $(LFLAGS)
 

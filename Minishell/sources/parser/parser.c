@@ -1,6 +1,6 @@
 #include "../.././includes/minishell.h"
 
-int create_list(t_data *minishell)
+int parser(t_data *minishell)
 {
 	int i;
 
