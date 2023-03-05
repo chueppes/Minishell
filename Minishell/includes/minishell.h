@@ -30,6 +30,7 @@ typedef struct s_exec
     int                 outfile;
     int                 pipe_heredoc[2];
 	char				*heredoc_str;
+	int					has_doc;
 	struct s_exec  *next;
 }						t_exec;
 
@@ -99,7 +100,6 @@ int			find_position_open(t_commands *comm, int i);
 int			check_executable(t_commands *check_exec);
 char        *my_strjoin(char *s1, char *s2, int *size);
 char	    *my_strjoin2(char *s1, char *s2);
-void		str_heredoc(char *str, t_exec **exec_list, t_exec *temp_exec, int find_list);
 
 //utils_open
 int			open_output(t_commands **comm, t_exec **exec_list, int i, char *file);
@@ -107,6 +107,7 @@ int         open_append(t_commands **comm, t_exec **exec_list, int i, char *file
 int         open_input(t_commands **comm, t_exec **exec_list, int i, char *file);
 void        open_heredoc(t_commands **comm, t_exec **exec_list, int i, char *eof);
 char        *heredoc_readline(char *eof);
+void		str_heredoc(char *str, t_exec **exec_list, t_exec *temp_exec, int find_list);
 
 // execution
 void         execution(t_data *minishell);
@@ -125,6 +126,8 @@ void		main_process_last(int prevpipe, t_exec *exec_list);
 void        single_command(t_data *minishell);
 int         is_builtin(char *cmd);
 void        exec_builtin(t_exec *cmd, t_data *minishell);
+pid_t		heredoc_exec_single(t_data *minishell);
+pid_t		heredoc_exec_pipes(t_exec	*exec_list);
 
 //expansions
 void	start_expansions(char **commands, t_data *data);

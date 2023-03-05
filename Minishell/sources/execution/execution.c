@@ -24,25 +24,27 @@ void execution(t_data *minishell)
 void single_command(t_data *minishell)
 {
 	pid_t	fpid;
+	pid_t	heredocpid;
 
 	if (is_builtin(minishell->exec_list->exec_cmd[0]))
+	{
 		exec_builtin(minishell->exec_list, minishell);
+	}
 	else
 	{
 		fpid = fork();
 		if (fpid == 0)
 		{
-			dup_infile(minishell->exec_list);
-			dup_outfile(minishell->exec_list);
-			if (minishell->exec_list->pipe_heredoc[1] != 0 && minishell->exec_list->pipe_heredoc[0] != 0)
+			if (minishell->exec_list->has_doc == 1)
+				heredocpid = heredoc_exec_single(minishell);
+			if (heredocpid != 0)
 			{
-				close(minishell->exec_list->pipe_heredoc[1]);
-				dup2(minishell->exec_list->pipe_heredoc[0], STDIN_FILENO);
-				close(minishell->exec_list->pipe_heredoc[0]);
+				dup_infile(minishell->exec_list);
+				dup_outfile(minishell->exec_list);
+				execve(find_path(minishell->exec_list->exec_cmd[0], minishell->minishell_envp),  minishell->exec_list->exec_cmd, minishell->minishell_envp);
 			}
-			execve(find_path(minishell->exec_list->exec_cmd[0], minishell->minishell_envp), minishell->exec_list->exec_cmd, minishell->minishell_envp);
 		}
-		else
+		if (fpid != 0)
 		{
 			close_infile(minishell->exec_list);
 			close_outfile(minishell->exec_list);

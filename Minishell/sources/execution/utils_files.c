@@ -7,10 +7,6 @@ void dup_infile(t_exec *exec_list)
 		dup2 (exec_list->infile, STDIN_FILENO);
 		close(exec_list->infile);
 	}
-	if (exec_list->pipe_heredoc[0] != 0 && exec_list->pipe_heredoc[1] != 0)
-	{
-	
-	}
 	return ;
 }
 
