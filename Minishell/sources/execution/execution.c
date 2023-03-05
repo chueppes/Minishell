@@ -36,8 +36,16 @@ void single_command(t_data *minishell)
 		if (fpid == 0)
 		{
 			if (minishell->exec_list->has_doc == 1)
+			{
 				heredocpid = heredoc_exec_single(minishell);
-			if (heredocpid != 0)
+				if (heredocpid != 0)
+				{
+					dup_infile(minishell->exec_list);
+					dup_outfile(minishell->exec_list);
+					execve(find_path(minishell->exec_list->exec_cmd[0], minishell->minishell_envp),  minishell->exec_list->exec_cmd, minishell->minishell_envp);
+				}
+			}
+			else 
 			{
 				dup_infile(minishell->exec_list);
 				dup_outfile(minishell->exec_list);

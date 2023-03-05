@@ -10,6 +10,7 @@ pid_t heredoc_exec_single(t_data *minishell)
 	{
 		close(minishell->exec_list->pipe_heredoc[0]);
 		ft_putstr_fd(minishell->exec_list->heredoc_str, minishell->exec_list->pipe_heredoc[1]);
+		free(minishell->exec_list->heredoc_str);
 		close(minishell->exec_list->pipe_heredoc[1]);
 		exit(0);
 	}
@@ -32,6 +33,7 @@ pid_t heredoc_exec_pipes(t_exec	*exec_list)
 	{
 		close(exec_list->pipe_heredoc[0]);
 		ft_putstr_fd(exec_list->heredoc_str, exec_list->pipe_heredoc[1]);
+		free(exec_list->heredoc_str);
 		close(exec_list->pipe_heredoc[1]);
 		exit(0);
 	}

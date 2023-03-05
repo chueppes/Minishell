@@ -21,6 +21,7 @@ char	*heredoc_readline(char *eof)
 		free(temp);
 	}
 	free(temp);
+//	add_history(str);
 	return (str);
 }
 
@@ -53,9 +54,8 @@ void str_heredoc(char *str, t_exec **exec_list, t_exec *temp_exec, int find_list
 		}
 	}
 	else
-  	{
-		printf("%s", str);
+	{
 		if (str)
 			free(str);
-  	}
+	}
 }
