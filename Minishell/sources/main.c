@@ -10,5 +10,4 @@ int main(int argc, char **argv, char **envp)
         return(1);
     init_vars(&minishell, envp); //adicionado envp como parametro
     init_readline(&minishell);
-    free_all(&minishell);
 }

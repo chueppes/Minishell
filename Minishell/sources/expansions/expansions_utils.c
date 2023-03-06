@@ -1,6 +1,6 @@
 #include "../.././includes/minishell.h"
 
-void	start_expansions(char **commands, t_data *data)
+int	start_expansions(char **commands, t_data *data)
 {
 	int	i;
 
@@ -13,6 +13,7 @@ void	start_expansions(char **commands, t_data *data)
 		remove_outer_quotes(commands[i]);
 		i++;
 	}
+	return(1);
 }
 
 int	ft_strnchar(const char *s, char *set)

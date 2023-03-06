@@ -67,6 +67,11 @@ extern int global;
 int         init_vars(t_data *minishell, char **envp);
 int         init_readline(t_data *minishell);
 
+//initialize
+char 		**copy_envp(char **envp);
+void 	print_commands(t_commands *temp);
+void 	print_exec(t_exec *temp);
+
 // utils
 int         count_pipes(t_commands *comm);
 int         count_strs(char **str);
@@ -135,7 +140,7 @@ pid_t		heredoc_exec_single(t_data *minishell);
 pid_t		heredoc_exec_pipes(t_exec	*exec_list);
 
 //expansions
-void	start_expansions(char **commands, t_data *data);
+int		start_expansions(char **commands, t_data *data);
 char	*expand_path(char *str, t_data *data);
 char	*expand_vars(char *str, t_data *data);
 int	    ft_strnchar(const char *s, char *set);
@@ -146,7 +151,7 @@ void sigint_should_do(int signal);
 void sigint_parser(void);
 
 //expansions
-void	start_expansions(char **commands, t_data *data);
+int	start_expansions(char **commands, t_data *data);
 char	*expand_path(char *str, t_data *data);
 char	*expand_vars(char *str, t_data *data);
 int	    ft_strnchar(const char *s, char *set);
