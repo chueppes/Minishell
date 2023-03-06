@@ -15,8 +15,6 @@ char	*get_var_value(char *str, int i, t_data *data)
 	aux = ft_substr(str, 0, i - 1);
 	size_var = ft_strnchar(str + i, "|\"\'$?>< ");
 	var = ft_getenv(str + i, data->minishell_envp, size_var);
-	// if (!var && str[i] == '$')
-	// 	var = ft_itoa(data->pid);
 	if (!var && str[i] == '?')
 		var = ft_itoa(global);
 	path = ft_strjoin(aux, var);
@@ -62,6 +60,7 @@ char	*expand_vars(char *str, t_data *data)
             sq_open = (sq_open + 1) % 2;
         if (!sq_open && str[i] == '"') 
             dq_open = (dq_open + 1) % 2;
+			//STR NON EXISTENT
 		if (should_var_be_expanded(str, i, sq_open, dq_open))
 			return (expand_vars(get_var_value(str, ++i, data), data));
 		i++;

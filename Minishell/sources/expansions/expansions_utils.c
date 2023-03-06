@@ -7,10 +7,10 @@ void	start_expansions(char **commands, t_data *data)
 	i = 0;
 	while (commands[i])
 	{
+		check_quotes(commands[i]);
 		commands[i] = expand_vars(commands[i], data);
 		commands[i] = expand_path(commands[i], data);
 		remove_outer_quotes(commands[i]);
-		printf("%s\n", commands[i]);
 		i++;
 	}
 }

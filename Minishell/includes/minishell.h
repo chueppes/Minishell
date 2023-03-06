@@ -43,6 +43,7 @@ typedef struct s_data {
     char        *expanded_str;
     t_commands  *commands;
 	char        *old_pwd;
+	int 		online;
 	t_exec		*exec_list;
 }               t_data;
 
@@ -76,6 +77,7 @@ char        **split_quotes(char const *s, char c);
 char        *separate_by_spaces(char *str);
 int         check_quotes(char* string);
 char*       remove_outer_quotes(char* string);
+int treat_input(t_data *minishell);
 
 // list
 void        lstadd_back_command(t_commands **lst, t_commands *new_lst);
@@ -158,5 +160,12 @@ void	do_echo(char **str);
 void    do_env(t_data *envp);
 void    do_pwd(void);
 void    do_exit(t_data *minishell);
+
+// utils
+void	clear_up(void);
+
+//main
+int is_readline_valid(char *readline);
+int get_value_out(char *readline);
 
 #endif
