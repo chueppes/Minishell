@@ -15,6 +15,12 @@ char	*get_var_value(char *str, int i, t_data *data)
 	aux = ft_substr(str, 0, i - 1);
 	size_var = ft_strnchar(str + i, "|\"\'$?>< ");
 	var = ft_getenv(str + i, data->minishell_envp, size_var);
+	if (!var && str[i] != '?')
+	{
+		var = malloc(2);
+		var[0] = '\n';
+		var[1] = '\0';
+	}
 	if (!var && str[i] == '?')
 		var = ft_itoa(global);
 	path = ft_strjoin(aux, var);

@@ -10,9 +10,7 @@ int	start_expansions(char **commands, t_data *data)
 	while (commands[i])
 	{
 		check_quotes(commands[i]);
-		write(1, "oioi", 5);
 		commands[i] = expand_vars(commands[i], data);
-		write(1, "tchau", 6);
 		commands[i] = expand_path(commands[i], data);
 		remove_outer_quotes(commands[i]);
 		i++;
