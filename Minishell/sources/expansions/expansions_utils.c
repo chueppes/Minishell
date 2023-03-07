@@ -1,5 +1,7 @@
 #include "../.././includes/minishell.h"
 
+//static int get_key_size(char *commands);
+
 int	start_expansions(char **commands, t_data *data)
 {
 	int	i;
@@ -8,11 +10,11 @@ int	start_expansions(char **commands, t_data *data)
 	while (commands[i])
 	{
 		check_quotes(commands[i]);
-    if (ft_getenv(commands[i], data->minishell_envp, ft_strlen(commands[i])))
-		  commands[i] = expand_vars(commands[i], data);
+		write(1, "oioi", 5);
+		commands[i] = expand_vars(commands[i], data);
+		write(1, "tchau", 6);
 		commands[i] = expand_path(commands[i], data);
-		if (ft_getenv(commands[i], data->minishell_envp, ft_strlen(commands[i])))
-      remove_outer_quotes(commands[i]);
+		remove_outer_quotes(commands[i]);
 		i++;
 	}
 	return(1);
@@ -52,3 +54,23 @@ char	*ft_getenv(char *key, char **envp, int key_size)
 
 	return (NULL);
 }
+
+/*static int get_key_size(char *commands)
+{
+	int	i;
+	int count;
+
+	i = 0;
+	count = 0;
+	while ((commands[i] == '\'' || commands[i] == '\"') && commands[i] != 0)
+		i++;
+	if (commands[i] == '$')
+	{
+		while (commands[i] && commands[i] != '\'' && commands[i] != '\"')
+		{
+			i++;
+			count++;
+		}
+	}
+	return (count);
+}*/
