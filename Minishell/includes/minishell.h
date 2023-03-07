@@ -40,5 +40,6 @@ int     count_strs(char **strs);
 int     is_space(int c);
 int     is_special_char(char *str);
 char    *separate_by_spaces(char *str);
+char    *check_quotes(char *copy, char *str, int i, int start);
 
 #endif
