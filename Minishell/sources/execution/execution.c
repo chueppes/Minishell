@@ -27,9 +27,7 @@ void single_command(t_data *minishell)
 	pid_t	heredocpid;
 
 	if (is_builtin(minishell->exec_list->exec_cmd[0]))
-	{
 		exec_builtin(minishell->exec_list, minishell);
-	}
 	else
 	{
 		fpid = fork();
@@ -42,14 +40,16 @@ void single_command(t_data *minishell)
 				{
 					dup_infile(minishell->exec_list);
 					dup_outfile(minishell->exec_list);
-					execve(find_path(minishell->exec_list->exec_cmd[0], minishell->minishell_envp),  minishell->exec_list->exec_cmd, minishell->minishell_envp);
+					execve(find_path(minishell->exec_list->exec_cmd[0], minishell->minishell_envp),\
+					minishell->exec_list->exec_cmd, minishell->minishell_envp);
 				}
 			}
 			else 
 			{
 				dup_infile(minishell->exec_list);
 				dup_outfile(minishell->exec_list);
-				execve(find_path(minishell->exec_list->exec_cmd[0], minishell->minishell_envp),  minishell->exec_list->exec_cmd, minishell->minishell_envp);
+				execve(find_path(minishell->exec_list->exec_cmd[0], minishell->minishell_envp),\
+				 minishell->exec_list->exec_cmd, minishell->minishell_envp);
 			}
 		}
 		if (fpid != 0)
