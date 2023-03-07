@@ -8,9 +8,11 @@ int	start_expansions(char **commands, t_data *data)
 	while (commands[i])
 	{
 		check_quotes(commands[i]);
-		commands[i] = expand_vars(commands[i], data);
+    if (ft_getenv(commands[i], data->minishell_envp, ft_strlen(commands[i])))
+		  commands[i] = expand_vars(commands[i], data);
 		commands[i] = expand_path(commands[i], data);
-		remove_outer_quotes(commands[i]);
+		if (ft_getenv(commands[i], data->minishell_envp, ft_strlen(commands[i])))
+      remove_outer_quotes(commands[i]);
 		i++;
 	}
 	return(1);

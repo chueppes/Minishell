@@ -9,9 +9,10 @@ int parser(t_data *minishell)
         lstadd_back_command(&minishell->commands, lstnew_command(minishell->cmd_split[i]));
 //	if (parse_error(minishell))
 //		return (-1);
+//  check_var();
 	check_input(minishell);
 	check_input2(minishell);
-    create_exec_list(&minishell->exec_list, minishell->commands);
+  create_exec_list(&minishell->exec_list, minishell->commands);
 	prepare_for_execution(&minishell->exec_list);
 	search_redirect(&minishell->commands, &minishell->exec_list);
 	return (SUCESS);
