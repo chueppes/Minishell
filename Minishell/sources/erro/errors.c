@@ -21,7 +21,7 @@ int handle_errors(int type_error, int code_error, char *output)
     if(type_error == PIPENDE_ERR)
         put_error("Error at ./Minishell: Syntax error near unexpected token '|'.");
     if(type_error == NDIR_ERR)
-        put_error("Error at ./Minishell: No such file or directory");
+        put_error("Error at ./Minishell: No such file or directory: ");
     if(type_error == NPERM_ERR)
         put_error("Error at ./Minishell: Permission denied.");
     if(type_error == ISDIR_ERR)

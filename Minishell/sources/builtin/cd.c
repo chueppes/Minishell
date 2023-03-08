@@ -68,7 +68,7 @@ void	do_cd(char *path, char **env, t_data *mini, int empity)
 		free(exec_home);
 	}
 	else if (opendir(path) == NULL)
-		printf("Minishell: cd: %s: No such file or directory\n", path);
+		handle_errors(14, 1, path);
 	else
 	{
 		mini->old_pwd = getcwd(NULL, 0);
