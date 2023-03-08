@@ -67,6 +67,7 @@ int init_readline(t_data *minishell)
         {
             add_history(minishell->readline);
             minishell->expanded_str = separate_by_spaces(minishell->readline);
+            printf("%s\n", minishell->expanded_str);
             minishell->cmd_split = split_quotes(minishell->expanded_str, ' ');
             int i = -1;
             int j = -1;
