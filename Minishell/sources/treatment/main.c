@@ -5,10 +5,9 @@ int get_value_out(char *readline);
 
 int treat_input(t_data *minishell)
 {
-   
+    add_history(minishell->readline);
     if(!check_quotes(minishell->readline))
         return(handle_errors(QUOTE_ERR, 1, NULL)); 
-    add_history(minishell->readline);
     minishell->expanded_str = separate_by_spaces(minishell->readline);
     minishell->cmd_split = split_quotes(minishell->expanded_str, ' ');
     if (start_expansions(minishell->cmd_split, minishell))

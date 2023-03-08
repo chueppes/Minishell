@@ -28,6 +28,7 @@ int init_readline(t_data *minishell)
             execution(minishell);
 		    free_all(minishell);
         }
+        free(minishell->readline);
     }
     return (0);
 }

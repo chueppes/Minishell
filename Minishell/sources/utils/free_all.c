@@ -49,8 +49,8 @@ void	free_list_exec(t_exec **list)
     (*list)->aux = NULL;
 	while ((*list)->exec_cmd[++i])
 	{
-		(*list)->exec_cmd[i] = NULL;
 		free((*list)->exec_cmd[i]);
+		(*list)->exec_cmd[i] = NULL;
 	}
 	(*list)->exec_cmd = NULL;
 	free(*list);
