@@ -47,7 +47,10 @@ void	ft_last_prog(t_data *mini, int prevpipe, t_exec *exec_list)
 
 		cpid = fork ();
 		if (cpid == 0)
+		{
+			child_signals();
 			exec_child_last(mini, prevpipe, exec_list);
+		}
 		else
 			main_process_last(prevpipe, exec_list);
 }
@@ -60,7 +63,10 @@ void	ft_pipe(t_data *mini, int *prevpipe, t_exec *exec_list)
 	pipe (pipefd);
 	cpid = fork ();
 	if (cpid == 0)
+	{
+		child_signals();
 		exec_child(mini, prevpipe, exec_list, pipefd);
+	}
 	else
 		main_process(prevpipe, pipefd, exec_list);
 }

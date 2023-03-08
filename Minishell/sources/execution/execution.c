@@ -39,6 +39,7 @@ void single_command(t_data *minishell)
 		fpid = fork();
 		if (fpid == 0)
 		{
+			child_signals();
 			if (minishell->exec_list->has_doc == 1)
 			{
 				heredocpid = heredoc_exec_single(minishell);
