@@ -43,6 +43,11 @@ void    do_export(char **envp, char *str, t_data *mini)
     i = 0;
     exec = 0;
     j = 0;
+    if (!str)
+    {
+        do_env(mini, 0);
+        return ;
+    }
     while (str[i] != '=' && str[i])
         i++;
     if (str[i] == '\0')

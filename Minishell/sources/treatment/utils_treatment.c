@@ -14,7 +14,7 @@ void	ft_check_syntax_aux_1(char *str, int *start, int *i, char *copy)
 			*start = *start + 1;
 		}
 	}
-	if (str[*start] == 39)
+	else if (str[*start] == 39)
 	{
 		copy[*i] = str[*start];
 		*i = *i + 1;
@@ -28,17 +28,17 @@ void	ft_check_syntax_aux_1(char *str, int *start, int *i, char *copy)
 	}
 }
 
-int	ft_check_syntax_aux_0(char *str, int *start, int *i, char *copy)
+int	ft_check_syntax_aux_0(char *str, int *start, int *i, char *copy, int *j)
 {
-	if (str[*i] == '|')
+	if (str[*j] == '|')
 	{
 		free(copy);
 		return (1);
 	}
 	ft_check_syntax_aux_1(str, start, i, copy);
 	copy[*i] = str[*start];
-	if (is_special_char(&str[*i]) == 2)
-		*i = *i + 1;
+	if (is_special_char(&str[*j]) == 2)
+		*j = *j + 1;
 	if (multi(str, *start) == 1)
 	{
 		*i = *i + 1;
