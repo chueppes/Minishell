@@ -9,7 +9,7 @@ char **modify_env(char **envp, char *str, int j)
     i = -1;
     amount_strs = count_strs(envp);
     cpy_envp = (char **)malloc(sizeof(char *) * amount_strs + 1);
-    while (++i < (amount_strs - 1) && ft_strncmp(envp[i], str, j) != 0)
+    while (++i < amount_strs && ft_strncmp(envp[i], str, j) != 0)
         cpy_envp[i] = ft_strdup(envp[i]);
     cpy_envp[i] = ft_strdup(str);
     while (++i < (amount_strs - 1) )
@@ -27,7 +27,7 @@ char **add_env(char **envp, char *str)
     i = -1;
     amount_strs = count_strs(envp);
     cpy_envp = (char **)malloc(sizeof(char *) * amount_strs + 1);
-    while (++i < (amount_strs - 1))
+    while (++i < amount_strs)
         cpy_envp[i] = ft_strdup(envp[i]);
     cpy_envp[i] = ft_strdup(str);
     cpy_envp[i + 1] = NULL;
@@ -46,7 +46,7 @@ void    do_export(char **envp, char *str, t_data *mini)
     while (str[i] != '=' && str[i])
         i++;
     if (str[i] == '\0')
-        str = ft_strjoin(str, "="); //TESTAR
+        return ;
     while (envp[j])
     {
         if(ft_strncmp(envp[j], str, i) == 0)

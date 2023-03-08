@@ -9,7 +9,7 @@ char **unset_env(char **envp, int unset_i)
     i = -1;
     amount_strs = count_strs(envp);
     cpy_envp = (char **)malloc(sizeof(char *) * amount_strs);
-    while (++i < (amount_strs - 1) && i != unset_i)
+    while (++i < amount_strs && i != unset_i)
         cpy_envp[i] = ft_strdup(envp[i]);
     cpy_envp[i] = NULL;
     return (cpy_envp);
