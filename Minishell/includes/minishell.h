@@ -83,6 +83,11 @@ char        *separate_by_spaces(char *str);
 int         check_quotes(char* string);
 char*       remove_outer_quotes(char* string);
 int treat_input(t_data *minishell);
+void	ft_check_syntax_aux_1(char *str, int *start, int *i, char *copy);
+int	ft_check_syntax_aux_0(char *str, int *start, int *i, char *copy);
+int	is_special_char(char *str);
+int	multi(char *str, int index);
+int	is_space(int c);
 
 // list
 void        lstadd_back_command(t_commands **lst, t_commands *new_lst);

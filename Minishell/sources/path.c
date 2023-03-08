@@ -40,6 +40,7 @@ char	*find_path(char *cmd, char **envp)
 	}
 	if (access(final_path, F_OK | X_OK) == -1)
     {
+		printf("Minishell: %s: command not found\n", cmd);
 		return (NULL); //erro
 		//return alguma coisa
     }

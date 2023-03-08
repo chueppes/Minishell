@@ -27,7 +27,7 @@ int init_readline(t_data *minishell)
     clear_up();
     while (1)
     {
-        sigint_parser();
+    //    sigint_parser();
         minishell->readline = readline("minishell~> ");
         if(minishell->readline == NULL)
             break ;

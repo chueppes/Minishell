@@ -1,8 +1,11 @@
 NAME	= minishell
 
+
 LIBRARY = ./sources/libft/libft.a
 
+
 SRCS = $(shell find sources -name '*.c')
+
 
 OBJS	= $(SRC:.c=.o)
 
@@ -30,4 +33,4 @@ re:	fclean all
 .PHONY: all clean fclean re norminette
 
 valgrind: all
-	valgrind --leak-check=full --show-reachable=yes --show-leak-kinds=all --error-limit=no --gen-suppressions=all --track-origins=yes  --log-file=lib.log ./minishell
+	valgrind --leak-check=full --show-reachable=yes --show-leak-kinds=all --error-limit=no --gen-suppressions=all --track-origins=yes  --log-file=lib.log ./minishel
