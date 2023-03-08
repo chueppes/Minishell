@@ -99,7 +99,7 @@ char*       remove_outer_quotes(char* string);
 int treat_input(t_data *minishell);
 int	multi(char *str, int index);
 void	ft_check_syntax_aux_1(char *str, int *start, int *i, char *copy);
-int	ft_check_syntax_aux_0(char *str, int *start, int *i, char *copy);
+int	ft_check_syntax_aux_0(char *str, int *start, int *i, char *copy, int *j);
 int	is_space(int c);
 int	is_special_char(char *str);
 
