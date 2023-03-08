@@ -15,11 +15,13 @@ int	multi(char *str, int index)
 char	*check_syntax(char *str, int start, int end, char *copy)
 {
 	int	i;
+	int j;
 
 	i = 0;
+	j = start + 1;
 	while (str[start] && start <= end)
 	{
-		if (ft_check_syntax_aux_0(str, &start, &i, copy))
+		if (ft_check_syntax_aux_0(str, &start, &i, copy, &j))
 			return ("ERROR: syntax error near unexpected token '|'");
 		i++;
 		start++;
