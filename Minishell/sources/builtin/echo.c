@@ -71,7 +71,7 @@ int	flag_check(char *str)
 		i++;
 	if (str[i] != '\0')
 		return (1);
-	return (0);	
+	return (0);
 }
 
 void	do_echo(char **str)
