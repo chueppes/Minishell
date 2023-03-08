@@ -6,9 +6,9 @@ SRCS = $(shell find sources -name '*.c')
 
 OBJS	= $(SRC:.c=.o)
 
-CFLAGS	= -I /opt/homebrew/Cellar/readline/8.2.1/includes
+CFLAGS = -I ~/.brew/opt/readline/include
 
-LFLAGS = -L /opt/homebrew/Cellar/readline/8.2.1/libft
+LFLAGS = -L ~/.brew/opt/readline/lib
 
 $(NAME):	$(OBJS)
 	make bonus -s -C ./sources/libft 
@@ -30,4 +30,4 @@ re:	fclean all
 .PHONY: all clean fclean re norminette
 
 valgrind: all
-	valgrind --leak-check=full --show-reachable=yes --show-leak-kinds=all --error-limit=no --gen-suppressions=all --track-origins=yes  --log-file=lib.log ./minishel
+	valgrind --leak-check=full --show-reachable=yes --show-leak-kinds=all --error-limit=no --gen-suppressions=all --track-origins=yes  --log-file=lib.log ./minishell
