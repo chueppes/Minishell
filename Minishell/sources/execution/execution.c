@@ -28,6 +28,10 @@ void single_command(t_data *minishell)
 
 	if (is_builtin(minishell->exec_list->exec_cmd[0]))
 	{
+		if (minishell->exec_list->heredoc_str != NULL)
+			free(minishell->exec_list->heredoc_str);
+			dup_infile(minishell->exec_list);
+			dup_outfile(minishell->exec_list);
 		exec_builtin(minishell->exec_list, minishell);
 	}
 	else
