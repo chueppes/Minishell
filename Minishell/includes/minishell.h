@@ -41,5 +41,8 @@ int     is_space(int c);
 int     is_special_char(char *str);
 char    *separate_by_spaces(char *str);
 char    *check_quotes(char *copy, char *str, int i, int start);
+int ft_check_syntax_aux_0(char *str, int *start, int *i, char *copy);
+void ft_check_syntax_aux_1(char *str, int *start, int *i, char *copy);
+int	multi(char *str, int index);
 
 #endif

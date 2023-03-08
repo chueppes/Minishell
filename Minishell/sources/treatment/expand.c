@@ -19,28 +19,8 @@ char	*check_syntax(char *str, int start, int end, char *copy)
 	i = 0;
 	while (str[start] && start <= end)
 	{
-		if (str[i] == '|')
-		{
-			free(copy);
+		if (ft_check_syntax_aux_0(str, &start, &i, copy))
 			return ("ERROR: syntax error near unexpected token '|'");
-		}
-		if (str[start] == '"')
-		{
-			copy[i++] = str[start++];
-			while (str[start] != '"' && str[start])
-				copy[i++] = str[start++];
-		}
-        if (str[start] == 39)
-		{
-			copy[i++] = str[start++];
-			while (str[start] != 39 && str[start])
-				copy[i++] = str[start++];
-		}
-		copy[i] = str[start];
-		if (is_special_char(&str[i]) == 2)
-			i++;
-		if (multi(str, start) == 1)
-			copy[++i] = ' ';
 		i++;
 		start++;
 	}
