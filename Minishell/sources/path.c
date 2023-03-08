@@ -40,8 +40,8 @@ char	*find_path(char *cmd, char **envp)
 	}
 	if (access(final_path, F_OK | X_OK) == -1)
     {
-		return (NULL); //erro
-		//return alguma coisa
+		handle_errors(CMDNOTFOUND_ERR, 0, cmd);
+		return (NULL);
     }
 	// virar um outro return de existe;
 	return (final_path);

@@ -50,7 +50,7 @@ void str_heredoc(char *str, t_exec **exec_list, t_exec *temp_exec, int find_list
 		else
 		{
 			temp_exec->heredoc_str = malloc(1);
-			temp_exec->heredoc_str = '\0';
+			//temp_exec->heredoc_str = '\0';
 		}
 	}
 	else

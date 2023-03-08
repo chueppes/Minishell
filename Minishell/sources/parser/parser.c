@@ -24,13 +24,13 @@ int check_input(t_data *minishell)
 	temp = minishell->commands;
 	while (temp != NULL)
 	{
-		if (temp->cmd[0] == '>' && temp->cmd[1] == '>')
+		if (temp->cmd[0] == '>' && temp->cmd[1] == '>' && temp->cmd[2] == '\0')
 			temp->token = APPEND_OUTPUT;
 		else if (temp->cmd[0] == '>' && temp->cmd[1] == '\0')
 			temp->token = REDIRECT_OUTPUT;
 		else if (temp->cmd[0] == '<' && temp->cmd[1] == '\0')
 			temp->token = REDIRECT_INPUT;
-		else if (temp->cmd[0] == '<' && temp->cmd[1] == '<')
+		else if (temp->cmd[0] == '<' && temp->cmd[1] == '<' && temp->cmd[2] == '\0')
 			temp->token = HEREDOC;
 		else if (temp->cmd[0] == '|' && temp->cmd[1] == '\0')
 			temp->token = PIPE;

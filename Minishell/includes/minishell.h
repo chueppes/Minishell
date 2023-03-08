@@ -47,6 +47,20 @@ typedef struct s_data {
 	t_exec		*exec_list;
 }               t_data;
 
+enum	error_type
+{
+	FORK_ERR = 10,
+	QUOTE_ERR = 11,
+	PIPENDE_ERR = 12,
+	OPENFILE_ERR = 13,
+	NDIR_ERR = 14,
+	NPERM_ERR = 15,
+	PIPERR_ERR = 16,
+	ISDIR_ERR = 17,
+	CMDNOTFOUND_ERR = 18,
+	DUP_ERR = 19,
+};
+
 enum    input_type {
 	REDIRECT_INPUT = 1000,
 	REDIRECT_OUTPUT = 1001,
@@ -83,6 +97,11 @@ char        *separate_by_spaces(char *str);
 int         check_quotes(char* string);
 char*       remove_outer_quotes(char* string);
 int treat_input(t_data *minishell);
+int	multi(char *str, int index);
+void	ft_check_syntax_aux_1(char *str, int *start, int *i, char *copy);
+int	ft_check_syntax_aux_0(char *str, int *start, int *i, char *copy);
+int	is_space(int c);
+int	is_special_char(char *str);
 
 // list
 void        lstadd_back_command(t_commands **lst, t_commands *new_lst);
@@ -172,5 +191,8 @@ void	clear_up(void);
 //main
 int is_readline_valid(char *readline);
 int get_value_out(char *readline);
+
+//erro
+int handle_errors(int type_error, int code_error, char *output);
 
 #endif

@@ -5,22 +5,26 @@
 #include <string.h>
 #include <ctype.h>
 
-int check_quotes(char* string) {
-    int inside_quotes = 0, inside_single_quotes = 0;
-    for (char* p = string; *p; p++) {
-        if (*p == '"' && !inside_single_quotes) inside_quotes = !inside_quotes;
-        else if (*p == '\'' && !inside_quotes) inside_single_quotes = !inside_single_quotes;
-        else if (!inside_quotes && !inside_single_quotes && (*p == '"' || *p == '\'')) {
-            printf("Erro: aspas abertas\n");
-            return 1;
-        }
+int check_quotes(char* string) 
+{
+    int inside_quotes = 0;
+    int inside_single_quotes = 0;
+    const char* p = string;
+    while (*p) 
+    {
+        if (*p == '"' && !inside_single_quotes)
+            inside_quotes = !inside_quotes;
+        else if (*p == '\'' && !inside_quotes)
+            inside_single_quotes = !inside_single_quotes;
+        else if (!inside_quotes && !inside_single_quotes && (*p == '"' || *p == '\''))
+            return (0);
+        p++;
     }
-    if (inside_quotes || inside_single_quotes) {
-        printf("Erro: aspas não fechadas\n");
-        return 1;
-    }
-    return 0;
+    if (inside_quotes || inside_single_quotes) 
+        return (0);
+    return (1);
 }
+
 char* remove_outer_quotes(char* string)
  {
     char* result = NULL;
