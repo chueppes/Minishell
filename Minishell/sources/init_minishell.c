@@ -10,6 +10,7 @@ int init_vars(t_data *minishell, char **envp)
 	minishell->exec_list = NULL;
     minishell->online = 1;
     minishell->minishell_envp = copy_envp(envp); // inicialização da nossa envp
+	minishell->old_pwd = getcwd(NULL, 0);
     return(0);
 }
 
