@@ -10,10 +10,17 @@ char	**modify_env(char **envp, char *str, int j)
 	amount_strs = count_strs(envp);
 	cpy_envp = (char **)malloc(sizeof(char *) * amount_strs + 1);
 	while (++i < amount_strs && ft_strncmp(envp[i], str, j) != 0)
+	{
 		cpy_envp[i] = ft_strdup(envp[i]);
+		free(envp[i]);
+	}
 	cpy_envp[i] = ft_strdup(str);
+	free(envp[i]);
 	while (++i < amount_strs)
+	{
 		cpy_envp[i] = ft_strdup(envp[i]);
+		free(envp[i]);
+	}
 	cpy_envp[i] = NULL;
 	return (cpy_envp);
 }

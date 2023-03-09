@@ -10,17 +10,20 @@ char	**unset_env(char **envp, int unset_i)
 	i = 0;
 	j = 0;
 	amount_strs = count_strs(envp);
-	cpy_envp = (char **)malloc(sizeof(char *) * amount_strs);
+	cpy_envp = (char **)malloc(sizeof(char *) * amount_strs - 1);
 	while (i < amount_strs && i != unset_i)
 	{
 		cpy_envp[j] = ft_strdup(envp[i]);
+		free(envp[i]);
 		i++;
 		j++;
 	}
+	free(envp[i]);
 	i++;
 	while (i < amount_strs)
 	{
 		cpy_envp[j] = ft_strdup(envp[i]);
+		free(envp[i]);
 		j++;
 		i++;
 	}
@@ -31,13 +34,20 @@ char	**unset_env(char **envp, int unset_i)
 void	do_unset(char **env, char *unset, t_data *mini)
 {
 	int	i;
-	int	len_unset;
+	int	j;
 
 	i = -1;
-	len_unset = ft_strlen(unset);
+	j = 0;
+	while (unset[j] != '=' && unset[j])
+		j++;
+	if (unset[j] == '=')
+	{
+		printf("errado\n");
+		return ;
+	}
 	while (env[++i])
 	{
-		if (ft_strncmp(unset, env[i], len_unset) == 0)
+		if (ft_strncmp(unset, env[i], j) == 0)
 			mini->minishell_envp = unset_env(env, i);
 	}
 }
