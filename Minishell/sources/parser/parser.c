@@ -6,12 +6,12 @@ int parser(t_data *minishell)
 
 	i = -1;
     while (minishell->cmd_split[++i])
-        lstadd_back_command(&minishell->commands, lstnew_command(minishell->cmd_split[i]));
-//	if (parse_error(minishell))
-//		return (-1);
+        lstadd_back_command(&minishell->commands,\
+      lstnew_command(minishell->cmd_split[i]));
 	check_input(minishell);
 	check_input2(minishell);
-    create_exec_list(&minishell->exec_list, minishell->commands);
+//  parser_error(minishell);
+  create_exec_list(&minishell->exec_list, minishell->commands);
 	prepare_for_execution(&minishell->exec_list);
 	search_redirect(&minishell->commands, &minishell->exec_list);
 	return (SUCESS);
