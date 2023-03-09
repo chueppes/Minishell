@@ -30,8 +30,8 @@ void single_command(t_data *minishell)
 	{
 		if (minishell->exec_list->heredoc_str != NULL)
 			free(minishell->exec_list->heredoc_str);
-			dup_infile(minishell->exec_list);
-			dup_outfile(minishell->exec_list);
+		dup_infile(minishell->exec_list);
+		dup_outfile(minishell->exec_list);
 		exec_builtin(minishell->exec_list, minishell);
 	}
 	else
@@ -39,6 +39,7 @@ void single_command(t_data *minishell)
 		fpid = fork();
 		if (fpid == 0)
 		{
+      child_signals();
 			if (minishell->exec_list->has_doc == 1)
 			{
 				heredocpid = heredoc_exec_single(minishell);

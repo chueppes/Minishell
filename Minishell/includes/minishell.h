@@ -193,6 +193,9 @@ int is_readline_valid(char *readline);
 int get_value_out(char *readline);
 
 //erro
-int handle_errors(int type_error, int code_error, char *output);
+int     handle_errors(int type_error, int code_error, char *output);
+void    signals(void);
+void    handle_sig(int sig, siginfo_t *info, void *algo);
+void    child_signals(void);
 
 #endif
