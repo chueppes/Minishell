@@ -72,6 +72,32 @@ enum    input_type {
     DELIMITER = 1009,
 };
 
+# define LINE_1 "			⣠⡀⠀⠀⠀⢀⡀⠤⣤⣶⣶⣶⣶⣦⠤⢄⡀⠀⠀⠀⢀⣄"
+# define LINE_2 "			⣿⣿⣄⣤⣾⣷⣤⣤⣀⠉⠛⠛⠉⣁⣠⣤⣼⣷⣦⣠⣿⣿"
+# define LINE_3 "			⣿⣿⣜⠿⣿⡿⠿⢿⣿⣿⣦⣴⣾⣿⡿⠿⢿⣿⠿⣣⣿⣿"
+# define LINE_4 "			⠸⣿⣿⣷⣾⣭⣷⡀⠈⢻⣿⣿⡿⠋⢀⣾⣭⣷⣾⣿⣿⠇"
+# define LINE_5 "		  	 ⣿⣿⣿⣿⣿⣿⠃⠀⠀⢹⡟⠀⠀⡘⣿⣿⣿⣿⣿⣿"
+# define LINE_6 "		      ⢰⡇⠀⢻⡌⠛⠿⢟⡡⠊⠀⠀⠀⠃⠀⠀⠐⢜⣻⠿⠛⢁⣿⠀⢀⢇"
+# define LINE_7 "		      ⢸⠙⢄⣸⡿⠂⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⢻⣯⣠⠎⣼"
+# define LINE_8 "		      ⠈⣷⡀⠙⢷⣏⣉⡓⢦⡀⠀⠀⢀⠀⠀⠀⢀⣠⠞⣉⣹⣾⠟⢁⣼⠇"
+# define LINE_9 "		       ⢹⣿⣶⠞⠁⠹⡉⠚⠿⣦⣤⠆⠸⣄⣴⡿⠗⢋⠟⠉⠙⣶⣿⡿"
+# define LINE_10 "		       ⠈⣿⣿⡀⠀⠐⠌⠒⠂⠚⢷⠀⠀⡸⠓⠒⠒⠉⠄⠀⣀⣾⣿⠇"
+# define LINE_11 "			⠈⠻⠿⡷⢄⡀⠀⣤⠆⢸⠀⠀⠁⠀⣤⡀⠀⡠⢾⠿⠿⠋"
+# define LINE_12 "			   ⣇⠀⠁⠘⠙⠦⣌⠆⠀⢂⠴⠏⠇⠈⠀⢸"
+# define LINE_13 "			   ⠹⡄⠀⣆⠐⠢⠬⠷⠶⠥⠤⠒⢰⠀⢀⠜"
+# define LINE_14 "			    ⠈⠳⣿⡄⠐⠦⢦⣴⠶⠖⢀⣿⡴⠁"
+# define LINE_15 " 			      ⢻⣿⣦⣴⣿⣿⣶⣴⣾⡿"
+# define LINE_16 "			      ⠈⠻⡿⠟⣋⣙⠻⠿⡿⠁"
+# define LINE_17 "			        ⠈⢾⣿⣿⡷⠊"
+# define LINE_18 "			          ⠹⠟"
+# define LINE_19 "												"
+# define LINE_20 "	███╗░░░███╗██╗███╗░░██╗██╗██╗░░██╗███████╗██╗░░░░░██╗░░░░░"
+# define LINE_21 "	████╗░████║██║████╗░██║██║██║░░██║██╔════╝██║░░░░░██║░░░░░"
+# define LINE_22 "	██╔████╔██║██║██╔██╗██║██║███████║█████╗░░██║░░░░░██║░░░░░"
+# define LINE_23 "	██║╚██╔╝██║██║██║╚████║██║██╔══██║██╔══╝░░██║░░░░░██║░░░░░"
+# define LINE_24 "	██║░╚═╝░██║██║██║░╚███║██║██║░░██║███████╗███████╗███████╗"
+# define LINE_25 "	╚═╝░░░░░╚═╝╚═╝╚═╝░░╚══╝╚═╝╚═╝░░╚═╝╚══════╝╚══════╝╚══════╝"
+
 #define SUCESS 0
 #define FAILURE -1
 
@@ -191,6 +217,7 @@ void	clear_up(void);
 //main
 int is_readline_valid(char *readline);
 int get_value_out(char *readline);
+void	print_start(void);
 
 //erro
 int     handle_errors(int type_error, int code_error, char *output);
