@@ -1,36 +1,36 @@
 #include "../../includes/minishell.h"
 
-void	print_simple(char *str)
+int	flag_check(char *str)
 {
-	int		i;
-//	int		len;
-	char	*print;
+	int	i;
 
-//	len = 0;
-	i = -1;
-//	len = ft_strlen(str);
-	print = ft_strtrim(str, "\'");
-	while (print[++i])
-		printf("%c", print[i]);
-	free(print);
+	i = 0;
+	if (str[i] == '-' && str[i + 1] == 'n')
+		i++;
+	if (i == 1)
+		while (str[i] == 'n' && str[i])
+			i++;
+	if (str[i] != '\0')
+		return (1);
+	return (0);
 }
 
-void	print_double(char *str)
+void	print_echo(char *str, int type)
 {
 	int		i;
-//	int		len;
 	char	*print;
 
-//	len = 0;
-	i = 0;
-//	len = ft_strlen(str);
-	print = ft_strtrim(str, "\"");
-	while (print[i])
+	i = -1;
+	if (type == 1)
+		print = ft_strtrim(str, "\'");
+	else
+		print = ft_strtrim(str, "\"");
+	while (print[++i])
 	{
-		if (print[i] == '\"')
-			i++;
+		if (type != 1)
+			while (print[i] == '\"')
+				i++;
 		printf("%c", print[i]);
-		i++;
 	}
 	free(print);
 }
@@ -38,26 +38,25 @@ void	print_double(char *str)
 void	do_echo(char **str)
 {
 	int	i;
+	int	flag;
 
 	i = 1;
-	if (ft_strcmp(str[i], "-n") == 0)
+	flag = 1;
+	while (str[i] && (ft_strcmp(str[i], "-n") == 0 || flag_check(str[i]) == 0))
 	{
+		flag = 0;
 		i++;
-		if (str[i][0] == '\'')
-			print_simple(str[i]);
-		else
-			print_double(str[i]);
 	}
-	else
+	while (str[i])
 	{
-		while (str[i])
-		{
-			if (str[i][0] == '\'')
-				print_simple(str[i]);
-			else
-				print_double(str[i]);
-			i++;
-		}
-		printf("\n");
+		if (str[i][0] == '\'')
+			print_echo(str[i], 1);
+		else
+			print_echo(str[i], 2);
+		if (str[i + 1])
+			printf(" ");
+		i++;
 	}
+	if (flag == 1)
+		printf("\n");
 }

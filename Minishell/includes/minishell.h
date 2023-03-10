@@ -207,7 +207,7 @@ void	do_cd(char *path, char **env, t_data *mini, int empity);
 void    do_export(char **envp, char *str, t_data *mini);
 void    do_unset(char **env, char *unset, t_data *mini);
 void	do_echo(char **str);
-void    do_env(t_data *envp);
+void    do_env(t_data *envp, int type);
 void    do_pwd(void);
 void    do_exit(t_data *minishell);
 
