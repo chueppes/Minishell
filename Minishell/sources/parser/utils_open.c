@@ -82,7 +82,7 @@ int open_append(t_commands **comm, t_exec **exec_list, int i, char *file)
 		while (find_list--)
 			temp_exec = temp_exec->next;
     	if (temp_exec->outfile != 0)
-      		close(temp_exec->outfile);
+      	close(temp_exec->outfile);
 		temp_exec->outfile = open(file, O_WRONLY | O_CREAT | O_APPEND, 0666);
 	}
 	else

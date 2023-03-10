@@ -16,7 +16,7 @@ int init_vars(t_data *minishell, char **envp)
 
 int init_readline(t_data *minishell)
 {
-    clear_up();
+    clear_up(); 
     while (1)
     {
         signals();
@@ -25,11 +25,16 @@ int init_readline(t_data *minishell)
             break ;
         if(!treat_input(minishell))
         {
-            parser(minishell);
-            execution(minishell);
-		    free_all(minishell);
+            if (parser(minishell) == SUCCESS)
+            {
+				execution(minishell);
+				free_all(minishell);
+            }
+            else
+              free_parser(minishell);
         }
-        free(minishell->readline);
+		else
+        	free(minishell->readline);
     }
     return (0);
 }

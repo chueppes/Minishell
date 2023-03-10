@@ -5,16 +5,16 @@ int parser(t_data *minishell)
 	int i;
 
 	i = -1;
-    while (minishell->cmd_split[++i])
-        lstadd_back_command(&minishell->commands,\
-      lstnew_command(minishell->cmd_split[i]));
+    while (minishell->cmd_split[++i] != NULL)
+		lstadd_back_command(&minishell->commands, lstnew_command(minishell->cmd_split[i]));
 	check_input(minishell);
 	check_input2(minishell);
-//  parser_error(minishell);
-  create_exec_list(&minishell->exec_list, minishell->commands);
+	if (parser_error(minishell) == FAILURE)
+		return (FAILURE);
+	create_exec_list(&minishell->exec_list, minishell->commands);
 	prepare_for_execution(&minishell->exec_list);
 	search_redirect(&minishell->commands, &minishell->exec_list);
-	return (SUCESS);
+	return (SUCCESS);
 }
 
 int check_input(t_data *minishell)
@@ -38,7 +38,7 @@ int check_input(t_data *minishell)
 			temp->token = NORMAL_ARG;
 		temp = temp->next;
 	}
-	return (SUCESS);
+	return (SUCCESS);
 }
 
 int check_input2(t_data *minishell)
@@ -67,5 +67,5 @@ int check_input2(t_data *minishell)
 		}
 		temp = temp->next;
 	}
-	return (SUCESS);
+	return (SUCCESS);
 }

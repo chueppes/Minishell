@@ -72,7 +72,7 @@ enum    input_type {
     DELIMITER = 1009,
 };
 
-#define SUCESS 0
+#define SUCCESS 0
 #define FAILURE -1
 
 extern int global;
@@ -193,9 +193,11 @@ int is_readline_valid(char *readline);
 int get_value_out(char *readline);
 
 //erro
-int handle_errors(int type_error, int code_error, char *output);
+int		handle_errors(int type_error, int code_error, char *output);
 void    signals(void);
 void    handle_sig(int sig, siginfo_t *info, void *algo);
 void    child_signals(void);
+void	free_parser(t_data *minishell);
+int		parser_error(t_data *minishell);
 
 #endif
