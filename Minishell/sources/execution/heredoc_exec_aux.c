@@ -6,6 +6,12 @@ pid_t heredoc_exec_single(t_data *minishell)
 
 	pipe(minishell->exec_list->pipe_heredoc);
 	heredocpid = fork();
+	if (heredocpid == -1)
+	{
+		handle_errors(FORK_ERR, 1, NULL);
+		exit(1);
+		return (FAILURE);
+	}
 	if (heredocpid == 0)
 	{
 		close(minishell->exec_list->pipe_heredoc[0]);
@@ -29,8 +35,15 @@ pid_t heredoc_exec_pipes(t_exec	*exec_list)
 
 	pipe(exec_list->pipe_heredoc);
 	heredocpid = fork();
+	if (heredocpid == -1)
+	{
+		handle_errors(FORK_ERR, 1, NULL);
+		exit(1);
+		return (FAILURE);
+	}
 	if (heredocpid == 0)
 	{
+		
 		close(exec_list->pipe_heredoc[0]);
 		ft_putstr_fd(exec_list->heredoc_str, exec_list->pipe_heredoc[1]);
 		free(exec_list->heredoc_str);

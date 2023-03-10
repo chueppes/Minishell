@@ -56,7 +56,8 @@ int init_readline(t_data *minishell)
         {
             if (parser(minishell) == SUCCESS)
             {
-				execution(minishell);
+				if (execution(minishell) != -1)
+					global = 0;
 		    	free_all(minishell);
 			}
 			else

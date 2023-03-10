@@ -19,12 +19,12 @@ int	parser_error(t_data *minishell)
 	{
 		if (aux->token == PIPE && aux->next == NULL)
 		{
-			handle_errors(PIPENDE_ERR, 2, aux->cmd);
+			handle_errors(PIPENDE_ERR, 2, NULL);
 			return (-1);
 		}
 		if (is_redirect2(aux->token) && aux->next == NULL)
 		{
-			handle_errors(OPENFILE_ERR, 2, aux->cmd);
+			handle_errors(OPENFILE_ERR, 2, NULL);
 			return (-1);
 		}
 		aux = aux->next;

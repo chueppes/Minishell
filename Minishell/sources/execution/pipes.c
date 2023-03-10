@@ -49,48 +49,88 @@ void	exec_builtin(t_exec *cmd, t_data *minishell)
 		//return (42);
 }
 
-void	ft_last_prog(t_data *mini, int prevpipe, t_exec *exec_list)
+int	ft_last_prog(t_data *mini, int prevpipe, t_exec *exec_list)
 {
 	pid_t	cpid;
 
 	cpid = fork();
+	if (cpid == -1)
+	{
+		handle_errors(FORK_ERR, 1, NULL);
+		free_all(mini);
+		exit(1);
+		return (FAILURE);
+	}
 	if (cpid == 0)
 	{
 		child_signals();
 		exec_child_last(mini, prevpipe, exec_list);
 	}
 	else
-		main_process_last(prevpipe, exec_list);
+	{
+		if (main_process_last(prevpipe, exec_list, mini) == -1)
+			return (FAILURE);
+	}
+	return (SUCCESS);
 }
 
-void	ft_pipe(t_data *mini, int *prevpipe, t_exec *exec_list)
+int	ft_pipe(t_data *mini, int *prevpipe, t_exec *exec_list)
 {
 	int		pipefd[2];
 	pid_t	cpid;
 
-	pipe(pipefd);
+	if (pipe(pipefd) == -1)
+	{
+		handle_errors(PIPERR_ERR, 1, NULL);
+		return (FAILURE);
+	}
 	cpid = fork();
+	if (cpid == -1)
+	{
+		handle_errors(FORK_ERR, 1, NULL);
+		free_all(mini);
+		exit(1);
+		return (FAILURE);
+	}
 	if (cpid == 0)
 	{
 		child_signals();
 		exec_child(mini, prevpipe, exec_list, pipefd);
 	}
 	else
-		main_process(prevpipe, pipefd, exec_list);
+	{
+		if (main_process(prevpipe, pipefd, exec_list, mini) == FAILURE)
+			return (FAILURE);
+	}
+	return (SUCCESS);
 }
 
 int	execute_pipes(t_data *minishell)
 {
 	int	prevpipe;
+	int status;
 
+	status = 0;
 	prevpipe = dup(0);
 	while (minishell->exec_list)
 	{
 		if (minishell->exec_list->next != NULL)
-			ft_pipe(minishell, &prevpipe, minishell->exec_list);
+		{
+			if (ft_pipe(minishell, &prevpipe, minishell->exec_list) == FAILURE)
+			{
+				status = -1;
+				break ;
+			}
+		}
 		else
-			ft_last_prog(minishell, prevpipe, minishell->exec_list);
+		{
+			if (ft_last_prog(minishell, prevpipe, minishell->exec_list) == FAILURE)
+			{
+				status = -1;	
+				break ;
+			}
+		}
 		minishell->exec_list = minishell->exec_list->next;
 	}
-	return (0);
+	return (status);
 }

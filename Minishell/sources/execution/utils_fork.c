@@ -1,8 +1,9 @@
 #include "../.././includes/minishell.h"
 
-void exec_child(t_data *mini, int *prevpipe, t_exec *exec_list, int pipefd[2])
+void	exec_child(t_data *mini, int *prevpipe, t_exec *exec_list, int pipefd[2])
 {
 	pid_t heredocpid;
+	char *path;
 
 	close (pipefd[0]);
 	dup2 (pipefd[1], STDOUT_FILENO);
@@ -22,7 +23,12 @@ void exec_child(t_data *mini, int *prevpipe, t_exec *exec_list, int pipefd[2])
 		    	exit(0) ;
 		 	}
 		 	else
-				execve(find_path(exec_list->exec_cmd[0], mini->minishell_envp), exec_list->exec_cmd, mini->minishell_envp);
+			{
+				path = find_path(exec_list->exec_cmd[0], mini->minishell_envp);
+				if (path == NULL)
+					exit(127);
+				execve(path, exec_list->exec_cmd, mini->minishell_envp);
+			}
 		}
 	}
 	else
@@ -33,13 +39,19 @@ void exec_child(t_data *mini, int *prevpipe, t_exec *exec_list, int pipefd[2])
 	    	exit(0) ;
 	 	}
 		else
-			execve(find_path(exec_list->exec_cmd[0], mini->minishell_envp), exec_list->exec_cmd, mini->minishell_envp);
+		{
+			path = find_path(exec_list->exec_cmd[0], mini->minishell_envp);
+			if (path == NULL)
+				exit(127);
+			execve(path, exec_list->exec_cmd, mini->minishell_envp);
+		}
 	}
 }
 
 void exec_child_last(t_data *mini, int prevpipe, t_exec *exec_list)
 {
 	pid_t heredocpid;
+	char *path;
 
 	dup2 (prevpipe, STDIN_FILENO);
 	close (prevpipe);
@@ -56,7 +68,12 @@ void exec_child_last(t_data *mini, int prevpipe, t_exec *exec_list)
 				exit(0);
 			}
 	 		else
-				execve(find_path(exec_list->exec_cmd[0], mini->minishell_envp), exec_list->exec_cmd, mini->minishell_envp);
+			{
+				path = find_path(exec_list->exec_cmd[0], mini->minishell_envp);
+				if (path == NULL)
+					exit (127);
+				execve(path, exec_list->exec_cmd, mini->minishell_envp);
+			}
 		}
 	}
 	else
@@ -67,24 +84,65 @@ void exec_child_last(t_data *mini, int prevpipe, t_exec *exec_list)
 			exit(0);
 		}
  		else
-			execve(find_path(exec_list->exec_cmd[0], mini->minishell_envp), exec_list->exec_cmd, mini->minishell_envp);
+		{
+			path = find_path(exec_list->exec_cmd[0], mini->minishell_envp);
+			if (path == NULL)
+				exit (127);
+			execve(path, exec_list->exec_cmd, mini->minishell_envp);
+		}
 	}
 }
 
-void main_process(int *prevpipe, int pipefd[2], t_exec *exec_list)
+int main_process(int *prevpipe, int pipefd[2], t_exec *exec_list, t_data *mini)
 {
+	char *path;
+	int status;
+
+	status = 0;
+	path = find_path(exec_list->exec_cmd[0], mini->minishell_envp);
+	if (access(path, F_OK) == -1)
+	{
+		handle_errors(CMDNOTFOUND_ERR, 127, exec_list->exec_cmd[0]);
+		status = -1;
+	}
+	else if (access(path, X_OK) == -1)
+	{
+		handle_errors(NPERM_ERR, 126, NULL);
+		status = -1;
+	}
+	if (path != NULL)
+		free(path);
 	close (pipefd[1]);
 	close (*prevpipe);
 	close_infile(exec_list);
 	close_outfile(exec_list);
 	*prevpipe = pipefd[0];
+	return (status);
 }
 
-void main_process_last(int prevpipe, t_exec *exec_list)
+int main_process_last(int prevpipe, t_exec *exec_list, t_data *mini)
 {
+	char *path;
+	int status;
+
+	status = 0;
+	path = find_path(exec_list->exec_cmd[0], mini->minishell_envp);
+	if (access(path, F_OK) == -1)
+	{
+		status = -1;
+		handle_errors(CMDNOTFOUND_ERR, 127, exec_list->exec_cmd[0]);
+	}
+	else if (access(path, X_OK) == -1)
+	{
+		status = -1;
+		handle_errors(NPERM_ERR, 126, NULL);
+	}
+	if (path != NULL)
+		free(path);
 	close (prevpipe);
 	close_infile(exec_list);
 	close_outfile(exec_list);
 	while (wait (NULL) != -1)
 		;
+	return (status);
 }
