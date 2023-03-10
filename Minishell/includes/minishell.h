@@ -98,7 +98,7 @@ enum    input_type {
 # define LINE_24 "	██║░╚═╝░██║██║██║░╚███║██║██║░░██║███████╗███████╗███████╗"
 # define LINE_25 "	╚═╝░░░░░╚═╝╚═╝╚═╝░░╚══╝╚═╝╚═╝░░╚═╝╚══════╝╚══════╝╚══════╝"
 
-#define SUCESS 0
+#define SUCCESS 0
 #define FAILURE -1
 
 extern int global;
@@ -224,5 +224,7 @@ int     handle_errors(int type_error, int code_error, char *output);
 void    signals(void);
 void    handle_sig(int sig, siginfo_t *info, void *algo);
 void    child_signals(void);
+void	free_parser(t_data *minishell);
+int		parser_error(t_data *minishell);
 
 #endif

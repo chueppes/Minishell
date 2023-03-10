@@ -54,11 +54,16 @@ int init_readline(t_data *minishell)
             break ;
         if(!treat_input(minishell))
         {
-            parser(minishell);
-            execution(minishell);
-		    free_all(minishell);
-        }
-        free(minishell->readline);
+            if (parser(minishell) == SUCCESS)
+            {
+				execution(minishell);
+		    	free_all(minishell);
+			}
+			else
+				free_parser(minishell);
+		}
+		else
+        	free(minishell->readline);
     }
     return (0);
 }
