@@ -2,7 +2,6 @@
 
 void	exec_child(t_data *mini, int *prevpipe, t_exec *exec_list, int pipefd[2])
 {
-	pid_t heredocpid;
 	char *path;
 
 	close (pipefd[0]);
@@ -13,44 +12,23 @@ void	exec_child(t_data *mini, int *prevpipe, t_exec *exec_list, int pipefd[2])
 	close (*prevpipe);
 	dup_infile(exec_list);
 	if (exec_list->has_doc == 1)
-	{
-		heredocpid = heredoc_exec_pipes(exec_list);
-		if (heredocpid != 0)
-		{
-		 	if (is_builtin(exec_list->exec_cmd[0]))
-		 	{
-		   		exec_builtin(exec_list, mini);
-		    	exit(0) ;
-		 	}
-		 	else
-			{
-				path = find_path(exec_list->exec_cmd[0], mini->minishell_envp);
-				if (path == NULL)
-					exit(127);
-				execve(path, exec_list->exec_cmd, mini->minishell_envp);
-			}
-		}
-	}
+		has_doc_child(exec_list);
+	if (is_builtin(exec_list->exec_cmd[0]))
+ 	{
+   		exec_builtin(exec_list, mini);
+    	exit(0) ;
+ 	}
 	else
 	{
-		if (is_builtin(exec_list->exec_cmd[0]))
-	 	{
-	   		exec_builtin(exec_list, mini);
-	    	exit(0) ;
-	 	}
-		else
-		{
-			path = find_path(exec_list->exec_cmd[0], mini->minishell_envp);
-			if (path == NULL)
-				exit(127);
-			execve(path, exec_list->exec_cmd, mini->minishell_envp);
-		}
+		path = find_path(exec_list->exec_cmd[0], mini->minishell_envp);
+		if (path == NULL)
+			exit(127);
+		execve(path, exec_list->exec_cmd, mini->minishell_envp);
 	}
 }
 
 void exec_child_last(t_data *mini, int prevpipe, t_exec *exec_list)
 {
-	pid_t heredocpid;
 	char *path;
 
 	dup2 (prevpipe, STDIN_FILENO);
@@ -58,38 +36,18 @@ void exec_child_last(t_data *mini, int prevpipe, t_exec *exec_list)
 	dup_outfile(exec_list);
 	dup_infile(exec_list);
 	if (exec_list->has_doc == 1)
+		has_doc_child(exec_list);
+	if (is_builtin(exec_list->exec_cmd[0]))
 	{
-		heredocpid = heredoc_exec_pipes(exec_list);
-		if (heredocpid != 0)
-		{
-	 		if (is_builtin(exec_list->exec_cmd[0]))
-	 		{
-				exec_builtin(exec_list, mini);
-				exit(0);
-			}
-	 		else
-			{
-				path = find_path(exec_list->exec_cmd[0], mini->minishell_envp);
-				if (path == NULL)
-					exit (127);
-				execve(path, exec_list->exec_cmd, mini->minishell_envp);
-			}
-		}
+		exec_builtin(exec_list, mini);
+		exit(0);
 	}
 	else
 	{
- 		if (is_builtin(exec_list->exec_cmd[0]))
- 		{
-			exec_builtin(exec_list, mini);
-			exit(0);
-		}
- 		else
-		{
-			path = find_path(exec_list->exec_cmd[0], mini->minishell_envp);
-			if (path == NULL)
-				exit (127);
-			execve(path, exec_list->exec_cmd, mini->minishell_envp);
-		}
+		path = find_path(exec_list->exec_cmd[0], mini->minishell_envp);
+		if (path == NULL)
+			exit (127);
+		execve(path, exec_list->exec_cmd, mini->minishell_envp);
 	}
 }
 
@@ -99,6 +57,8 @@ int main_process(int *prevpipe, int pipefd[2], t_exec *exec_list, t_data *mini)
 	int status;
 
 	status = 0;
+	if (exec_list->has_doc == 1)
+		has_doc_main(exec_list);
 	path = find_path(exec_list->exec_cmd[0], mini->minishell_envp);
 	if (access(path, F_OK) == -1)
 	{
@@ -126,6 +86,8 @@ int main_process_last(int prevpipe, t_exec *exec_list, t_data *mini)
 	int status;
 
 	status = 0;
+	if (exec_list->has_doc == 1)
+		has_doc_main(exec_list);
 	path = find_path(exec_list->exec_cmd[0], mini->minishell_envp);
 	if (access(path, F_OK) == -1)
 	{

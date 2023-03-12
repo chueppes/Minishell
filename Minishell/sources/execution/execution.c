@@ -15,23 +15,69 @@ int	count_commands(t_exec *exec_list)
 
 int execution(t_data *minishell)
 {
+	int status;
+
+	status = SUCCESS;
 	if (count_commands(minishell->exec_list) == 1)
 	{
 		if (single_command(minishell) == FAILURE)
-			return (FAILURE);
+			status = FAILURE;
 	}
 	else
 	{
 		if (execute_pipes(minishell) == FAILURE)
-			return (FAILURE);
+			status = FAILURE;
 	}
-	return (SUCCESS);
+	return (status);
+}
+
+static int main_execution(t_data *minishell, char *path)
+{
+	int status;
+
+	if (minishell->exec_list->has_doc == 1)
+	{
+		close(minishell->exec_list->pipe_heredoc[0]);
+		ft_putstr_fd(minishell->exec_list->heredoc_str, minishell->exec_list->pipe_heredoc[1]);
+		close(minishell->exec_list->pipe_heredoc[1]);
+	}
+	if (access(path, F_OK) == -1)
+	{
+		handle_errors(CMDNOTFOUND_ERR, 127, minishell->exec_list->exec_cmd[0]);
+		status = -1;
+	}
+	else if (access(path, X_OK) == -1)
+	{
+		handle_errors(NPERM_ERR, 126, NULL);
+		status = -1;
+	}
+	if (path != NULL)
+		free(path);
+	close_infile(minishell->exec_list);
+	close_outfile(minishell->exec_list);
+	wait(NULL);
+	return (status);
+}
+
+static void child_execution(t_data *minishell, char *path)
+{
+	child_signals();
+	if (minishell->exec_list->has_doc == 1)
+	{
+		close(minishell->exec_list->pipe_heredoc[1]);
+		dup2(minishell->exec_list->pipe_heredoc[0], STDIN_FILENO);
+		close(minishell->exec_list->pipe_heredoc[0]);
+	}
+	dup_infile(minishell->exec_list);
+	dup_outfile(minishell->exec_list);
+	if (path == NULL)
+		exit(127);
+	execve(path, minishell->exec_list->exec_cmd, minishell->minishell_envp);
 }
 
 int single_command(t_data *minishell)
 {
 	pid_t	fpid;
-	pid_t	heredocpid;
 	char	*path;
 	int		status;
 
@@ -46,59 +92,14 @@ int single_command(t_data *minishell)
 	}
 	else
 	{
+		if (minishell->exec_list->has_doc == 1)
+			pipe(minishell->exec_list->pipe_heredoc);
 		path = find_path(minishell->exec_list->exec_cmd[0], minishell->minishell_envp);
 		fpid = fork();
-		if (fpid == -1)
-		{
-			handle_errors(FORK_ERR, 1, NULL);
-			free_all(minishell);
-			exit(1);
-			return (FAILURE);
-		}
-		if (fpid == 0)
-		{
-			child_signals();
-			if (minishell->exec_list->has_doc == 1)
-			{
-				heredocpid = heredoc_exec_single(minishell);
-				if (heredocpid == FAILURE)
-					return (FAILURE);
-				if (heredocpid != 0)
-				{
-					dup_infile(minishell->exec_list);
-					dup_outfile(minishell->exec_list);
-					if (path == NULL)
-						exit(127);
-					execve(path, minishell->exec_list->exec_cmd, minishell->minishell_envp);
-				}
-			}
-			else 
-			{
-				dup_infile(minishell->exec_list);
-				dup_outfile(minishell->exec_list);
-				if (path == NULL)
-					exit(127);
-				execve(path, minishell->exec_list->exec_cmd, minishell->minishell_envp);
-			}
-		}
 		if (fpid != 0)
-		{
-			if (access(path, F_OK) == -1)
-			{
-				handle_errors(CMDNOTFOUND_ERR, 127, minishell->exec_list->exec_cmd[0]);
-				status = -1;
-			}
-			else if (access(path, X_OK) == -1)
-			{
-				handle_errors(NPERM_ERR, 126, NULL);
-				status = -1;
-			}
-			if (path != NULL)
-				free(path);
-			close_infile(minishell->exec_list);
-			close_outfile(minishell->exec_list);
-			wait(NULL);
-		}
+			status = main_execution(minishell, path);
+		if (fpid == 0)
+			child_execution(minishell, path);
 	}
 	return (status);
 }
