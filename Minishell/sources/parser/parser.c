@@ -11,9 +11,9 @@ int parser(t_data *minishell)
 	check_input2(minishell);
 	if (parser_error(minishell) == FAILURE)
 		return (FAILURE);
-	search_redirect(&minishell->commands, &minishell->exec_list);
     create_exec_list(&minishell->exec_list, minishell->commands);
 	prepare_for_execution(&minishell->exec_list);
+	search_redirect(&minishell->commands, &minishell->exec_list);
 	return (SUCCESS);
 }
 
