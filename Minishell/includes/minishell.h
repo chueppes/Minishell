@@ -161,7 +161,7 @@ int			open_append(t_commands **comm, t_exec **exec_list, int i, char *file);
 int			open_input(t_commands **comm, t_exec **exec_list, int i, char *file);
 void		open_heredoc(t_commands **comm, t_exec **exec_list, int i, char *eof);
 char		*heredoc_readline(char *eof);
-void		str_heredoc(char *str, t_exec **exec_list, t_exec *temp_exec, int find_list);
+void		str_heredoc(char *str, t_exec *temp_exec, int find_list);
 
 // execution
 int			execution(t_data *minishell);

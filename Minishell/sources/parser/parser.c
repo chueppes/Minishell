@@ -14,6 +14,7 @@ int parser(t_data *minishell)
     create_exec_list(&minishell->exec_list, minishell->commands);
 	prepare_for_execution(&minishell->exec_list);
 	search_redirect(&minishell->commands, &minishell->exec_list);
+	print_exec(minishell->exec_list);
 	return (SUCCESS);
 }
 

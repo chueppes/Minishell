@@ -25,12 +25,12 @@ char	*heredoc_readline(char *eof)
 	return (str);
 }
 
-void str_heredoc(char *str, t_exec **exec_list, t_exec *temp_exec, int find_list)
+void str_heredoc(char *str, t_exec *temp_exec, int find_list)
 {
-	if (exec_list && *exec_list)
+	while (find_list-- && temp_exec)
+		temp_exec = temp_exec->next;
+	if (temp_exec)
 	{
-		while (find_list--)
-			temp_exec = temp_exec->next;
 		if (temp_exec->infile)
 		{
     		close(temp_exec->infile);
