@@ -29,8 +29,11 @@ void	free_list_comm(t_commands **list)
 	if (*list == NULL)
 		return ;
 	tmp = (*list)->next;
-    free((*list)->cmd);
-    (*list)->cmd = NULL;
+	if ((*list)->token != DELIMITER)
+	{
+    	free((*list)->cmd);
+    	(*list)->cmd = NULL;
+	}
 	free(*list);
 	*list = NULL;
 	free_list_comm(&tmp);

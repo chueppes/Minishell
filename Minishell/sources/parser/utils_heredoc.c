@@ -7,21 +7,21 @@ char	*heredoc_readline(char *eof)
 
 	str = NULL;
 	temp = NULL;
+	eof = remove_outer_quotes(eof);
 	while (1)
 	{
 		temp = readline(">");
-		if (ft_strncmp(temp, eof, ft_strlen(eof)) == 0)
-			break;
 		if (!str)
 		{
 			str = malloc(1);
 			*str = '\0';
 		}
+		if (ft_strncmp(temp, eof, ft_strlen(eof)) == 0)
+			break;
 		str = my_strjoin2(str, temp);
 		free(temp);
 	}
 	free(temp);
-//	add_history(str);
 	return (str);
 }
 

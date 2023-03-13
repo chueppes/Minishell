@@ -18,7 +18,7 @@ int open_input(t_commands **comm, t_exec **exec_list, int i, char *file)
 {
 	t_exec		*temp_exec;
 	int			find_list;
-  int     temp;
+  	int     temp;
 
 	temp_exec = *exec_list;
 	find_list = find_position_open(*comm, i);

@@ -6,21 +6,26 @@ int			cmd_found_quotes2(t_exec *exec_list);
 int parser(t_data *minishell)
 {
 	int i;
+	int status;
 
 	i = -1;
+	status = 0;
     while (minishell->cmd_split[++i] != NULL)
 		lstadd_back_command(&minishell->commands, lstnew_command(minishell->cmd_split[i]));
 	check_input(minishell);
 	check_input2(minishell);
-    create_exec_list(&minishell->exec_list, minishell->commands);
-	prepare_for_execution(&minishell->exec_list);
-	remove_quotes(&minishell->exec_list);
 	if (parser_error(minishell) == FAILURE)
-		return (FAILURE);
-	if (cmd_found_quotes(minishell->exec_list) == -1 || cmd_found_quotes2(minishell->exec_list) == -1)
-		return (-1);
+		status = -1;
+	if (status == 0)
+	{
+    	create_exec_list(&minishell->exec_list, minishell->commands);
+		prepare_for_execution(&minishell->exec_list);
+		remove_quotes(&minishell->exec_list);
+		if (cmd_found_quotes(minishell->exec_list) == -1 || cmd_found_quotes2(minishell->exec_list) == -1)
+			status = -1;
+	}
 	search_redirect(&minishell->commands, &minishell->exec_list);
-	return (SUCCESS);
+	return (status);
 }
 
 int	cmd_found_quotes(t_exec *exec_list)
