@@ -22,8 +22,13 @@ char	*treat_home(char **env)
 	home_local = 0;
 	i = 5;
 	j = 0;
-	while (ft_strncmp(env[home_local], "HOME=", 5) != 0)
+	while (env[home_local] && ft_strncmp(env[home_local], "HOME=", 5) != 0)
 		home_local++;
+	if (!env[home_local])
+	{
+		printf("cd: HOME not defined\n");
+		return (NULL);
+	}
 	exec_home = malloc(ft_strlen(env[home_local]) - 3);
 	while (env[home_local][i])
 	{
@@ -53,8 +58,8 @@ void	do_cd(char *path, char **env, t_data *mini, int empity)
 
 	if (empity == 1 || ft_strcmp(path, "~") == 0 || ft_strcmp(path, "~/") == 0)
 	{
-		mini->old_pwd = getcwd(NULL, 0);
 		exec_home = treat_home(env);
+		mini->old_pwd = getcwd(NULL, 0);
 		chdir(exec_home);
 		free(exec_home);
 	}

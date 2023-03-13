@@ -61,7 +61,7 @@ int init_readline(t_data *minishell)
 		    	free_all(minishell);
 			}
 			else
-				free_parser(minishell);
+				free_all(minishell);
 		}
 		else
         	free(minishell->readline);

@@ -1,5 +1,7 @@
 #include "../.././includes/minishell.h"
 static void	remove_quotes(t_exec **exec_list);
+int			cmd_found_quotes(t_exec *exec_list);
+int			cmd_found_quotes2(t_exec *exec_list);
 
 int parser(t_data *minishell)
 {
@@ -10,14 +12,56 @@ int parser(t_data *minishell)
 		lstadd_back_command(&minishell->commands, lstnew_command(minishell->cmd_split[i]));
 	check_input(minishell);
 	check_input2(minishell);
-	if (parser_error(minishell) == FAILURE)
-		return (FAILURE);
     create_exec_list(&minishell->exec_list, minishell->commands);
 	prepare_for_execution(&minishell->exec_list);
 	remove_quotes(&minishell->exec_list);
+	if (parser_error(minishell) == FAILURE)
+		return (FAILURE);
+	if (cmd_found_quotes(minishell->exec_list) == -1 || cmd_found_quotes2(minishell->exec_list) == -1)
+		return (-1);
 	search_redirect(&minishell->commands, &minishell->exec_list);
 	return (SUCCESS);
 }
+
+int	cmd_found_quotes(t_exec *exec_list)
+{
+	int i;
+
+	while (exec_list)
+	{
+		i = -1;
+		while (exec_list->exec_cmd[0][++i])
+		{
+			if (is_space(exec_list->exec_cmd[0][i]))
+			{
+				handle_errors(CMDNOTFOUND_ERR, 127, exec_list->exec_cmd[0]);
+				return (-1);
+			}
+		}
+		exec_list = exec_list->next;
+	}
+	return (0);
+}
+
+int	cmd_found_quotes2(t_exec *exec_list)
+{
+	int i;
+
+	while (exec_list)
+	{
+		i = -1;
+		while (exec_list->exec_cmd[0][++i])
+		{
+			if (exec_list->exec_cmd[0][i] != '\'' \
+			 && exec_list->exec_cmd[0][i] != '\"')
+				return (0);
+		}
+		handle_errors(CMDNOTFOUND_ERR, 127, exec_list->exec_cmd[0]);
+		exec_list = exec_list->next;
+	}
+	return (-1);
+}
+
 
 static void	remove_quotes(t_exec **exec_list)
 {

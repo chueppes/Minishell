@@ -43,6 +43,7 @@ char* remove_outer_quotes(char* string)
     {
         result = (char*) malloc(sizeof(char) * (len + 1));
         ft_strcpy(result, string);
+        free(string);
         return result;
     }
     trimmed = ft_strtrim(string, quote);// remove todas as ocorrências da primeira aspa encontrada
@@ -57,5 +58,6 @@ char* remove_outer_quotes(char* string)
     }
     result[j] = '\0';
     free(trimmed); // libera a memória alocada por ft_strtrim
+    free(string);
     return result;
 }

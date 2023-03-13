@@ -38,14 +38,14 @@ static int main_execution(t_data *minishell, char *path)
 	status = 0;
 	if (minishell->exec_list->has_doc == 1)
 		has_doc_main_single(minishell);
-	if (access(path, F_OK) == -1)
-	{
-		handle_errors(CMDNOTFOUND_ERR, 127, minishell->exec_list->exec_cmd[0]);
-		status = -1;
-	}
-	else if (access(path, X_OK) == -1)
+	if (access(path, X_OK) == -1)
 	{
 		handle_errors(NPERM_ERR, 126, NULL);
+		status = -1;
+	}
+	else if (access(path, F_OK) == -1)
+	{
+		handle_errors(CMDNOTFOUND_ERR, 127, minishell->exec_list->exec_cmd[0]);
 		status = -1;
 	}
 	if (path != NULL)
