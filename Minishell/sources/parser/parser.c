@@ -1,4 +1,5 @@
 #include "../.././includes/minishell.h"
+static void	remove_quotes(t_exec **exec_list);
 
 int parser(t_data *minishell)
 {
@@ -13,9 +14,24 @@ int parser(t_data *minishell)
 		return (FAILURE);
     create_exec_list(&minishell->exec_list, minishell->commands);
 	prepare_for_execution(&minishell->exec_list);
+	remove_quotes(&minishell->exec_list);
 	search_redirect(&minishell->commands, &minishell->exec_list);
-	print_exec(minishell->exec_list);
 	return (SUCCESS);
+}
+
+static void	remove_quotes(t_exec **exec_list)
+{
+	int		i;
+	t_exec	*temp;
+
+	temp = *exec_list;
+	while (temp)
+	{
+		i = -1;
+		while(temp->exec_cmd[++i])
+			temp->exec_cmd[i] = remove_outer_quotes(temp->exec_cmd[i]);
+		temp = temp->next;
+	}
 }
 
 int check_input(t_data *minishell)

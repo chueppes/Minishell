@@ -11,7 +11,7 @@ int	start_expansions(char **commands, t_data *data)
 		// 	return(handle_errors(QUOTE_ERR, 1, NULL));
 		commands[i] = expand_vars(commands[i], data);
 		commands[i] = expand_path(commands[i], data);
-		remove_outer_quotes(commands[i]);
+		//commands[i] = remove_outer_quotes(commands[i]);
 		i++;
 	}
 	return(0);

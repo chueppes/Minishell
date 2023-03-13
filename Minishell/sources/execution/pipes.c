@@ -45,8 +45,8 @@ void	exec_builtin(t_exec *cmd, t_data *minishell)
 			do_unset(minishell->minishell_envp, cmd->exec_cmd[i], minishell);
 	else if (ft_strcmp(cmd->exec_cmd[0], "env") == 0)
 		do_env(minishell, 1);
-//	else if (ft_strcmp(cmd->exec_cmd[0], "exit") == 0)
-		//return (42);
+	else if (ft_strcmp(cmd->exec_cmd[0], "exit") == 0)
+		do_exit(minishell);
 }
 
 int	ft_last_prog(t_data *mini, int prevpipe, t_exec *exec_list)

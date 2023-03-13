@@ -5,6 +5,9 @@ int get_value_out(char *readline);
 
 int treat_input(t_data *minishell)
 {
+    int i;
+
+    i = -1;
     add_history(minishell->readline);
     if(!check_quotes(minishell->readline))
         return(handle_errors(QUOTE_ERR, 1, NULL)); 

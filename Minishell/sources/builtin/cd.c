@@ -63,7 +63,7 @@ void	do_cd(char *path, char **env, t_data *mini, int empity)
 	else if (ft_strncmp(path, "~/", 2) == 0)
 	{
 		mini->old_pwd = getcwd(NULL, 0);
-		exec_home = ft_strjoin(treat_home(env), remove_tilda(path));
+		exec_home = ft_strjoin_free(treat_home(env), remove_tilda(path));
 		chdir(exec_home);
 		free(exec_home);
 	}
