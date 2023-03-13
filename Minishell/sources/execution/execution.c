@@ -35,12 +35,9 @@ static int main_execution(t_data *minishell, char *path)
 {
 	int status;
 
+	status = 0;
 	if (minishell->exec_list->has_doc == 1)
-	{
-		close(minishell->exec_list->pipe_heredoc[0]);
-		ft_putstr_fd(minishell->exec_list->heredoc_str, minishell->exec_list->pipe_heredoc[1]);
-		close(minishell->exec_list->pipe_heredoc[1]);
-	}
+		has_doc_main_single(minishell);
 	if (access(path, F_OK) == -1)
 	{
 		handle_errors(CMDNOTFOUND_ERR, 127, minishell->exec_list->exec_cmd[0]);

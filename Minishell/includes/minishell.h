@@ -183,6 +183,7 @@ void		exec_builtin(t_exec *cmd, t_data *minishell);
 int			exec_fork_error(t_data *mini);
 void		has_doc_child(t_exec *exec_list);
 void		has_doc_main(t_exec	*exec_list);
+void		has_doc_main_single(t_data *minishell);
 
 //expansions
 int			start_expansions(char **commands, t_data *data);
