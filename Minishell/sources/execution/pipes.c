@@ -27,6 +27,8 @@ void	exec_builtin(t_exec *cmd, t_data *minishell)
 	i = 0;
 	if (ft_strcmp(cmd->exec_cmd[0], "echo") == 0)
 		do_echo(cmd->exec_cmd);
+	else if (ft_strcmp(cmd->exec_cmd[0], "cd") == 0 && cmd->exec_cmd[2])
+		printf("cd: too many arguments");
 	else if (ft_strcmp(cmd->exec_cmd[0], "cd") == 0 && cmd->exec_cmd[1])
 		do_cd(cmd->exec_cmd[1], minishell->minishell_envp, minishell, 0);
 	else if (ft_strcmp(cmd->exec_cmd[0], "cd") == 0 && !cmd->exec_cmd[1])

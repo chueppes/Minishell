@@ -58,7 +58,7 @@ void	do_export(char **envp, char *str, t_data *mini)
 	}
 	while (str[i] != '=' && str[i])
 		i++;
-	if (str[i] == '\0')
+	if (str[i] == '\0' || str[0] == '=')
 		return ;
 	while (envp[++j])
 	{

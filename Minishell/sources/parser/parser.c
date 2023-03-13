@@ -46,7 +46,11 @@ int	cmd_found_quotes(t_exec *exec_list)
 int	cmd_found_quotes2(t_exec *exec_list)
 {
 	int i;
+	int found_error;
+	int alright;
 
+	alright = 0;
+	found_error = 0;
 	while (exec_list)
 	{
 		i = -1;
@@ -54,12 +58,20 @@ int	cmd_found_quotes2(t_exec *exec_list)
 		{
 			if (exec_list->exec_cmd[0][i] != '\'' \
 			 && exec_list->exec_cmd[0][i] != '\"')
-				return (0);
+				alright = 1;
 		}
-		handle_errors(CMDNOTFOUND_ERR, 127, exec_list->exec_cmd[0]);
+		if (alright != 1)
+		{
+			found_error = 1;
+			handle_errors(CMDNOTFOUND_ERR, 127, exec_list->exec_cmd[0]);
+		}
+		alright = 0;
 		exec_list = exec_list->next;
 	}
-	return (-1);
+	if (found_error)
+		return (-1);
+	else	
+		return (1);
 }
 
 
